@@ -95,6 +95,17 @@ const DeleteAssignments = async(req,res,next)=>
     })
 }
 
+const FindByTeacherID = async(req,res,next) => {
+    TeacherAssignments.find({ teacher:req.body.teacher },(error,data) => {
+        if (error) {
+            return next(error);
+        }
+        else {
+            res.send(data).status(200)
+        }
+    })
+}
+
 
 //exports.AddPost = AddPost;
 exports.GetAssignments=GetAssignments
@@ -102,3 +113,4 @@ exports.GetCurrentTeacherAssignments = GetCurrentTeacherAssignments;
 exports.GetSingleAssignment= GetSingleAssignment;
 exports.UpdateAssignments= UpdateAssignments;
 exports.DeleteAssignments = DeleteAssignments;
+exports.FindByTeacherID = FindByTeacherID;
