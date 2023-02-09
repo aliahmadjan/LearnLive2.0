@@ -89,7 +89,7 @@ import {
 
       axios.post('http://localhost:5000/quizscore/addquizscore',
       {
-        quiz_id: `id: ${localStorage.getItem('quiz_viewid')}`,
+        quiz_id: `${localStorage.getItem('quiz_viewid')}`,
         student_id : userID,
         campname:campname,
         quiz_score: score,

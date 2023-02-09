@@ -10,6 +10,7 @@ import QuizQuesionsInfo from '../components/TeacherQuiz/QuizQuestionsInfo'
 import QuizInfo from '../components/TeacherQuiz/QuizInfo'
 import ViewQuizzes from '../components/TeacherQuiz/ViewQuizzes'
 import ViewSingleQuiz from '../components/TeacherQuiz/ViewSingleQuiz'
+import ViewQuizResults from '../components/ViewQuizResults'
 import ViewSubmittedAssignments from '../components/ViewSubmittedAssignment'
 import TeacherSingleViewAssignment from '../components/ViewSingleTeacherAssignment'
 import TeacherSingleViewSubmitAssignment from '../components/ViewSingleSubmittedAssignment'
@@ -56,6 +57,7 @@ const TeacherDashboard = () => {
                     <Route path="uploadquiz" element={<QuizInfo />} />
                     <Route path="viewquizzes" element={<ViewQuizzes/>}/> 
                     <Route path="viewquiz" element={<ViewSingleQuiz/>}/>
+                    <Route path="viewquizresults" element={<ViewQuizResults/>}/>
                     <Route path="viewassignment" element={<TeacherSingleViewAssignment/>}/>
                     <Route path="viewsubmittedassignment" element={<ViewSubmittedAssignments/>}/>
                     <Route path="viewssubmitassignment" element={<TeacherSingleViewSubmitAssignment/>}/>

@@ -20,6 +20,7 @@ import {
     const [ teacher , setTeacher] =useState('');
     const [nofquestions , setNofQuestions] = useState('');
     const [campname , setCampName] = useState("");
+    const [q ,setQ] = useState([])
     
 
 
@@ -46,6 +47,14 @@ import {
     {
         getSingleUser();
     },[])
+
+    const handleSubmitView = (submitquiz_viewid) =>
+    {
+        localStorage.removeItem('submitquiz_viewid')
+       console.log(localStorage.setItem('submitquiz_viewid',submitquiz_viewid))
+         localStorage.setItem('submitquiz_viewid',submitquiz_viewid)
+            navigate("/teacher/viewquizresults");
+    }
 
     const Back = ()=>
     {
@@ -213,10 +222,15 @@ import {
 
         </Flex>
       </Flex>
+      <Box p={4}>
+          <Button mx={4} onClick={()=>handleSubmitView(quizzes._id)} colorScheme='orange' variant='solid'>
+              Submissions
+          </Button>
 
-      <Button mt={2} onClick={Back} type='button'  colorScheme='orange' variant='solid' >
-            Back 
-      </Button>
+          <Button mx={4} onClick={Back} type='button' colorScheme='orange' variant='outline'>
+              Back
+          </Button>
+        </Box>
 
     </Box>
 

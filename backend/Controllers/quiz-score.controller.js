@@ -27,5 +27,35 @@ const AddQuizScore = (req,res,next)=>
           return res.status(422).send({error: err.message});
       }
 }
+const GetQuizzesScore = (req,res,next)=>
+{
+   QuizzesScore.find((error,data) => {
+        if(error)
+        {
+            res.send("Could Not Get Quizzes Score")
+        }
+        else 
+         {
+            res.json(data)
+         }
+    })
+}
+const GetSingleQuizScore = (req,res,next)=>
+{
+    var x = req.query.id;
+    QuizzesScore.findById(x , (error,data) =>
+    {
+        if(error)
+        {
+            return next(error);
+        }
+        else 
+        {
+            res.json(data);
+        }
+    })
+}
 
 exports.AddQuizScore = AddQuizScore;
+exports.GetQuizzesScore = GetQuizzesScore;
+exports.GetSingleQuizScore = GetSingleQuizScore;

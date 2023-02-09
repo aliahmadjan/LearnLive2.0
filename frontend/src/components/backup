@@ -132,3 +132,28 @@ import {
   }
 
   export default ViewQuizzes;
+
+
+
+
+  <Flex mt={4} maxW='4xl' mx="auto" width={'100%'} gap={4} >
+  {/* <Flex p={4} pt={0}>
+    <Input placeholder="Student's Name" variant={'outlined'} borderColor='orange'></Input>
+    <Button colorScheme={'orange'}>Search</Button>
+  </Flex> */}
+  <Box width={'50%'}>
+    <Heading size={'md'} mb={4}> Teachers </Heading>
+    <Flex width="100%" border={'1px solid orange'} gap={2} justifyContent='space-around' height='50vh' borderRadius='20px' p={4} flexWrap='wrap' overflow='scroll'>
+
+      {quizzesScore.map((quiz_score,index) => (         
+        <Box p={2} height="100px">  
+              
+          <Text>{quiz_score.quizscore}</Text>   
+        </Box>
+      ))}   
+
+    </Flex>
+  </Box>
+  
+
+</Flex>

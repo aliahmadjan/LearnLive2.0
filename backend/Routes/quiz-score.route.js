@@ -6,5 +6,8 @@ const QuizzesScoreController = require('../Controllers/quiz-score.controller')
 
 router.post('/addquizscore',QuizzesScoreController.AddQuizScore);
 
+router.get('/getquizzesscore',QuizzesScoreController.GetQuizzesScore);
+
+router.get('/getquizscore/:id',QuizzesScoreController.GetSingleQuizScore);
 
 module.exports = router;
