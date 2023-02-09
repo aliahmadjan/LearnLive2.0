@@ -79,6 +79,8 @@ router.post('/uploadassigns',  upload.array('uplassign',4),async (req,res,next) 
 
     router.get('/singletchassign/:id', TeacherAssignmentsController.GetSingleAssignment);
 
+    router.post('/findbyteacherid',TeacherAssignmentsController.FindByTeacherID)
+
     router.put('/updatetchassigns/:id' , TeacherAssignmentsController.UpdateAssignments);
 
     router.delete('/deletetchassigns/:id', TeacherAssignmentsController.DeleteAssignments);
