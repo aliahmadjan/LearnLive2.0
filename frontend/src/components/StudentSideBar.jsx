@@ -92,6 +92,7 @@ export default function StudentSidebar({navSize, changeNavSize}) {
                 <NavItem navSize={navSize} icon={'fa-solid fa-user'} active={route === "account"} title="Account" route="account" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-list-check'} active={route === "quizzes"}  title="Quizzes" route="quizzes" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-folder'} active={route === "assignments"} title="Assignments" route="assignments"/>
+                <NavItem navSize={navSize} icon={'fa-solid fa-folder'} active={route === "viewmeets"} title="Classes" route="viewmeets"/>
 
                 {/* <NavItem navSize={navSize} icon={FiHome} title="Dashboard" description="This is the description for the dashboard." /> */}
                 <NavItem navSize={navSize} icon={'fa-solid fa-calendar'} active={route === "calendar"} title="Calendar" route="calendar" />

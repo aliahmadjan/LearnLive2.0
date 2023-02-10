@@ -229,7 +229,8 @@ app.post("/meeting", async (req,res) => {
       agenda: zoomRes1.data.agenda,
       start_url: zoomRes1.data.start_url,
       join_url: zoomRes1.data.join_url,
-      password: zoomRes1.data.password
+      password: zoomRes1.data.password,
+      campname: req.body.campname
     });
 
     var config2 = {
