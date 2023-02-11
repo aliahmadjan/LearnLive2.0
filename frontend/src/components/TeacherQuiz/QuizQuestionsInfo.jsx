@@ -172,7 +172,7 @@ const QuizQuesionsInfo =(props) =>
             optionC={question.optionC}
             optionD={question.optionD}
             correctOption={question.correctOption}
-            onChange={() => handleChange1(question.id)}/>)
+            onChange={(e) => handleChange1(question.id,e)}/>)
 
 
     

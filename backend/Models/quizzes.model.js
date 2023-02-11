@@ -12,6 +12,10 @@ const quizSchema = new mongoose.Schema({
     teacher: {
         type: String
     },
+
+    teacher_name: {
+        type: String
+    },
     quizno: {
         type: String
     },

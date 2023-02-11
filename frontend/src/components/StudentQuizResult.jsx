@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom'
 
 const StudentQuizResult = () => {
 
-    const {questions, nofquestions, teacher, campname, score, selectedOptions} = useLocation().state;
+    const {questions, nofquestions, teacher_name, campname, score, selectedOptions} = useLocation().state;
 
 
   return (
@@ -21,7 +21,7 @@ const StudentQuizResult = () => {
 
       <Flex maxW='2xl' mx="auto" justifyContent={'center'} gap={4} p={4} >
               <Text>
-              Teacher Name: <Text color={'orange.800'} display={'inline'}> {teacher} </Text>
+              Teacher Name: <Text color={'orange.800'} display={'inline'}> {teacher_name} </Text>
               </Text> 
               <Text>
               Camp: <Text color={'orange.800'} display={'inline'}> {campname} </Text> 

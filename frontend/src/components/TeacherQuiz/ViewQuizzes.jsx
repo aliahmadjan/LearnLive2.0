@@ -60,7 +60,7 @@ import {
     const getAllQuizzes = () =>
     {
 
-        axios.get("http://localhost:5000/quizzes/getquizzes") 
+        axios.get("http://localhost:5000/quizzes/getcurrquizzes") 
         .then(res=> {
            console.log(res.data)
           setQuizzes(res.data)
@@ -136,7 +136,7 @@ import {
               Teacher Name: {assignment.teacher}
               </Text>  */}
               <Text>
-              Quiz By: {quiz.teacher}
+             Camp Name: {quiz.campname}
               </Text> 
               <Text>
               Quiz No: {quiz.quizno}

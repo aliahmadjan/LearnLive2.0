@@ -82,7 +82,8 @@ const QuizInfo = () => {
         axios.post("http://localhost:5000/quizzes/addquiz",
         {
          campname: selectedCamp,
-         teacher:name,
+         teacher:userID,
+         teacher_name: name,
          quizno: quizno,
          nofquestions:details.noOfQuestions,
         }).then(res =>

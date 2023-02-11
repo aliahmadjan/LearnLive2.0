@@ -9,11 +9,12 @@ const router = express.Router()
 
 const AddQuiz= (req,res,next)=>
 {
-        const { campname, teacher, quizno,nofquestions, questions} = req.body;
+        const { campname, teacher,teacher_name, quizno,nofquestions, questions} = req.body;
     
         const quizObj = {
             campname: campname,
             teacher: teacher,
+            teacher_name: teacher_name,
             quizno: quizno,
             nofquestions: nofquestions,
             questions: questions,

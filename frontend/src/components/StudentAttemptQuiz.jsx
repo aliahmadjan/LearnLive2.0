@@ -19,7 +19,7 @@ import {
     const navigate = useNavigate();
     const [quizzes , setQuizzes] = useState([]);
     const [questions , setQuestions] = useState([]);
-    const [teacher , setTeacher] =useState('');
+    const [teacher_name , setTeacherName] =useState('');
     const [nofquestions , setNofQuestions] = useState('');
     const [campname , setCampName] = useState("");
 
@@ -106,7 +106,7 @@ import {
 
       //console.log('score : ' , score)
       
-      navigate('/student/quizresult', {state: {questions, nofquestions, teacher, campname, score, selectedOptions}})
+      navigate('/student/quizresult', {state: {questions, nofquestions, teacher_name, campname, score, selectedOptions}})
 
       //console.log(selectedOptions)
       //setResultMarks(score)
@@ -123,7 +123,7 @@ import {
         .then((res) => {
           console.log(res.data);
           setCampName(res.data.campname);
-          setTeacher(res.data.teacher);
+          setTeacherName(res.data.teacher_name);
           setNofQuestions(res.data.nofquestions);
           setQuestions(res.data.questions);
           //console.log(questions);
@@ -174,7 +174,7 @@ import {
 
       <Flex maxW='2xl' mx="auto" justifyContent={'center'} gap={4} p={4} >
               <Text>
-              Teacher Name: <Text color={'orange.800'} display={'inline'}> {teacher} </Text>
+              Teacher Name: <Text color={'orange.800'} display={'inline'}> {teacher_name} </Text>
               </Text> 
               <Text>
               Camp: <Text color={'orange.800'} display={'inline'}> {campname} </Text> 
