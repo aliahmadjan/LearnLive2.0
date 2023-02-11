@@ -57,11 +57,13 @@ import {
     const getAllAssignments= () =>
     {
       //console.log(userID)
-    // localStorage.setItem('userID',userID)
-    axios.get('http://localhost:5000/tchassignments/gettchassigns')
+     //localStorage.setItem('userID',userID)
+    axios.get('http://localhost:5000/tchassignments/getcurrassigns' )
+   // axios.get('http://localhost:5000/tchassignments/gettchassigns')
         //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
         .then(res=> {
            console.log(res.data)
+          
           setAssignments(res.data)
           //console.log(quizzes)
     }).catch (err=> {
@@ -76,7 +78,7 @@ import {
     getAllAssignments();
     getCurentUser();
 
-   })
+   },[])
 
 
 
@@ -113,7 +115,7 @@ import {
                 },
               }}>
 
-        {assignments.map((assignment) => (  
+        {assignments.map((assignment,index) => (  
 
             <Flex border={'1px solid orange'} height='40%' width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
 

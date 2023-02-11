@@ -35,12 +35,12 @@ const teacherAssignmentsSchema = new moongose.Schema({
         type: Array
     },
 
-    // teacher: [
+    // teacher: 
     //     {
     //         type: mongoose.Schema.Types.ObjectId,
     //         ref: 'Teacher'
     //     },
-    // ],
+    
 
     teacher:{
       type: String

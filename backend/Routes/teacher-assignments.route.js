@@ -1,11 +1,16 @@
 const express = require('express');
+
+
 const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
 const {v4: uuidv4} = require('uuid')
 const TeacherAssignments = require('../Models/teacher-assignments.model')
 const TeacherAssignmentsController  = require('../Controllers/teacher-assignments.controller')
+const TokenTeacher = require('../Middleware/TeacherToken');
 //const TeacherController = require('../Controllers/teacher.controller')
+
+const app = express();
 
 const DIR = './teacher-assignments/';
 
@@ -75,11 +80,33 @@ router.post('/uploadassigns',  upload.array('uplassign',4),async (req,res,next) 
 
     router.get('/gettchassigns',TeacherAssignmentsController.GetAssignments);
 
-    router.get('/getcurrtchass/:id',TeacherAssignmentsController.GetCurrentTeacherAssignments)
-
     router.get('/singletchassign/:id', TeacherAssignmentsController.GetSingleAssignment);
 
-    router.post('/findbyteacherid',TeacherAssignmentsController.FindByTeacherID)
+    router.get('/getcurrassigns',TokenTeacher, async(req,res)=>
+{
+  //console.log(req.teacher._id.toHexString())
+  const tchass =  await TeacherAssignments.find()
+  //console.log(tchass[0])
+  const arr = []
+   for(let i=0; i<tchass.length; i++)
+   {
+  
+    //for(let j=0; j<tchass[i].teacher.length; j++)
+    //{
+      //const id = ObjectId();
+      //console.log(tchass[i].teacher)
+      
+       if (req.teacher._id.toHexString() === tchass[i].teacher)
+       {
+        //console.log("Hello World")
+        arr.push(tchass[i] )
+       // console.log(tchass[i].campname)
+      }
+   // }
+  }
+  //res.send(tchass)
+  res.send(arr)
+})
 
     router.put('/updatetchassigns/:id' , TeacherAssignmentsController.UpdateAssignments);
 

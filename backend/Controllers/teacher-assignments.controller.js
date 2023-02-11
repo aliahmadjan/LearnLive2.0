@@ -1,5 +1,3 @@
-const express = require('express');
-const https = require('https');
 const TeacherAssignments = require('../Models/teacher-assignments.model')
 
 const GetAssignments = async(req,res,next)=>
@@ -33,39 +31,7 @@ const GetSingleAssignment = async(req,res,next)=>
     })
 };
 
-const GetCurrentTeacherAssignments = async(req,res,next) =>
-{
-    var x = req.query.id; // for getting single id for editing
- // console.log(x);
- 
-
-   const xy =await  TeacherAssignments.find({teacher: x})
-   res.status(200).send(xy);
-   //,(error, data) => {
-//     if (error) {
-//       res.send("Error")
-//       console.log(error)
-//     } else {
-//       res.json(data)
-//       console.log('Post updated successfully !')
-//     }
-//   })
-//    console.log(xy);
-   
-    //{
-    // if(err)
-    //  { 
-    //   res.status(500).send({message: err.message});
-    //  }
-    //  else
-    //  { 
-    //     console.log(data);
-    //   //res.status(200).send(data);
-    //  }
-    //  }
-}
-
-const UpdateAssignments = async(req,res,next)=>
+const UpdateAssignments = async(req,res)=>
 {
     TeacherAssignments.findByIdAndUpdate(req.params.id, {
         $set: req.body
@@ -95,22 +61,35 @@ const DeleteAssignments = async(req,res,next)=>
     })
 }
 
-const FindByTeacherID = async(req,res,next) => {
-    TeacherAssignments.find({ teacher:req.body.teacher },(error,data) => {
-        if (error) {
-            return next(error);
-        }
-        else {
-            res.send(data).status(200)
-        }
-    })
+const GetCurrTchAssign = async(req,res) => 
+{
+    //console.log(req.teacher._id.toHexString())
+  const tchass =   TeacherAssignments.find()
+  //console.log(tchass[0])
+  const arr = []
+   for(let i=0; i<tchass.length; i++)
+   {
+  
+    //for(let j=0; j<tchass[i].teacher.length; j++)
+    //{
+      //const id = ObjectId();
+      //console.log(tchass[i].teacher)
+      
+       if (req.teacher._id.toHexString() === tchass[i].teacher)
+       {
+        //console.log("Hello World")
+        arr.push(tchass[i] )
+       // console.log(tchass[i].campname)
+      }
+   // }
+  }
+  //res.send(tchass)
+  res.send(arr)
 }
-
 
 //exports.AddPost = AddPost;
 exports.GetAssignments=GetAssignments
-exports.GetCurrentTeacherAssignments = GetCurrentTeacherAssignments;
 exports.GetSingleAssignment= GetSingleAssignment;
 exports.UpdateAssignments= UpdateAssignments;
 exports.DeleteAssignments = DeleteAssignments;
-exports.FindByTeacherID = FindByTeacherID;
+exports.GetCurrTchAssign = GetCurrTchAssign;

@@ -9,6 +9,10 @@ const bodyParser = require('body-parser')
 const KJUR = require('jsrsasign')
 const axios = require("axios")
 
+
+
+
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -41,6 +45,8 @@ const QuizzesScoreRouter = require('./Routes/quiz-score.route')
 const TokenTeacher = require('./Middleware/TeacherToken');
 const TokenStudent = require('./Middleware/StudentToken');
 const TokenAdmin = require('./Middleware/AdminToken')
+
+const TeacherAssignments = require('./Models/teacher-assignments.model')
 //const NewAssignmentRouter = require('./routes/uploadassignment-route')
 app.use('/teacher' ,express.static('teacher'));
 app.use('/teacher',TeacherRouter);
@@ -58,25 +64,26 @@ app.use('/zoomMain',zoomMainRouter);
 app.use('/zoomMeet',zoomMeetRouter);
 app.use('/quizscore',QuizzesScoreRouter);
 
+
+
 app.get('/teacher/viewprofile',TokenTeacher,(req,res)=>
 {
-  console.log(req.teacher);
+ // console.log(req.teacher);
   res.send(req.teacher);
  // res.send("TOKEN VERIFIED");
 });
 
 app.get('/student/viewprofile', TokenStudent, (req,res) =>
 {
-  console.log(req.student);
+  //console.log(req.student);
   res.send(req.student);
 });
 
 app.get('/admin/viewprofile', TokenAdmin, (req,res) =>
 {
-  console.log(req.admin);
+  //console.log(req.admin);
   res.send(req.admin);
 });
-
 
 //ZOOM WORK 
 app.post('/', (req, res) => {

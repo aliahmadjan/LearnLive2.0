@@ -33,7 +33,7 @@ const AddTeacher = (req,res,next) =>
           await teacher.save();
           res.send({message: "Teacher Created Successfully"})
           const token = jwt.sign({_id: teacher.id}, process.env.SECRET_KEY_TEACHER);
-        console.log(token);
+        //console.log(token);
         res.send({token});
         }
         catch (err)
@@ -64,7 +64,7 @@ const VerifyLogin = async(req,res,next) =>
         // res.send({token});
 
           token = await log.generateAuthToken();
-          console.log(token);
+          //console.log(token);
           res.send(token);
       }
       else
