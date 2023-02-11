@@ -37,5 +37,18 @@ const GetMeetData = (req,res,next) =>
     })
 }
 
+const meetDataByEmail = (req,res,next) => 
+{
+    zoomMeetSchema.find({ email:req.body.email },(error,data) => {
+        if (error) {
+            return next(error);
+        }
+        else {
+            res.send(data).status(200)
+        }
+    })
+}
+
 exports.GetMeetData = GetMeetData;
 exports.AddMeetingDetails = AddMeetingDetails;
+exports.meetDataByEmail = meetDataByEmail;

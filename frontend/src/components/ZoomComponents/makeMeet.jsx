@@ -16,13 +16,15 @@ export default function MakeMeet() {
     const [join_url , setJoinUrl] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [campname, setCampName] = useState("");
     function ScheduleClass(e) {
         e.preventDefault();
 
         var data = JSON.stringify({
             email: email,
             duration: duration,
-            agenda: agenda
+            agenda: agenda,
+            campname: campname
           });
       
           var config = {
@@ -65,6 +67,48 @@ export default function MakeMeet() {
             //console.log(zoomRes1)
             //mydata = zoomRes1.data
     }
+
+    const [zoommeets , setZoomMeets] = useState([]);
+    const [userID , setUserID] = useState("")
+    const [ teachers , setTeachers] =useState('')
+
+    const getCurentUser = () =>
+    {
+      let logintoken = localStorage.getItem("logintoken")
+      console.log("Login Token"+logintoken);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
+      axios.get("http://localhost:5000/teacher/viewprofile")
+        .then(res=> {
+               // console.log(res.data)
+                setUserID(res.data._id);
+                localStorage.setItem('userID',res.data._id)
+                setTeachers(res.data.name);
+        }).catch (err=> {
+            console.log(err) })
+    }
+
+    const getAllMeets= () =>
+    {
+      //console.log(userID)
+    // localStorage.setItem('userID',userID)
+    axios.get('http://localhost:5000/zoomMeet/getData')
+        //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
+        .then(res=> {
+           console.log(res.data)
+           setZoomMeets(res.data)
+           setStartUrl(res.data.start_url)
+    }).catch (err=> {
+       console.log(err) })
+    
+    }
+ 
+
+    
+   useEffect(()=>
+   {   
+    getAllMeets();
+    getCurentUser();
+   })
     return (
 
     
@@ -110,6 +154,23 @@ export default function MakeMeet() {
             </FormControl>
             
             <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel htmlFor="campname" fontWeight="bold" color="orange.500" mr={2}>Camp</FormLabel>
+              <Input
+              id="campname"
+              name="campname"
+              textAlign={'center'}
+              focusBorderColor='orange.700' 
+              variant={'flushed'} 
+              borderBottomColor='orange'
+              onChange={(e) => setCampName(e.target.value)}
+              value={campname}
+              isRequired
+              width={'60%'} 
+              mr={0} ml='auto'
+              />
+            </FormControl>
+
+            <FormControl mb={2} display={'flex'} alignItems='center'>
               <FormLabel htmlFor="agenda" fontWeight="bold" color="orange.500" mr={2}>Agenda</FormLabel>
               <Input
               id="agenda"
@@ -153,71 +214,31 @@ export default function MakeMeet() {
         </Button>
   
         </form>
-         
-      
-  
+
+        <Box pt={4} pb={2} mt={4} >
+        <Heading mb={4} >
+          Classes
+        </Heading>
+      </Box>
+        {zoommeets.map((meets) => (  
+          <Box ml={0} >
+          <Text>
+          Camp: {meets.campname}
+          </Text> 
+          <Text>
+          Agenda: {meets.agenda}
+          </Text> 
+          <Text>
+          Duration: {meets.duration}
+          </Text>
+          <form action={meets.start_url} target="_blank">
+            <Button m={4} type='submit' colorScheme='orange' variant='solid'>
+                Start
+            </Button> 
+          </form>
+        </Box>
+        ))}
     </Box>
-  
     );
-    // return (
-      
-    // <div>
-    //   <a target="_blank" rel="noreferrer" href={`https://zoom.us/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}`}>
-    //             Authorize Zoom
-    //         </a>
-    //   <form onSubmit={ScheduleClass} align="center">
-    //     <div>
-    //       <h1 align="center">Create Class</h1>
-    //     </div>
-    //     <div>
-    //       <input
-    //           id="email"
-    //           name="email"
-    //           onChange={(e)=>setEmail(e.target.value)}
-    //           textAlign={'center'}
-    //           placeholder='email'
-    //           required
-    //           value={email}
-    //       />
-    //       <input
-    //           id="duration"
-    //           name="duration"
-    //           type="number"
-    //           onChange={(e)=>setDuration(e.target.value)}
-    //           textAlign={'center'}
-    //           placeholder='duration'
-    //           required
-    //           value={duration}
-    //       />
-    //       <input
-    //           id="agenda"
-    //           name="agenda"
-    //           onChange={(e)=>setAgenda(e.target.value)}
-    //           textAlign={'center'}
-    //           placeholder='agenda'
-    //           required
-    //           value={agenda}
-    //       />
-    //     </div>
-    //     <div>
-    //       <button>Create</button>
-    //     </div>
-    //   </form>
-    //   <div align="center">
-    //     <br></br>
-    //     Agenda: {agenda}
-    //     <br></br>
-    //     Duration: {duration}
-    //     <br></br>
-    //     ID: {zoom_id}
-    //     <br></br>
-    //     Passcode: {passcode}
-    //     <br></br>
-    //     Start_url: {start_url}
-    //     <br></br>
-    //     Join_url: {join_url}
-    //     <br></br>
-    //   </div>
-    // </div>
-    // )
+
 }
