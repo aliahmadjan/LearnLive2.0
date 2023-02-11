@@ -6,6 +6,8 @@ LearnLive is an online platform, with all the operations of having an online cod
 
 # How to run this project
 
+Ask the author of this repository for .env files which cannot be downloaded directly from the repo for security. Afterwards,
+
 Open main folder in 2 terminals
 
 Terminal 1:
@@ -20,7 +22,7 @@ Terminal 2:
 > 
 > npm install
 > 
-> npm run dev
+> npm start
 
 
 # Project features currently
