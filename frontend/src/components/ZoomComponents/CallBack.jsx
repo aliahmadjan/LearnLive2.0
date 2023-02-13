@@ -7,7 +7,7 @@ export default function Callback() {
     React.useEffect(() => {
         if (code) {
 
-          fetch('http://localhost:5000/connectZoom', {
+          fetch('http://localhost:5000/zoomMain/connectZoom', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

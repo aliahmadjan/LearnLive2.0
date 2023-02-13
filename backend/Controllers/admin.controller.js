@@ -66,7 +66,6 @@ const VerifyLogin = async(req,res,next) =>
         // res.send({token});
 
          token = await  log.generateAuthToken();
-          console.log(token);
           res.send(token);
       }
       else
