@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {
+    Button,
     Flex,
     Text,
     IconButton,
@@ -130,6 +131,13 @@ export default function TeacherSidebar({navSize, changeNavSize}) {
                 </Flex>
 
             </Flex>
+
+            <form action={"https://localhost:3000/"}>
+            <Button m={4} type='submit' colorScheme='orange' variant='solid' _hover={{ bg: '#a85e32' }} px='20px' position={'relative'} left='50px'
+            width='150px'>
+                Sign out
+            </Button> 
+            </form>
         </Flex>
     )
 }
