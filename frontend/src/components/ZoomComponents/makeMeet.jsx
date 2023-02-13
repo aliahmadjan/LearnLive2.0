@@ -20,6 +20,9 @@ export default function MakeMeet() {
     function ScheduleClass(e) {
         e.preventDefault();
 
+        const zoomMainRes = fetch("http://localhost:5000/zoomMain/zoom-refresh", {
+          method: "GET",
+        });
         var data = JSON.stringify({
             email: email,
             duration: duration,
@@ -29,7 +32,7 @@ export default function MakeMeet() {
       
           var config = {
               method: 'post',
-              url: 'http://localhost:5000/meeting',
+              url: 'http://localhost:5000/zoomMain/createMeeting',
               headers: {
                   "Content-Type": "application/json; charset=UTF-8"
               },
@@ -120,12 +123,6 @@ export default function MakeMeet() {
         <Heading mb={4} >
           Schedule Class
         </Heading>
-      </Box>
-  
-      <Box m={4}>
-        <a target="_blank" rel="noreferrer" href={`https://zoom.us/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}`}>
-            Authorize Zoom
-        </a>
       </Box>
       
   

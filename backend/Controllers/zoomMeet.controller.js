@@ -49,6 +49,18 @@ const meetDataByEmail = (req,res,next) =>
     })
 }
 
+const deletingMeet = async(req,res,next) => {
+    zoomMeetSchema.findByIdAndDelete(req.params.id,(error,data)=> {
+        if(error){
+            return next(error);
+        }
+        else {
+            res.json(data)
+        }
+    })
+}
+
 exports.GetMeetData = GetMeetData;
 exports.AddMeetingDetails = AddMeetingDetails;
 exports.meetDataByEmail = meetDataByEmail;
+exports.deletingMeet = deletingMeet;
