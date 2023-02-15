@@ -17,14 +17,11 @@ const StudentAccountDetails = () => {
 
   const getCurrentCampName = (userID) =>
   {
-    console.log(userID)
     localStorage.setItem('userID',userID)
     //axios.get('http://localhost:5000/camp/getcampteacher/:',{params : {id:localStorage.getItem('userID')}}).then(res =>
     axios.get(`http://localhost:5000/camp/getcampstudent/${localStorage.getItem('userID')}`).then(res =>
     {
-      console.log(res.data)
       setCampName(res.data);
-      console.log(res.data);
 
     }).catch(err =>
       {
@@ -35,11 +32,9 @@ const StudentAccountDetails = () => {
   const getCurentUser = () =>
   {
     let logintoken = localStorage.getItem("ltoken")
-    console.log("Login Token"+logintoken);
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
     axios.get("http://localhost:5000/student/viewprofile")
       .then(res=> {
-              console.log(res.data)
               setUserID(res.data._id);
               setName(res.data.name);
               setEmail(res.data.email);

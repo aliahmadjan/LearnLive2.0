@@ -20,8 +20,6 @@ const ViewQuizResults=()=>
       axios
         .get('http://localhost:5000/quizscore/getquizzesscore')
         .then((res) => {
-
-          console.log(res.data);
            setQuizzesScore(res.data)
         //   setQuizID(res.data.quiz_id)
            //setStudentID(res.data.student_id)

@@ -25,7 +25,6 @@ import {
       axios
          .get('http://localhost:5000/camp/getcamp/:',{params : {id: localStorage.getItem('camp_viewid')}})
         .then((res) => {
-          console.log(res.data);
           //setCamps(res.data);
           //console.log(camps)
           setCampName(res.data.campname)

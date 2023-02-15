@@ -21,11 +21,9 @@ function AdminSettings() {
   const getCurentUser = () =>
   {
     let logintoken = localStorage.getItem("logtoken")
-    console.log("Login Token"+logintoken);
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
     axios.get("http://localhost:5000/admin/viewprofile")
       .then(res=> {
-              console.log(res.data)
               setUserID(res.data._id);
       }).catch (err=> {
           console.log(err) })
@@ -33,7 +31,6 @@ function AdminSettings() {
 
   const UpdatePassword = (e) => {
     e.preventDefault();
-    console.log(`http://localhost:5000/admin/updateadmin/${userID}`)
 
     axios.put(`http://localhost:5000/admin/updateadmin/${userID}` ,
     {

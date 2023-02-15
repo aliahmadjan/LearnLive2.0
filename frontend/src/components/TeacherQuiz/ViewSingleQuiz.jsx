@@ -30,12 +30,10 @@ import {
       axios
         .get('http://localhost:5000/quizzes/getquiz/:',{params : {id: localStorage.getItem('quiz_viewid')}})
         .then((res) => {
-          console.log(res.data);
           setCampName(res.data.campname);
           setTeacherName(res.data.teacher_name);
           setNofQuestions(res.data.nofquestions);
           setQuestions(res.data.questions);
-          console.log(questions);
 
          
         })
@@ -52,7 +50,6 @@ import {
     const handleSubmitView = (submitquiz_viewid) =>
     {
         localStorage.removeItem('submitquiz_viewid')
-       console.log(localStorage.setItem('submitquiz_viewid',submitquiz_viewid))
          localStorage.setItem('submitquiz_viewid',submitquiz_viewid)
             navigate("/teacher/viewquizresults");
     }

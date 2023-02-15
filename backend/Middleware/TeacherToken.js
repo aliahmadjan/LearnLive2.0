@@ -28,7 +28,6 @@ module.exports = (req,res,next)=>
         const { _id } = payload;
 
         Teacher.findById(_id).then(teacherdata => {
-            console.log(teacherdata);
             req.teacher = teacherdata;
             next();
         })

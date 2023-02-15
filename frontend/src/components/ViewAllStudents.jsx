@@ -46,7 +46,6 @@ import { useDisclosure } from '@chakra-ui/react'
       axios
         .get("http://localhost:5000/student/getstudents")
         .then((res) => {
-          console.log(res.data);
           setStudents(res.data);
         })
         .catch((err) => {

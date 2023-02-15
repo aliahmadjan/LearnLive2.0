@@ -41,7 +41,6 @@ import {
     const getCurentUser = () =>
     {
       let logintoken = localStorage.getItem("logintoken")
-      console.log("Login Token"+logintoken);
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
       axios.get("http://localhost:5000/teacher/viewprofile")
         .then(res=> {
@@ -62,7 +61,6 @@ import {
    // axios.get('http://localhost:5000/tchassignments/gettchassigns')
         //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
         .then(res=> {
-           console.log(res.data)
           
           setAssignments(res.data)
           //console.log(quizzes)

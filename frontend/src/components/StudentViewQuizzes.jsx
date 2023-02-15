@@ -42,7 +42,6 @@ import {
 
         axios.get("http://localhost:5000/quizzes/getquizzes") 
         .then(res=> {
-           console.log(res.data)
           setQuizzes(res.data)
           //console.log(quizzes)
     }).catch (err=> {

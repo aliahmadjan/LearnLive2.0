@@ -82,11 +82,11 @@ app.get('/admin/viewprofile', TokenAdmin, (req,res) =>
 });
 
 
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// app.use((req, res, next) => {
+//   const err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

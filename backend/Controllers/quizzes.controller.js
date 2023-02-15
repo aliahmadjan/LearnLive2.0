@@ -35,7 +35,6 @@ const AddQuizQuestions = (req,res,next) => {
     Quizzes.findByIdAndUpdate({_id: quizId}, {questions: questions}).exec((err, result) => {
       if(err) res.status(500).send({message: err.message});
       else {
-        console.log("Added Questions!");
         res.status(200).send(result);
            }
       })

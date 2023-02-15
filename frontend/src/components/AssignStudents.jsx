@@ -32,9 +32,7 @@ const AssignStudents =() =>
       axios.get('http://localhost:5000/camp/getcampname')
       .then(res =>
         {
-          console.log(res.data);
           setCampName(res.data);
-          console.log(res.data);
           //setCamps(res.data);
           //console.log(camps)
           

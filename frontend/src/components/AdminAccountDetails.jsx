@@ -14,11 +14,9 @@ const AdminAccountDetails = () => {
   const getCurentUser = () =>
   {
     let logintoken = localStorage.getItem("logtoken")
-    console.log("Login Token"+logintoken);
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
     axios.get("http://localhost:5000/admin/viewprofile")
       .then(res=> {
-              console.log(res.data)
               setUserID(res.data._id);
               setName(res.data.name);
               setEmail(res.data.email);

@@ -28,7 +28,6 @@ module.exports = (req,res,next)=>
         const { _id } = payload;
 
         Student.findById(_id).then(studentdata => {
-            console.log(studentdata);
             req.student = studentdata;
             next();
         })
