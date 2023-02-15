@@ -9,11 +9,9 @@ const AddCamp =  (req,res,next) =>
 {
    
         const {campname, teachers , students} = req.body;
-        console.log(req.body);
         Camp.updateOne({"campname" : campname}, {$push: {teachers: teachers , students:students}}).exec((err, result) => {
             if(err) res.status(500).send({message: err.message});
             else {
-                console.log("INSERTED!");
                 res.status(200).send(result);
             }
         }) 

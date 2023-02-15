@@ -20,11 +20,9 @@ const QuizInfo = () => {
     const getCurentUser = () =>
     {
       let logintoken = localStorage.getItem("logintoken")
-      console.log("Login Token"+logintoken);
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
       axios.get("http://localhost:5000/teacher/viewprofile")
         .then(res=> {
-                console.log(res.data)
                 setUserID(res.data._id);
                 setName(res.data.name);
         }).catch (err=> {
@@ -34,14 +32,11 @@ const QuizInfo = () => {
   
     const getCurrentCampName = (userID) =>
     {
-      console.log(userID)
       localStorage.setItem('userID',userID)
       //axios.get('http://localhost:5000/camp/getcampteacher/:',{params : {id:localStorage.getItem('userID')}}).then(res =>
       axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
       {
-        console.log(res.data)
         setCampName(res.data);
-        console.log(res.data);
   
       }).catch(err =>
         {
@@ -88,7 +83,6 @@ const QuizInfo = () => {
          nofquestions:details.noOfQuestions,
         }).then(res =>
          {
-                 console.log(res.data);
                  setQuizID(res.data._id);
                  localStorage.setItem("quizID",res.data._id)
                  //setQuizID(res.data._id);

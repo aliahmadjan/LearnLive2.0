@@ -43,7 +43,6 @@ import {
 
         axios.get("http://localhost:5000/tchassignments/gettchassigns") 
         .then(res=> {
-           console.log(res.data)
           setAssignments(res.data)
           //console.log(quizzes)
     }).catch (err=> {

@@ -16,7 +16,6 @@ const TeacherCalendar = () => {
     {
     axios.get('http://localhost:5000/tchassignments/gettchassigns') 
     .then(res=> {
-       console.log(res.data)
       setAssignments(res.data)
   
 }).catch (err=> {

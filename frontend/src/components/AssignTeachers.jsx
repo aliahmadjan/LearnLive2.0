@@ -34,9 +34,7 @@ const AssignTeachers =() =>
       axios.get('http://localhost:5000/camp/getcampname')
       .then(res =>
         {
-          console.log(res.data);
           setCampName(res.data);
-          console.log(res.data);
           //setCamps(res.data);
           //console.log(camps)
           
@@ -51,7 +49,6 @@ const AssignTeachers =() =>
       e.preventDefault();
         const url = 'http://localhost:5000/camp/addcamp';
         setTeachers(`${localStorage.getItem('teacher_assignid')}`)
-        console.log(`${localStorage.getItem('teacher_assignid')}`)
         //setTeachers(teachers=> [...teachers, `${localStorage.getItem('teacher_assignid')}`])
        // setSearches(searches => [...searches, `${localStorage.getItem('teacher_assignid')}`]);
 

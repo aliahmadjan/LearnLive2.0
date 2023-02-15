@@ -209,7 +209,6 @@ const meetingsInfo = async (req,res) => {
           .catch(function (error) {
               return error;
           });
-      console.log(zoomRes1)
       
       res.send('Retrieved scheduled meetings by user')
     }
@@ -237,7 +236,6 @@ const findAccessToken = (req,res,next) =>
     try {
         zoomMainSchema.findOne({email:"i190573@nu.edu.pk"})
         .then(data => {
-            console.log(data)
             res.json(data)
         })
         .catch(err => {
@@ -252,11 +250,10 @@ const findAccessToken = (req,res,next) =>
 const createMeeting = async (req,res,next) => {
     //Get access token through email from database
     try {
-      console.log('hello')
+      var user_email = 'i190573@nu.edu.pk'
       var data = qs.stringify({
-        email: req.body.email
+        email: user_email
       });
-  
       var config = {
           method: 'post',
           url: 'http://localhost:5000/zoomMain/getToken',
@@ -273,7 +270,7 @@ const createMeeting = async (req,res,next) => {
           .catch(function (error) {
               return error;
           });
-  
+          
       var data1 = JSON.stringify({
         agenda: req.body.agenda,
         duration: req.body.duration
@@ -281,7 +278,7 @@ const createMeeting = async (req,res,next) => {
   
       var config1 = {
           method: 'post',
-          url: `https://api.zoom.us/v2/users/${req.body.email}/meetings`,
+          url: `https://api.zoom.us/v2/users/${user_email}/meetings`,
           headers: {
             Authorization: `Bearer ${zoomRes.data.access_token}`,
             "Content-Type": "application/json; charset=UTF-8",
@@ -296,7 +293,6 @@ const createMeeting = async (req,res,next) => {
           .catch(function (error) {
               return error;
           });
-      console.log(zoomRes1)
       
       var data2 = JSON.stringify({
         zoom_id: zoomRes1.data.id,

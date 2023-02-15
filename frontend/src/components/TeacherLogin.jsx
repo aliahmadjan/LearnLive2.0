@@ -27,7 +27,6 @@ const TeacherLogin = () => {
             });
 
             localStorage.setItem("logintoken",res.data);
-             console.log("HELLO" +res.data);
             navigate("/teacher");
         } catch (error) {
             if (error.response) {

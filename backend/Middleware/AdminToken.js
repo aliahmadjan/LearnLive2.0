@@ -28,7 +28,6 @@ module.exports = (req,res,next)=>
         const { _id } = payload;
 
         Admin.findById(_id).then(admindata => {
-            console.log(admindata);
             req.admin = admindata;
             next();
         })

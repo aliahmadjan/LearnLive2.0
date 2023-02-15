@@ -24,7 +24,6 @@ export default function MakeMeet() {
           method: "GET",
         });
         var data = JSON.stringify({
-            email: email,
             duration: duration,
             agenda: agenda,
             campname: campname
@@ -54,7 +53,6 @@ export default function MakeMeet() {
         
             var zoomRes1 = axios(config1)
                 .then(function (response) {
-                    console.log(response.data)
                     setAgenda(response.data.agenda);
                     setDuration(response.data.duration);
                     setEmail(response.data.email);
@@ -78,7 +76,6 @@ export default function MakeMeet() {
     const getCurentUser = () =>
     {
       let logintoken = localStorage.getItem("logintoken")
-      console.log("Login Token"+logintoken);
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
       axios.get("http://localhost:5000/teacher/viewprofile")
         .then(res=> {
@@ -97,7 +94,6 @@ export default function MakeMeet() {
     axios.get('http://localhost:5000/zoomMeet/getData')
         //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
         .then(res=> {
-           console.log(res.data)
            setZoomMeets(res.data)
            setStartUrl(res.data.start_url)
     }).catch (err=> {
@@ -133,22 +129,6 @@ export default function MakeMeet() {
       
         <Box border={'1px solid orange'} maxW='2xl' mx='auto' borderRadius='20px' p={4} >
   
-            <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel htmlFor="email" fontWeight="bold" color="orange.500" mr={2}>Email</FormLabel>
-              <Input
-                id="email"
-                name="email"
-                textAlign={'center'}
-                focusBorderColor='orange.700' 
-                variant={'flushed'} 
-                borderBottomColor='orange'
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                isRequired
-                width={'60%'} 
-                mr={0} ml='auto'
-                />
-            </FormControl>
             
             <FormControl mb={2} display={'flex'} alignItems='center'>
               <FormLabel htmlFor="campname" fontWeight="bold" color="orange.500" mr={2}>Camp</FormLabel>

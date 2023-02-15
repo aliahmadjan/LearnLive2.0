@@ -41,9 +41,7 @@ import {
 
         axios.get("http://localhost:5000/camp/getcamps") 
         .then(res=> {
-           console.log(res.data)
            setCamps(res.data)
-          console.log(camps)
           //console.log(quizzes)
     }).catch (err=> {
        console.log(err) })

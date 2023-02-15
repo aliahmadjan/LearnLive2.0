@@ -115,7 +115,6 @@ const QuizQuesionsInfo =(props) =>
          nofquestions:details.noOfQuestions,
         }).then(res =>
          {
-                console.log(res.data);
                  setQuizID(res.data._id);
                  localStorage.setItem("quizID",res.data._id)
         }).catch(err=>
@@ -127,8 +126,6 @@ const QuizQuesionsInfo =(props) =>
 
     const createQuiz = (event) => {
         event.preventDefault();
-       console.log(questions)
-        console.log(quizID);
         
         axios.post(`http://localhost:5000/quizzes/addquizques/${localStorage.getItem('quizID')}`,
         {

@@ -49,7 +49,6 @@ export default function AdminSidebar({navSize, changeNavSize}) {
                 naviagte('/');
         }
       let logintoken = localStorage.getItem("logtoken")
-      console.log("Login Token"+logintoken);
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
       axios.get("http://localhost:5000/admin/viewprofile")
         .then(res=> {
@@ -143,7 +142,7 @@ export default function AdminSidebar({navSize, changeNavSize}) {
                     
                 </Flex>
                 
-                <form action={"https://localhost:3000/"}>
+                <form action={"http://localhost:3000/"}>
                 <Button m={4} type='submit' colorScheme='orange' variant='solid' _hover={{ bg: '#a85e32' }} px='20px' position={'relative'} left='50px'
                 width='150px'>
                     Sign out
