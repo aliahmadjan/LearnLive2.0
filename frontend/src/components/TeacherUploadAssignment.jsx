@@ -28,7 +28,6 @@ function TeacherUploadAssignment() {
   var imgURLsArray = []
   const onSelectFile = (e) => {
     const selectedImages = [...e.target.files];
-    console.log(selectedImages)
     selectedImages.map(img=> imgURLsArray.push(URL.createObjectURL(img)))
      setSelected(imgURLsArray)
      setSelectedFiles(e.target.files)
@@ -37,11 +36,9 @@ function TeacherUploadAssignment() {
   const getCurentUser = () =>
   {
     let logintoken = localStorage.getItem("logintoken")
-    console.log("Login Token"+logintoken);
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
     axios.get("http://localhost:5000/teacher/viewprofile")
       .then(res=> {
-              console.log(res.data)
               setUserID(res.data._id);
               setTeacher(res.data.name);
       }).catch (err=> {
@@ -51,14 +48,11 @@ function TeacherUploadAssignment() {
 
   const getCurrentCampName = (userID) =>
   {
-    console.log(userID)
     localStorage.setItem('userID',userID)
     //axios.get('http://localhost:5000/camp/getcampteacher/:'}).then(res =>
     axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
     {
-      console.log(res.data)
       setCampName(res.data);
-      console.log(res.data);
 
     }).catch(err =>
       {
@@ -98,8 +92,6 @@ function TeacherUploadAssignment() {
        }
        //localStorage.setItem('userID',userID)
        formData.append("teacher",userID)
-    console.log(selectedFiles);
-    console.log(formData);
 
 
     fetch('http://localhost:5000/tchassignments/uploadassigns', {
@@ -120,7 +112,6 @@ function TeacherUploadAssignment() {
     getCurrentCampName(userID);
   })
 
-  console.log(selectedFiles.length)
 
   return (
 

@@ -20,7 +20,6 @@ const StudentSingleViewAssignment=()=>
   var imgURLsArray = []
   const onSelectFile = (e) => {
     const selectedImages = [...e.target.files];
-    console.log(selectedImages)
     selectedImages.map(img=> imgURLsArray.push(URL.createObjectURL(img)))
      setSelected(imgURLsArray)
      setSelectedFiles(e.target.files)
@@ -32,7 +31,6 @@ const StudentSingleViewAssignment=()=>
       axios
         .get('http://localhost:5000/tchassignments/singletchassign/:',{params : {id: localStorage.getItem('assignment_viewid')}})
         .then((res) => {
-          console.log(res.data);
           setCampName(res.data.campname);
           setTitle(res.data.title);
           
@@ -40,7 +38,6 @@ const StudentSingleViewAssignment=()=>
           setTMarks(res.data.tmarks);
           setDate(res.data.duedate);
           setUplAssign(res.data.uplassign);
-          console.log(uplassign);
           
 
          
@@ -56,7 +53,6 @@ const StudentSingleViewAssignment=()=>
         axios
         .get('http://localhost:5000/tchassignments/singletchassign/:',{params : {id: localStorage.getItem('assignment_viewid')}})
         .then((res) => {
-          console.log(res.data);
           setCampName(res.data.campname);
           setTitle(res.data.title);
           
@@ -64,7 +60,6 @@ const StudentSingleViewAssignment=()=>
           setTMarks(res.data.tmarks);
           setDate(res.data.duedate);
           setUplAssign(res.data.uplassign);
-          console.log(uplassign);
         })
         .catch((err) => {
           console.log(err);
@@ -74,8 +69,6 @@ const StudentSingleViewAssignment=()=>
            for (let i = 0; i < selectedFiles.length; i++) {
             formData.append(`uplassign`,selectedFiles[i]);
            }
-        console.log(selectedFiles);
-        console.log(formData);
     
     
         fetch('http://localhost:5000/stdassignments/submitassigns', {

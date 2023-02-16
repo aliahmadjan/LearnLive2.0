@@ -46,8 +46,6 @@ const AddTeachers = () => {
            formData.append('password',password)
            formData.append('cpassword',cpassword)
            formData.append('profileimg',selectedFile)
-           
-           console.log(formData);
            axios.post(url,formData).then ((res)=>
            {
             setSubmitStatus(1);

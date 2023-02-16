@@ -11,7 +11,6 @@ export default function StudentViewMeets() {
     const getCurentUser = () =>
     {
       let logintoken = localStorage.getItem("logintoken")
-      console.log("Login Token"+logintoken);
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
       axios.get("http://localhost:5000/teacher/viewprofile")
         .then(res=> {
@@ -30,7 +29,6 @@ export default function StudentViewMeets() {
     axios.get('http://localhost:5000/zoomMeet/getData')
         //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
         .then(res=> {
-           console.log(res.data)
            setZoomMeets(res.data)
     }).catch (err=> {
        console.log(err) })

@@ -54,11 +54,9 @@ import {
     const getCurentUser = () =>
   {
     let logintoken = localStorage.getItem("ltoken")
-    console.log("Login Token"+logintoken);
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
     axios.get("http://localhost:5000/student/viewprofile")
       .then(res=> {
-              console.log(res.data)
               setUserID(res.data._id);
       }).catch (err=> {
           console.log(err) })
@@ -96,7 +94,6 @@ import {
         total_questions: questions.length
       }).then(res =>
         {
-            console.log(res)
         }).catch(err=>
           {
             console.log(err)
@@ -121,7 +118,6 @@ import {
       axios
         .get('http://localhost:5000/quizzes/getquiz/:',{params : {id: localStorage.getItem('quiz_viewid')}})
         .then((res) => {
-          console.log(res.data);
           setCampName(res.data.campname);
           setTeacherName(res.data.teacher_name);
           setNofQuestions(res.data.nofquestions);

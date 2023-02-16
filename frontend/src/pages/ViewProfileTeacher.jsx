@@ -15,11 +15,9 @@ const ViewProfileTeacher = () =>
         const getCurrTeacher = ()=>
         {
             let logintoken = localStorage.getItem("logintoken")
-      console.log("Login Token"+logintoken);
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
       axios.get("http://localhost:5000/teacher/viewprofile")
         .then(res=> {
-                console.log(res.data)
                 //setUserID(res.data._id);
                 setName(res.data.name);
                 setEmail(res.data.email);

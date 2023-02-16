@@ -41,7 +41,6 @@ const UpdateAssignments = async(req,res)=>
               console.log(error)
             } else {
               res.json(data)
-              console.log('Post updated successfully !')
             }
           })
 }

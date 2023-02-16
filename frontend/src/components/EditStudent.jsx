@@ -26,7 +26,6 @@ const EditStudentDetails = () =>
     {
       axios.get('http://localhost:5000/student/getstudent/:', {params : {id: localStorage.getItem('studentid')}})
       .then(res=> {
-        console.log(res.data)
         setName(res.data.name);
         setEmail(res.data.email);
         setGender(res.data.gender);
@@ -41,7 +40,6 @@ const EditStudentDetails = () =>
   {
    
     e.preventDefault();
-    console.log(`id: ${localStorage.getItem('studentid')}`)
     //setName(name);
     axios.put(`http://localhost:5000/student/updatestudent/${localStorage.getItem('studentid')}`,
     {

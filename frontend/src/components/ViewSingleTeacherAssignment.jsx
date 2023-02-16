@@ -21,7 +21,6 @@ const TeacherSingleViewAssignment=()=>
       axios
         .get('http://localhost:5000/tchassignments/singletchassign/:',{params : {id: localStorage.getItem('assignment_viewid')}})
         .then((res) => {
-          console.log(res.data);
           setCampName(res.data.campname);
           setTitle(res.data.title);
           
@@ -30,7 +29,6 @@ const TeacherSingleViewAssignment=()=>
           setUploadedDate(res.data.uploadeddate);
           setDate(res.data.duedate);
           setUplAssign(res.data.uplassign);
-          console.log(uplassign);
           
 
          

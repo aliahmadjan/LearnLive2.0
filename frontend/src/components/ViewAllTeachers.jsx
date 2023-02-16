@@ -56,7 +56,6 @@ import { useDisclosure } from '@chakra-ui/react'
       axios
         .get("http://localhost:5000/teacher/getteachers")
         .then((res) => {
-          console.log(res.data);
           setTeachers(res.data);
           setResults(res.data)
         })
@@ -77,7 +76,6 @@ import { useDisclosure } from '@chakra-ui/react'
     const DeleteTeacher=(e)=>
     {
       e.preventDefault();
-      console.log(`id: ${localStorage.getItem('teacher_delid')}`)
       axios.delete(`http://localhost:5000/teacher/deleteteacher/${localStorage.getItem('teacher_delid')}`)
       .then((res)=>
       {

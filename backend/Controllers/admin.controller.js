@@ -10,7 +10,6 @@ const router = express.Router()
 const AddAdmin = (req,res,next) =>  
 {
      const { name ,email,gender,phoneno,password,cpassword} = req.body;
-     console.log(name);
      if(!name || !email || !gender || !phoneno || !password || !cpassword)
      {
         return res.status(422).send("Please Fill ALl the fields");
@@ -116,7 +115,6 @@ const UpdateAdmin = async(req,res,next) =>
               console.log(error)
             } else {
               res.json(data)
-              console.log('Admin updated successfully !')
             }
           })
     }
