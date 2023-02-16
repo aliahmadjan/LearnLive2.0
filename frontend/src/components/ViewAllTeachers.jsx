@@ -58,6 +58,7 @@ import { useDisclosure } from '@chakra-ui/react'
         .then((res) => {
           console.log(res.data);
           setTeachers(res.data);
+          setResults(res.data)
         })
         .catch((err) => {
           console.log(err);
@@ -65,6 +66,13 @@ import { useDisclosure } from '@chakra-ui/react'
 
         
     }, []);
+
+  
+
+    useEffect(()=>
+    {
+        console.log(results)
+    },[results])
 
     const DeleteTeacher=(e)=>
     {

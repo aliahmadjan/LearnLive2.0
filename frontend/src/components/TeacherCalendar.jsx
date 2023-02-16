@@ -30,7 +30,7 @@ const TeacherCalendar = () => {
 
       
 
-    const {defaultDate,uploadeddate,duedate} = useMemo(() => ({
+    const {defaultDate} = useMemo(() => ({
         defaultDate: new Date(),
         //console.log(defaultDate),
         // uploadeddate: new Date(),

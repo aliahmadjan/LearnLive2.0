@@ -186,7 +186,7 @@ const EditTeacherDetails = (props) =>
             mr={2} ml='auto'>
             <Stack direction='row'>
               <Radio  value="male">Male</Radio>
-              <Radio  value="femlae">Female</Radio>
+              <Radio  value="female">Female</Radio>
               <Radio  value="other">Other</Radio>
             </Stack>
             </RadioGroup>

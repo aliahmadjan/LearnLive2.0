@@ -33,7 +33,15 @@ function AdminSettings() {
 
   const UpdatePassword = (e) => {
     e.preventDefault();
-    console.log(`http://localhost:5000/admin/updateadmin/${userID}`)
+    //console.log(`http://localhost:5000/admin/updateadmin/${userID}`)
+
+    if(password != cpassword)
+    {
+      setSubmitStatus(-1)
+    }
+    else{
+
+    
 
     axios.put(`http://localhost:5000/admin/updateadmin/${userID}` ,
     {
@@ -50,7 +58,7 @@ function AdminSettings() {
                 //console.log(err);
             })
 
-   
+          }
 
     // const parsedDueDate = new Date(dueDate);
     //  // Formatting the parsed date and time in the same format as the uploadDate state variable
@@ -76,7 +84,7 @@ function AdminSettings() {
       return (
         <Alert status='error'>
         <AlertIcon />
-       Password was not updated!
+       Passwords do not match!
       </Alert>
       );
     if (submitStatus === 1)

@@ -66,6 +66,7 @@ const VerifyLogin = async(req,res,next) =>
         // res.send({token});
 
          token = await  log.generateAuthToken();
+          console.log(token);
           res.send(token);
       }
       else
@@ -143,6 +144,3 @@ exports.GetAdmins = GetAdmins;
 exports.GetSingleAdmin = GetSingleAdmin;
 exports.UpdateAdmin = UpdateAdmin;
 exports.DeleteAdmin = DeleteAdmin;
-//exports.UpdatePassword = UpdatePassword;
-//exports.AddFollowing = AddFollowing;
-//exports.AddFollow = AddFollow;

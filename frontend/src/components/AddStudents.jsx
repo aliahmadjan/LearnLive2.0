@@ -21,6 +21,9 @@ const AddStudents = () => {
   const[profileimg, setProfileImg] = useState("");
   const [submitStatus, setSubmitStatus] = useState(0);
   const [msg,setMsg]=useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  
 
   const [selectedFile, setSelectedFile] =useState(null);
   const [fileInputState, setFileInputState ] = useState("");
@@ -30,10 +33,13 @@ const AddStudents = () => {
     onClose,
     onOpen,
   } = useDisclosure({ defaultIsOpen: true })
-
-  const PostStudents =async (e) =>
-  {
+  const PostStudents = (e) => {
     e.preventDefault();
+    if (password !== cpassword) {
+      setSubmitStatus(-1)
+    } else {
+      // submit the form
+      e.preventDefault();
     const url='http://localhost:5000/student/addstudent'
            const formData = new FormData()
            formData.append('name',name)
@@ -50,8 +56,9 @@ const AddStudents = () => {
             //console.log(res.data)
            })
           
-         }
-
+    }
+  }
+    
          const StatusAlert = () => {
           if (submitStatus === -1)
             return (
@@ -88,6 +95,7 @@ const AddStudents = () => {
           setPreviewSource(reader.result);
       }
   }
+
 
 
 
@@ -145,8 +153,8 @@ const AddStudents = () => {
                 id='gender' aria-label="gender" name="gender" mr={2} ml='auto'>
                 <Stack direction='row'>
                   <Radio isRequired value="male">Male</Radio>
-                  <Radio value="female">Female</Radio>
-                  <Radio  value="other">Other</Radio>
+                  <Radio isRequire value="female">Female</Radio>
+                  <Radio  isRequired value="other">Other</Radio>
                 </Stack>
               </RadioGroup>
 

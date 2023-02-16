@@ -60,13 +60,13 @@ const VerifyLogin = async(req,res,next) =>
    
       if(log)
       {
-         //res.status(201).json(log)
-        // const token = jwt.sign({_id: student.id}, process.env.SECRET_KEY_STUDENT);
+        // res.status(201).json(log)
+         //const token = jwt.sign({_id: student.id}, process.env.SECRET_KEY_STUDENT);
         // console.log(token);
-        // res.send({token});
+         //res.send({token});
 
          token = await  log.generateAuthToken();
-          console.log(token);
+         // console.log(token);
           res.send(token);
       }
       else
