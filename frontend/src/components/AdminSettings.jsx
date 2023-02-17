@@ -61,7 +61,7 @@ function AdminSettings() {
     //   }).format(parsedDueDate);
   
 
-  };
+  // };
 
   useEffect(()=>
   {
@@ -151,7 +151,7 @@ function AdminSettings() {
       <StatusAlert/>
     </Box>
 
-  );
+  )
 }
 
 export default AdminSettings;
