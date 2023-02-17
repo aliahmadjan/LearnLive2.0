@@ -51,7 +51,7 @@ const AdminLogin = () => {
                 <Text fontSize={"xl"}>Sign In to Learn Live</Text>
             </VStack>
           
-            <Image src="AdminLogin.png" w={400} overflow="hidden" ml={{lg: '-80px' , md: '-80px'}} pl={{base: '60px', lg:'0px'} }/>
+            <Image src="StudentLogin.png" w={400} overflow="hidden" ml={{lg: '-80px' , md: '-80px'}} pl={{base: '60px', lg:'0px'} }/>
 
             <SimpleGrid pb={10} columns={2} columnGap={3} rowGap={6} textAlign="center">
                     <GridItem colSpan={2} minW={40}>
