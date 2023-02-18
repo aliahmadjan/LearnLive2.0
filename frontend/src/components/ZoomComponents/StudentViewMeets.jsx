@@ -14,7 +14,6 @@ export default function StudentViewMeets() {
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
       axios.get("http://localhost:5000/teacher/viewprofile")
         .then(res=> {
-               // console.log(res.data)
                 setUserID(res.data._id);
                 localStorage.setItem('userID',res.data._id)
                 setStudents(res.data.name);
@@ -24,10 +23,7 @@ export default function StudentViewMeets() {
 
     const getAllMeets= () =>
     {
-      //console.log(userID)
-    // localStorage.setItem('userID',userID)
     axios.get('http://localhost:5000/zoomMeet/getData')
-        //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
         .then(res=> {
            setZoomMeets(res.data)
     }).catch (err=> {
@@ -64,7 +60,10 @@ export default function StudentViewMeets() {
           <Text>
           Duration: {meets.duration}
           </Text>
-          <form action={meets.start_url} target="_blank">
+          <Text>
+          Password: {meets.password}
+          </Text>
+          <form action={meets.join_url} target="_blank">
             <Button m={4} type='submit' colorScheme='orange' variant='solid'>
                 Join
             </Button> 
