@@ -11,6 +11,7 @@ const AddQuizScore = (req,res,next)=>
 {
     const quizscore = new QuizzesScore({   
      quiz_id:req.body.quiz_id,
+     student_name: req.body.student_name,
      student_id: req.body.student_id,
      campname: req.body.campname,
      quiz_score: req.body.quiz_score,
@@ -56,6 +57,15 @@ const GetSingleQuizScore = (req,res,next)=>
     })
 }
 
+const GetQuizResults = async (req, res, next) => {
+    //console.log(req.params);
+    const studentquizId = req.params.studentquizId; // get the teacher assignment id from the request parameter
+    
+    const quiz = await QuizzesScore.find({ quiz_id: studentquizId }); // only find submitted quiz that match the teacher quiz id
+    res.send(quiz);
+  };
+
+  exports.GetQuizResults = GetQuizResults;
 exports.AddQuizScore = AddQuizScore;
 exports.GetQuizzesScore = GetQuizzesScore;
 exports.GetSingleQuizScore = GetSingleQuizScore;

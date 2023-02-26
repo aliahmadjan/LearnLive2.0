@@ -16,9 +16,10 @@ const ViewQuizResults=()=>
 
     const getSingleUser = () =>
     {
-
+      console.log(`${localStorage.getItem('submitquiz_viewid')}`)
       axios
-        .get('http://localhost:5000/quizscore/getquizzesscore')
+      
+        .get(`http://localhost:5000/quizscore/getquizresults/${localStorage.getItem("quiz_viewid")}`)
         .then((res) => {
            setQuizzesScore(res.data)
         //   setQuizID(res.data.quiz_id)
@@ -69,7 +70,7 @@ const ViewQuizResults=()=>
 
       {quizzesScore.map((score,index) => (         
         <Box p={2} height="100px">  
-          <Text> Name : { score.student_id}</Text>
+          <Text> Name : { score.student_name}</Text>
           <Text> Quiz Score :  {score.quiz_score + "/" + score.total_questions}</Text>   
         </Box>
       ))}   

@@ -1,5 +1,5 @@
 const express = require('express');
-
+const mime = require('mime-types');
 
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -8,7 +8,9 @@ const {v4: uuidv4} = require('uuid')
 const TeacherAssignments = require('../Models/teacher-assignments.model')
 const TeacherAssignmentsController  = require('../Controllers/teacher-assignments.controller')
 const TokenTeacher = require('../Middleware/TeacherToken');
-//const TeacherController = require('../Controllers/teacher.controller')
+const TokenStudent = require('../Middleware/StudentToken');
+
+
 
 const app = express();
 
@@ -30,20 +32,40 @@ const storage = multer.diskStorage({
     }
 });
 
-var upload =multer({
+// var upload =multer({
+//     storage: storage,
+//     fileFilter: (req,file,cb) => {
+//         if(file.mimetype == "image/png" ||  file.mimetype =="application/pdf" || file.mimetype =="image/jpg" || file.mimetype == "image/jpeg" 
+//         || file.mimetype == "application/zip")
+//         {
+//             cb(null,true);
+//         }
+//         else
+//         {
+//             cb(null,false);
+//             return cb(new Error('Only .pdf .png .jpg .jpeg and .zip format allowed!'));
+//         }
+//     }
+// });
+
+
+
+var upload = multer({
     storage: storage,
-    fileFilter: (req,file,cb) => {
-        if(file.mimetype = "image/png" ||  file.mimetype =="application/pdf" || file.mimetype =="image/jpg" || file.mimetype == "image/jpeg")
-        {
-            cb(null,true);
-        }
-        else
-        {
-            cb(null,false);
-            return cb(new Error('Only .pdf .png .jpg and .jpeg format allowed!'));
+    fileFilter: (req, file, cb) => {
+        const allowedMimeTypes = ['image/png', 'application/pdf', 'image/jpg', 'image/jpeg', 'application/zip',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        ];
+        const fileMimeType = mime.lookup(file.originalname);
+
+        if (allowedMimeTypes.includes(fileMimeType)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Only .pdf .png .jpg .jpeg and .zip format allowed!'));
         }
     }
 });
+
 
 
 
@@ -86,27 +108,32 @@ router.post('/uploadassigns',  upload.array('uplassign',4),async (req,res,next) 
 {
   //console.log(req.teacher._id.toHexString())
   const tchass =  await TeacherAssignments.find()
-  //console.log(tchass[0])
   const arr = []
    for(let i=0; i<tchass.length; i++)
    {
-  
-    //for(let j=0; j<tchass[i].teacher.length; j++)
-    //{
-      //const id = ObjectId();
-      //console.log(tchass[i].teacher)
-      
        if (req.teacher._id.toHexString() === tchass[i].teacher)
        {
-        //console.log("Hello World")
-        arr.push(tchass[i] )
-       // console.log(tchass[i].campname)
+       
+        arr.push(tchass[i] )      
       }
-   // }
   }
-  //res.send(tchass)
   res.send(arr)
 })
+
+router.get('/samestdassign',TokenStudent, async(req,res)=>
+{
+  const tchass =  await TeacherAssignments.find()
+    const arr= [];
+    for(let i=0; i<tchass.length; i++)
+   {
+       if (req.student.campname === tchass[i].campname)
+       {
+        arr.push(tchass[i])
+      }
+  }
+  res.send(arr)
+})
+
 
     router.put('/updatetchassigns/:id' , TeacherAssignmentsController.UpdateAssignments);
 

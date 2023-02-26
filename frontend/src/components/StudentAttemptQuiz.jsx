@@ -17,6 +17,7 @@ import {
   {
 
     const navigate = useNavigate();
+    const [ name ,setName] = useState("");
     const [quizzes , setQuizzes] = useState([]);
     const [questions , setQuestions] = useState([]);
     const [teacher_name , setTeacherName] =useState('');
@@ -58,6 +59,7 @@ import {
     axios.get("http://localhost:5000/student/viewprofile")
       .then(res=> {
               setUserID(res.data._id);
+              setName(res.data.name)
       }).catch (err=> {
           console.log(err) })
   }
@@ -84,15 +86,23 @@ import {
              
           }
       }
-
+      // const formData = new FormData();
+      // formData.append('quiz_id',`${localStorage.getItem('quiz_viewid')}`)
+      // fetch('http://localhost:5000/quizscore/addquizscore',
+      // {
+      // method: 'POST',
+      // body: formData,
+      // })
       axios.post('http://localhost:5000/quizscore/addquizscore',
       {
+        //body: formData
         quiz_id: `${localStorage.getItem('quiz_viewid')}`,
+        student_name : name,
         student_id : userID,
         campname:campname,
         quiz_score: score,
         total_questions: questions.length
-      }).then(res =>
+     }).then(res =>
         {
         }).catch(err=>
           {

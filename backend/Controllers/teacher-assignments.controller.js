@@ -1,4 +1,5 @@
 const TeacherAssignments = require('../Models/teacher-assignments.model')
+const Student = require('../Models/student.model')
 
 const GetAssignments = async(req,res,next)=>
 {
@@ -62,29 +63,64 @@ const DeleteAssignments = async(req,res,next)=>
 
 const GetCurrTchAssign = async(req,res) => 
 {
-    //console.log(req.teacher._id.toHexString())
   const tchass =   TeacherAssignments.find()
-  //console.log(tchass[0])
+
+ 
   const arr = []
    for(let i=0; i<tchass.length; i++)
    {
-  
-    //for(let j=0; j<tchass[i].teacher.length; j++)
-    //{
-      //const id = ObjectId();
-      //console.log(tchass[i].teacher)
-      
        if (req.teacher._id.toHexString() === tchass[i].teacher)
        {
-        //console.log("Hello World")
+        
         arr.push(tchass[i] )
-       // console.log(tchass[i].campname)
+       
       }
-   // }
   }
-  //res.send(tchass)
   res.send(arr)
 }
+
+// const GetStdSameAssign = async(req,res)=> // assignment and student camp should be same
+// {
+//     const tchass = await TeacherAssignments.find()
+//     const std = await Student.find()
+//     const arr =[]
+//     const arr1 =[]
+//     const arr2 = []
+    
+//      for(let i=0;i<tchass.length ;i++)
+//      {
+//         for (let j=0; j<std.length;j++)
+//           { 
+//          if(tchass[i].campname === std[j].campname)
+//          {
+//             //console.log(tchass[i])
+//              arr.push(tchass[i])
+//           }
+//        }
+//      }
+//     //  for(let k=0;k<std.length ;k++)
+//     //  {
+//     //     for (let l=0; l<arr.length;l++)
+//     //       { 
+//     //      if(std[k].campname === arr[l].campname)
+//     //      {
+//     //         //console.log(tchass[i])
+//     //          arr1.push(arr[l])
+//     //       }
+//     //       else{
+                
+//     //       }
+//     //    }
+//     //  }
+//      if (arr.length != 0)
+//      {
+//         res.send(arr)
+//      }
+//      else{
+//         res.send(arr2)
+//      }
+     
+// }
 
 //exports.AddPost = AddPost;
 exports.GetAssignments=GetAssignments
@@ -92,3 +128,4 @@ exports.GetSingleAssignment= GetSingleAssignment;
 exports.UpdateAssignments= UpdateAssignments;
 exports.DeleteAssignments = DeleteAssignments;
 exports.GetCurrTchAssign = GetCurrTchAssign;
+//exports.GetStdSameAssign = GetStdSameAssign

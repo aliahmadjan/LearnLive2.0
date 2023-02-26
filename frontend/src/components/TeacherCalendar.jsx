@@ -5,16 +5,16 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from "moment";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-
-const TeacherCalendar = () => {
+const TeacherCalendar = props => {
 
     const localizer = momentLocalizer(moment)
     const [assignments , setAssignments] = useState([]);
+    const views = ['month','agenda']
     //const [uploadeddate ,setUploadedDate] = useState("")
 
     const getAllAssignments = () =>
     {
-    axios.get('http://localhost:5000/tchassignments/gettchassigns') 
+    axios.get('http://localhost:5000/tchassignments/getcurrassigns') 
     .then(res=> {
       setAssignments(res.data)
   
@@ -53,6 +53,8 @@ const TeacherCalendar = () => {
       <Box p={5} width='4xl' mx='auto' height='70vh' border='1px solid orange' borderRadius={10}>
       
       <Calendar
+       views={views}
+       {...props}
            defaultDate={defaultDate}
            localizer={localizer}
            events={assignments}

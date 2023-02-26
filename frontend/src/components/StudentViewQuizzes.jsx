@@ -40,7 +40,7 @@ import {
     const getAllQuizzes = () =>
     {
 
-        axios.get("http://localhost:5000/quizzes/getquizzes") 
+        axios.get("http://localhost:5000/quizzes/samestdquiz") 
         .then(res=> {
           setQuizzes(res.data)
           //console.log(quizzes)
@@ -48,12 +48,9 @@ import {
        console.log(err) })
     
     }
-
-
     
    useEffect(()=>
    { 
-  
     getAllQuizzes();
    },[])
 

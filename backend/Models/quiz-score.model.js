@@ -8,7 +8,9 @@ const quizscoreSchema = new mongoose.Schema({
    quiz_id : {
     type: String
    },
-
+   student_name: {
+      type: String
+   },
    student_id: 
       {
           type: mongoose.Schema.Types.ObjectId,

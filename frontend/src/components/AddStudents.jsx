@@ -22,6 +22,7 @@ const AddStudents = () => {
   const [submitStatus, setSubmitStatus] = useState(0);
   const [msg,setMsg]=useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [campname , setCampname] = useState('');
 
   
 
@@ -49,6 +50,7 @@ const AddStudents = () => {
            formData.append('password',password)
            formData.append('cpassword',cpassword)
            formData.append('profileimg',selectedFile)
+           formData.append('campname',campname)
            axios.post(url,formData).then ((res)=>
            {
             setSubmitStatus(1);

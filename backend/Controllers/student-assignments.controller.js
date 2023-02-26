@@ -1,7 +1,14 @@
 const express = require('express');
 const https = require('https');
 const StudentAssignments = require('../Models/student-assignments.model');
+const TeacherAssignments = require('../Models/teacher-assignments.model')
 
+
+const GetSubmittedAssignments = async (req, res, next) => {
+    const teacherAssignmentId = req.params.teacherAssignmentId; // get the teacher assignment id from the request parameter
+    const stdass = await StudentAssignments.find({ quizid: teacherAssignmentId }); // only find submitted assignments that match the teacher assignment id
+    res.send(stdass);
+  };
 
 const GetAssignments = async(req,res,next)=>
 {
@@ -69,3 +76,4 @@ exports.GetAssignments=GetAssignments
 exports.GetSingleAssignment= GetSingleAssignment;
 exports.UpdateAssignments= UpdateAssignments;
 exports.DeleteAssignments = DeleteAssignments;
+exports.GetSubmittedAssignments = GetSubmittedAssignments;

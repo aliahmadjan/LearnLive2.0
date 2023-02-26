@@ -66,6 +66,12 @@ const StudentSingleViewAssignment=()=>
         });
 
         const formData = new FormData();
+        formData.append('campname',campname);
+        formData.append('title',title);
+        formData.append('description',description)
+        formData.append('tmarks',tmarks);
+        formData.append('duedate',duedate)
+        formData.append('quizid',`${localStorage.getItem('assignment_viewid')}`)
            for (let i = 0; i < selectedFiles.length; i++) {
             formData.append(`uplassign`,selectedFiles[i]);
            }

@@ -9,10 +9,15 @@ import {
   AlertDescription,
 } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSound } from 'use-sound';
+import notificationSound from '../notification.mp3';
 
 const AssignTeachers =() =>
 {
-
+  //const [playNotificationSound] = useSound(notificationSound);
+  const [audio] = useState(new Audio(notificationSound));
     const [camps , setCamps] = useState([])
     const [campname , setCampName]= useState([]);
     const [teachers , setTeachers]= useState("");
@@ -29,50 +34,89 @@ const AssignTeachers =() =>
   } = useDisclosure({ defaultIsOpen: true })
     const navigate = useNavigate();
 
+    const playNotificationSound = () => {
+      audio.play();
+    };
+
     const GetCampNames = () =>
     {
       axios.get('http://localhost:5000/camp/getcampname')
       .then(res =>
         {
           setCampName(res.data);
-          //setCamps(res.data);
-          //console.log(camps)
-          
+
         }).catch(err =>
           {
             console.log(err)
           })
+
+          toast.success('Camps Displayed Successfully!',
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            onRender: playNotificationSound()
+            
+    
+          });
     };
+
+    
 
     const AssignTeachersToCamp=async(e)=>
     {
       e.preventDefault();
-        const url = 'http://localhost:5000/camp/addcamp';
-        setTeachers(`${localStorage.getItem('teacher_assignid')}`)
-        //setTeachers(teachers=> [...teachers, `${localStorage.getItem('teacher_assignid')}`])
-       // setSearches(searches => [...searches, `${localStorage.getItem('teacher_assignid')}`]);
+     
+ await axios.post('http://localhost:5000/camp/addcampteachers',{
+    campname:selectedCampus,
+     teachers:`${localStorage.getItem('teacher_assignid')}`
+  }).then((res)=>
+  {
+    setSubmitStatus(-1);
+  }).catch((err)=>
+  {
+    setSubmitStatus(1)
+  })
 
-   // setSearches(searches =>
-     //  searches.concat(`${localStorage.getItem('teacher_assignid')}`))
-    axios.post(url,{
-      campname:selectedCampus,
-       teachers:`${localStorage.getItem('teacher_assignid')}`
-    }).then ((res)=>
-    {
-      setSubmitStatus(1);
-      //console.log(res.data)
-    }).catch((err)=>
-    {
-      setSubmitStatus(-1)
-    })
+  axios.post(`http://localhost:5000/teacher/addcampname/${localStorage.getItem('teacher_assignid')}`,
+  {
+    campname:selectedCampus,
+  }).then ((res)=>
+  {
+    //setSubmitStatus(1);
+    //console.log(res.data)
+  }).catch((err)=>
+  {
+    //setSubmitStatus(-1)
+  })
     }
-
      useEffect(() => {
       GetCampNames();
        //console.log(teachers);
     }, [])
 
     const StatusAlert = () => {
+      if (submitStatus === -1)
+        return (
+          <Alert status='error'>
+          <AlertIcon />
+         Teacher was already assigned!
+        </Alert>
+        );
+      if (submitStatus === 1)
+        return (
+          <Alert status='success'>
+          <AlertIcon />
+         Teacher was assigned!
+        </Alert>
+        );
+    };
+
+    const StatusAlert1 = () => {
       if (submitStatus === -1)
         return (
           <Alert status='error'>
@@ -88,6 +132,29 @@ const AssignTeachers =() =>
         </Alert>
         );
     };
+
+  //  useEffect(()=>
+  //  {
+
+  //     if (Notification.permission === "granted") {
+  //       new Notification("Notification title", {
+  //         body: "Notification message",
+  //         icon: "/path/to/notification-icon.png",
+  //         tag: "notification-tag"
+  //       });
+  //     } else if (Notification.permission !== "denied") {
+  //       Notification.requestPermission().then(permission => {
+  //         if (permission === "granted") {
+  //           new Notification("Notification title", {
+  //             body: "Notification message",
+  //             icon: "/path/to/notification-icon.png",
+  //             tag: "notification-tag"
+  //           });
+  //         }
+  //       });
+  //     }
+  
+  //  })
 
     const Back = ()=>
     {
@@ -145,10 +212,12 @@ const AssignTeachers =() =>
           </Box>
 
       </form>
-
+     <ToastContainer/>
       <StatusAlert />
-    </Box>
 
+      
+    </Box>
+   
       )
 }
 

@@ -20,7 +20,11 @@ import { useDisclosure } from '@chakra-ui/react'
     const [phoneno , setPhoneNo] = useState("");
     const [password, setPassword]= useState("");
     const [profileimg , setProfileImg]= useState("");
+
     const [students , setStudents]= useState([]);
+
+    const [ query, setQuery]= useState("");
+    const [results , setResults] = useState([]);
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
@@ -42,28 +46,53 @@ import { useDisclosure } from '@chakra-ui/react'
          localStorage.setItem('student_assignid',student_assignid)
             navigate("/admin/assignstudent");
     }
+
+    const handleSubmitDelete = (student_delid)=>
+    {
+      localStorage.removeItem('student_delid')
+      localStorage.setItem('student_delid',student_delid)
+
+    }
     useEffect(() => {
       axios
         .get("http://localhost:5000/student/getstudents")
         .then((res) => {
           setStudents(res.data);
+          setResults(res.data)
         })
         .catch((err) => {
           console.log(err);
         });
     }, []);
 
-    const DeleteStudent=(student_id)=>
+    useEffect(()=>
     {
-    
-      localStorage.setItem('student_id',student_id)
-      axios.delete(`http://localhost:5000/student/deletestudent/${localStorage.getItem('student_id')}`)
-      .then((res) => {
-        //window.alert("Delete Successfull!")
-    }).catch((error) => {
-      //window.alert("Not Deleted! ")
-    })
+        console.log(results)
+    },[results])
+
+    const DeleteStudent=(e)=>
+    {
+      e.preventDefault();
+      axios.delete(`http://localhost:5000/student/deletestudent/${localStorage.getItem('student_delid')}`)
+      .then((res)=>
+      {
+
+      }).catch((err)=>
+        {
+        
+        })             
     }
+
+    const handleSearch = async(e) =>
+  {
+      setQuery(e.target.value);
+      const filteredStudents = students.filter(student=>
+        student.name.toLowerCase().includes(query.toLowerCase())
+        );
+        setResults(filteredStudents);
+        //setTeachers(filteredTeachers);
+  }
+
   
     const paperStyle = {padding : 20, height: '400vh', width: 900,
       margin: '80px 0px 50px 240px'}
@@ -83,13 +112,15 @@ import { useDisclosure } from '@chakra-ui/react'
 
       <Box maxW='4xl' mx="auto" >
         <Flex p={4} pt={0}>
-          <Input placeholder="Student's Name" variant={'outlined'} borderColor='orange'></Input>
-          <Button colorScheme={'orange'}>Search</Button>
+          <Input placeholder="Student's Name"
+          onChange={handleSearch}
+          variant={'outlined'} borderColor='orange'></Input>
+          {/* <Button colorScheme={'orange'}>Search</Button> */}
         </Flex>
 
         <Flex border={'1px solid orange'} gap={2} justifyContent='space-around' height='50vh' borderRadius='20px' p={4} flexWrap='wrap' overflow='scroll'>
 
-          {students.map((student) => (
+          {results.map((student) => (
             <Flex border={'1px solid orange'} width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
 
               <Avatar
@@ -117,9 +148,9 @@ import { useDisclosure } from '@chakra-ui/react'
                   <i class="fa-solid fa-pen-to-square"></i>
                 </Button>
 
-                <Button  onClick={onOpen} colorScheme='orange' variant='ghost'>
-                  <i class="fa-solid fa-trash"></i>
-                </Button>
+                <Button  onClick={()=>onOpen(handleSubmitDelete(student._id))} colorScheme='orange' variant='ghost'>
+                    <i class="fa-solid fa-trash"></i>
+                  </Button>
 
                 <Button onClick={()=>handleSubmitAssign(student._id)} colorScheme='orange' variant='ghost'>
                   <i class="fa-sharp fa-solid fa-person-circle-plus"></i>
@@ -132,32 +163,33 @@ import { useDisclosure } from '@chakra-ui/react'
 
             {/* Lookk thisss uPPP //Jaaan */}
             
-          <AlertDialog
-                  isOpen={isOpen}
-                  leastDestructiveRef={cancelRef}
-                  onClose={onClose}
-                >
-                  <AlertDialogOverlay>
-                    <AlertDialogContent>
-                      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                        Delete 
-                      </AlertDialogHeader>
+            <AlertDialog
+                    isOpen={isOpen}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                  >
+                    <AlertDialogOverlay>
+                      <AlertDialogContent>
+                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                          Delete 
+                        </AlertDialogHeader>
 
-                      <AlertDialogBody>
-                        Are you sure? You can't undo this action afterwards.
-                      </AlertDialogBody>
+                        <AlertDialogBody>
+                          Are you sure? You can't undo this action afterwards.
+                        </AlertDialogBody>
 
-                      <AlertDialogFooter>
-                        <Button ref={cancelRef} onClick={onClose}>
-                          Cancel
-                        </Button>
-                        <Button colorScheme='red' onClick={()=>DeleteStudent(students._id)} ml={3}>
-                          Delete
-                        </Button>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialogOverlay>
-        </AlertDialog>
+                        <AlertDialogFooter>
+                          <Button ref={cancelRef} onClick={onClose}>
+                            Cancel
+                          </Button>
+                          <Button colorScheme='red' ref={cancelRef} onClick={DeleteStudent} ml={3}>
+                            Delete
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialogOverlay>
+          </AlertDialog>
+
 
         </Flex>
       </Box>

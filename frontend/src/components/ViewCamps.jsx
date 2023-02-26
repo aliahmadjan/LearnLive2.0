@@ -23,8 +23,13 @@ import {
 
   const ViewCamps = ()=>
   {
+    const [campname , setCampName] = useState('')
     const [camps , setCamps] = useState([]);
     const [ teachers , setTeachers] =useState('')
+
+    const [ query, setQuery]= useState("");
+    const [results , setResults] = useState([]);
+
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
     const navigate = useNavigate();
@@ -36,12 +41,20 @@ import {
             navigate("/admin/viewcamp");
     }
 
+    const handleSubmitDelete = (camp_delid)=>
+    {
+      localStorage.removeItem('camp_delid')
+      localStorage.setItem('camp_delid',camp_delid)
+
+    }
+
     const getAllCamps= () =>
     {
 
         axios.get("http://localhost:5000/camp/getcamps") 
         .then(res=> {
            setCamps(res.data)
+           setResults(res.data)
           //console.log(quizzes)
     }).catch (err=> {
        console.log(err) })
@@ -56,27 +69,32 @@ import {
    getAllCamps();
    },[])
 
-   const DeleteQuiz=(quiz_deleteid)=>
+   useEffect(()=>
+    {
+        console.log(results)
+    },[results])
+   const handleSearch = async(e) =>
    {
-   
-     localStorage.setItem('quiz_deleteid',quiz_deleteid)
-     axios.delete(`http://localhost:5000/quizzes/deletequiz/${localStorage.getItem('quiz_deleteid')}`)
-     .then((res) => {
-       //window.alert("Delete Successfull!")
-   }).catch((error) => {
-     //window.alert("Not Deleted! ")
-   })
+       setQuery(e.target.value);
+       const filteredCamps = camps.filter(camp=>
+         camp.campname.toLowerCase().includes(query.toLowerCase())
+         );
+         setResults(filteredCamps);
+         //setTeachers(filteredTeachers);
    }
 
-  //  export default function App() {
-  //   const jokeElements = camps.map(joke => {
-  //       return <Joke setup={joke.setup} punchline={joke.punchline} />
-  //   })
-  //   return (
-  //       <div>
-  //           {jokeElements}
-  //       </div>
-  //   )
+   const DeleteCamp=(e)=>
+   {
+     e.preventDefault();
+     axios.delete(`http://localhost:5000/camp/deletecamp/${localStorage.getItem('camp_delid')}`)
+     .then((res)=>
+     {
+
+     }).catch((err)=>
+       {
+       
+       })             
+   }
 
 
     return (
@@ -93,13 +111,15 @@ import {
 
       <Box maxW='4xl' mx="auto" >
         <Flex p={4} pt={0}>
-          <Input placeholder="Camp's Name" variant={'outlined'} borderColor='orange'></Input>
-          <Button colorScheme={'orange'}>Search</Button>
+          <Input placeholder="Camp's Name" 
+          onChange={handleSearch}
+          variant={'outlined'} borderColor='orange'></Input>
+          {/* <Button colorScheme={'orange'}>Search</Button> */}
         </Flex>
 
         <Flex border={'1px solid orange'} gap={2} justifyContent='space-around' height='50vh' borderRadius='20px' p={4} flexWrap='wrap' overflow='scroll'>
 
-          {camps.map((camp) => (
+          {results.map((camp) => (
             <Flex border={'1px solid orange'} width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
 
               <Box ml={0} >
@@ -113,9 +133,9 @@ import {
                   <i class="fa-sharp fa-solid fa-eye"></i>
                 </Button>
 
-                <Button  onClick={onOpen} colorScheme='orange' variant='ghost'>
-                  <i class="fa-solid fa-trash"></i>
-                </Button>
+                <Button  onClick={()=>onOpen(handleSubmitDelete(camp._id))} colorScheme='orange' variant='ghost'>
+                    <i class="fa-solid fa-trash"></i>
+                  </Button>
 
               </Flex>
               
@@ -125,33 +145,32 @@ import {
 
             {/* Lookk thisss uPPP //Jaaan */}
             
-          <AlertDialog
-                  isOpen={isOpen}
-                  leastDestructiveRef={cancelRef}
-                  onClose={onClose}
-                >
-                  <AlertDialogOverlay>
-                    <AlertDialogContent>
-                      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                        Delete 
-                      </AlertDialogHeader>
+            <AlertDialog
+                    isOpen={isOpen}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                  >
+                    <AlertDialogOverlay>
+                      <AlertDialogContent>
+                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                          Delete 
+                        </AlertDialogHeader>
 
-                      <AlertDialogBody>
-                        Are you sure? You can't undo this action afterwards.
-                      </AlertDialogBody>
+                        <AlertDialogBody>
+                          Are you sure? You can't undo this action afterwards.
+                        </AlertDialogBody>
 
-                      <AlertDialogFooter>
-                        <Button ref={cancelRef} onClick={onClose}>
-                          Cancel
-                        </Button>
-                        <Button colorScheme='red' ml={3}>
-                          Delete
-                        </Button>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialogOverlay>
-        </AlertDialog>
-
+                        <AlertDialogFooter>
+                          <Button ref={cancelRef} onClick={onClose}>
+                            Cancel
+                          </Button>
+                          <Button colorScheme='red' ref={cancelRef} onClick={DeleteCamp} ml={3}>
+                            Delete
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialogOverlay>
+          </AlertDialog>
         </Flex>
       </Box>
 

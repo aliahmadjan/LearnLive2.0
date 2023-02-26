@@ -10,4 +10,6 @@ router.get('/getquizzesscore',QuizzesScoreController.GetQuizzesScore);
 
 router.get('/getquizscore/:id',QuizzesScoreController.GetSingleQuizScore);
 
+router.get('/getquizresults/:studentquizId',QuizzesScoreController.GetQuizResults);
+
 module.exports = router;

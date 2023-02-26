@@ -32,6 +32,11 @@ function AdminSettings() {
   const UpdatePassword = (e) => {
     e.preventDefault();
 
+    if(password != cpassword)
+    {
+      setSubmitStatus(-1)
+    }
+    else{
     axios.put(`http://localhost:5000/admin/updateadmin/${userID}` ,
     {
       password:password,
@@ -48,6 +53,7 @@ function AdminSettings() {
             })
 
           }
+        }
 
     // const parsedDueDate = new Date(dueDate);
     //  // Formatting the parsed date and time in the same format as the uploadDate state variable

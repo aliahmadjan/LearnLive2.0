@@ -5,6 +5,16 @@ const Teacher = require('../Models/teacher.model')
 const jwt = require('jsonwebtoken');
 const router = express.Router()
 
+const session = require('express-session');
+const app = express();
+// set up session middleware
+app.use(session({
+  secret: 'my-secret-key', // change this to a random string
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // set secure:true for HTTPS
+}));
+
 const AddTeacher = (req,res,next) =>  
 {
      const { name ,email,gender,phoneno,password,cpassword} = req.body;
@@ -27,6 +37,7 @@ const AddTeacher = (req,res,next) =>
           phoneno,
           password,
           cpassword,
+          campname,
         })
         try{
           await teacher.save();
@@ -121,6 +132,11 @@ const UpdateTeacher = async(req,res,next) =>
       })
     }
     
+    // const SetDeleteTeacherId = (req, res, next) => {
+    //   req.session.teacher_delid = req.query.id;
+    //   res.sendStatus(200);
+    // };
+
     const DeleteTeacher = (req,res,next) =>
     {
     var x= req.query.id;
@@ -137,6 +153,17 @@ const UpdateTeacher = async(req,res,next) =>
         })
     }
 
+    const AddCampname = (req,res,next) => {
+      const {campname} = req.body;
+      const teacherID = req.params.id;
+    
+      Teacher.findByIdAndUpdate({_id: teacherID}, {campname:campname}).exec((err, result) => {
+        if(err) res.status(500).send({message: err.message});
+        else {
+          res.status(200).send(result);
+             }
+        })
+      }
     
 
 exports.AddTeacher=AddTeacher;
@@ -145,5 +172,7 @@ exports.GetTeachers = GetTeachers;
 exports.GetSingleTeacher = GetSingleTeacher;
 exports.UpdateTeacher = UpdateTeacher;
 exports.DeleteTeacher = DeleteTeacher;
+//exports.SetDeleteTeacherId = SetDeleteTeacherId;
+exports.AddCampname = AddCampname;
 //exports.AddFollowing = AddFollowing;
 //exports.AddFollow = AddFollow;

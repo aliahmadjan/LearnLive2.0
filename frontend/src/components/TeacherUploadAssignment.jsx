@@ -4,6 +4,8 @@ import axios from "axios";
 import { useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Viewer } from 'react-doc-viewer';
+
 //import DatePicker from "react-datepicker"
 //import 'react-datepicker/dist/react-datepicker.css';
 //import  DatePicker  from '@chakra-ui/react';
@@ -267,7 +269,8 @@ function TeacherUploadAssignment() {
           focusBorderColor='orange.700' 
           variant={'flushed'} 
           borderBottomColor='orange'
-          accept="application/pdf , image/png "
+          accept="application/pdf , image/png , .zip , 
+          .docx"
           onChange={onSelectFile}
           name="uplassign"
           isRequired
@@ -306,7 +309,9 @@ function TeacherUploadAssignment() {
             {
               selected.map((file, index) => {
                 return (
+                  //iframe
                   <iframe
+                    //filePath={file}
                     src={file}
                     style={{
                       height: "80%",

@@ -1,6 +1,7 @@
 const express = require('express');
 const https = require('https');
 const Quizzes = require('../Models/quizzes.model')
+const Student = require('../Models/student.model')
 
 
 const jwt = require('jsonwebtoken');
@@ -121,9 +122,11 @@ const DeleteQuiz = (req,res,next) =>
 
 
 
+
 exports. AddQuiz = AddQuiz;
 exports. AddQuizQuestions = AddQuizQuestions;
 exports.GetQuizzes = GetQuizzes;
 exports.GetSingleQuiz= GetSingleQuiz;
 exports.DeleteQuiz = DeleteQuiz;
+
 //exports.GetAllQuizzes = GetAllQuizzes;

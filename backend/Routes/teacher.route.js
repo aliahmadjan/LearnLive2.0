@@ -56,6 +56,7 @@ router.post('/addteacher',  upload.single('profileimg'),async (req,res,next) =>
             phoneno: req.body.phoneno,
             password: req.body.password,
             cpassword: req.body.cpassword,
+            campname:req.body.campname,
             
         });
         try{
@@ -78,6 +79,7 @@ router.post('/addteacher',  upload.single('profileimg'),async (req,res,next) =>
             cpassword: req.body.cpassword,
             
             profileimg: url + "/teacher/" +req.file.filename,
+            campname:req.body.campname,
         });
         try{
             await teacher.save();
@@ -97,6 +99,8 @@ router.post('/addteacher',  upload.single('profileimg'),async (req,res,next) =>
 
 router.post('/verifylogin',TeacherController.VerifyLogin)
 
+router.post('/addcampname/:id',TeacherController.AddCampname);
+
 router.get('/getteachers',TeacherController.GetTeachers)
 
 router.get('/getteacher/:id',TeacherController.GetSingleTeacher)
@@ -105,5 +109,6 @@ router.put('/updateteacher/:id',TeacherController.UpdateTeacher)
 
 router.delete('/deleteteacher/:id',TeacherController.DeleteTeacher)
 
+//router.get('/setdeleteteacherid/:teacher_delid',TeacherController.SetDeleteTeacherId);
 
 module.exports = router;

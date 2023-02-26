@@ -10,7 +10,7 @@ const router = express.Router()
 const AddStudent = (req,res,next) =>  
 {
      const { name ,email,gender,phoneno,password,cpassword} = req.body;
-     if(!name || !email || !gender || !phoneno || !password || !cpassword)
+     if(!name || !email || !gender || !phoneno || !password || !cpassword )
      {
         return res.status(422).send("Please Fill ALl the fields");
      }
@@ -29,6 +29,7 @@ const AddStudent = (req,res,next) =>
           phoneno,
           password,
           cpassword,
+          campname,
         })
         try{
           await student.save();
@@ -136,6 +137,18 @@ const UpdateStudent = async(req,res,next) =>
         })
     }
 
+    const AddCampname = (req,res,next) => {
+      const {campname} = req.body;
+      const studentID = req.params.id;
+    
+      Student.findByIdAndUpdate({_id: studentID}, {campname:campname}).exec((err, result) => {
+        if(err) res.status(500).send({message: err.message});
+        else {
+          res.status(200).send(result);
+             }
+        })
+      }
+
     //Get All Veterans On Search
 // router.post("/getveterans", AuthToken, async (req, res) => {
 //   const savedUser = await Veteran.find({
@@ -151,5 +164,6 @@ exports.GetStudents = GetStudents;
 exports.GetSingleStudent = GetSingleStudent;
 exports.UpdateStudent = UpdateStudent;
 exports.DeleteStudent = DeleteStudent;
+exports.AddCampname = AddCampname;
 //exports.AddFollowing = AddFollowing;
 //exports.AddFollow = AddFollow;

@@ -1,6 +1,6 @@
 import React from "react"
 import { useState, useEffect } from "react"
-import { Box,Grid,Button, Text,FormControl, FormLabel, Input, Select, Textarea, Heading} from "@chakra-ui/react";
+import { Box,Grid,Button, Text,FormControl, FormLabel, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
 import axios from "axios"
 import { useNavigate, useParams} from "react-router-dom";
 import {
@@ -21,9 +21,9 @@ import {
 
 
 
-  const ViewSubmittedAssignments = ()=>
+  const ViewSubmittedAssignment = ()=>
   {
-
+    const [userID , setUserID] = useState("")
     const [assignments , setAssignments] = useState([]);
     const [questions , setQuestions] = useState([]);
     const [ teachers , setTeachers] =useState('')
@@ -38,107 +38,119 @@ import {
             navigate("/teacher/viewssubmitassignment");
     }
 
+    const getCurentUser = () =>
+    {
+      let logintoken = localStorage.getItem("logintoken")
+      axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
+      axios.get("http://localhost:5000/teacher/viewprofile")
+        .then(res=> {
+               // console.log(res.data)
+                setUserID(res.data._id);
+                localStorage.setItem('userID',res.data._id)
+                setTeachers(res.data.name);
+        }).catch (err=> {
+            console.log(err) })
+    }
+
+    
     const getAllAssignments= () =>
     {
-
-        axios.get("http://localhost:5000/stdassignments/gettchassigns") 
+      //console.log(userID)
+     //localStorage.setItem('userID',userID)
+    axios.get(`http://localhost:5000/stdassignments/getsameass/${localStorage.getItem('assignment_viewid')}`)
+   // axios.get('http://localhost:5000/tchassignments/gettchassigns')
+        //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
         .then(res=> {
+          
           setAssignments(res.data)
           //console.log(quizzes)
     }).catch (err=> {
        console.log(err) })
     
     }
+ 
 
-
-    const Back = ()=>
-    {
-      navigate("/teacher/viewassignment");
-    }
+    
    useEffect(()=>
-   { 
-  
+   {   
     getAllAssignments();
+    getCurentUser();
+
    },[assignments])
 
 
 
     return (
-        <Box width="80%" mt={8}  mx={"auto"}>
-             
-        <Text my={4} align={"center"} fontWeight="bold" fontSize={30}>All Students</Text>
-        {assignments.map((assignment) => (  
+
+      <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
+      <Box pt={4} pb={2} my={4}>
+        <Heading mb={4} >
+          Students Submitted Assignments
+        </Heading>
+      </Box>
+
+      <Flex maxW='2xl' mx="auto" flexDirection={'column'}>
+        <Flex p={4} pt={0}>
+          <Input placeholder="Assigment's Name" variant={'outlined'} borderColor='orange'></Input>
+          <Button colorScheme={'orange'}>Search</Button>
+        </Flex>
+
+        <Flex border={'1px solid orange'} 
+              gap={2} 
+              justifyContent='space-around' 
+              height='50vh' borderRadius='20px' 
+              p={4} flexWrap='wrap' 
+              overflowY='scroll'
+              sx={{
+                '&::-webkit-scrollbar': {
+                  width: '16px',
+                  borderRadius: '8px',
+                  backgroundColor: 'white',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: `orange.500`,
+                  borderRadius: '8px',
+                },
+              }}>
+
+        {assignments.map((assignment,index) => (  
+
+            <Flex border={'1px solid orange'} height='40%' width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
+
+            <Box ml={0} >
+              {/* Jaan Implement this ( displays teacher Id instead of name)*/}
+              {/* <Text>
+              Teacher Name: {assignment.teacher}
+              </Text>  */}
+              <Text>
+              Camp: {assignment.campname}
+              </Text> 
+              <Text>
+              Title: {assignment.title}
+              </Text>
+            </Box>
             
-            <> 
-            {/* <Grid templateColumns="repeat(3, 1fr)" gap={10} overflow="scroll" height="30%" width="100%" > */}
+            <Flex flexDir={'column'} justifyContent='center'>
+                <Button  onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
+                  <i class="fa-solid fa-eye"></i>
+                </Button>
+
+                <Button  onClick={onOpen} colorScheme='orange' variant='ghost'>
+                  <i class="fa-solid fa-trash"></i>
+                </Button>
+
+            </Flex>
+        
             
-                <Box p={5} shadow="md" borderWidth="1px" margin={2} marginBottom={10}>
-                <Text fontSize="xl" fontWeight="bold">
-                  Camp Name: {assignment.campname}
-                </Text>  
-                <Text fontSize="xl" fontWeight="bold">
-                  Name: {assignment.title}
-                </Text>
-                <Button display={"table-column"} type="submit"  
-               onClick={()=>handleSubmitView(assignment._id)}
-                colorScheme={"orange"} size="lg" mt={28} p="auto" ml="auto" mr="auto">
-                     View
-             </Button> 
-            <Button display={"table-column"} type="submit" 
-                onClick={onOpen}
-                colorScheme={"orange"} size="lg" mt={28} p="4" ml="28" mr={"auto"}>
-             Delete
-             </Button> 
-             
-                </Box>
+            </Flex>  ))} 
 
-            {/* </Grid> */}
+        </Flex>
+      </Flex>
 
-            <>
-     <AlertDialog
-      isOpen={isOpen}
-      leastDestructiveRef={cancelRef}
-      onClose={onClose}
-    >
-      <AlertDialogOverlay>
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-            Delete 
-          </AlertDialogHeader>
+    </Box>
 
-          <AlertDialogBody>
-            Are you sure? You can't undo this action afterwards.
-          </AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme='red' ml={3}>
-              Delete
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialogOverlay>
-    </AlertDialog>
-  </> 
-
-            </>
-                 ))} 
-       
-       <Button  onClick={Back}
-      style={{
-        position: 'absolute',
-        right: 30,
-        bottom:10,
-      }}
-      colorScheme='teal' variant='solid'>
-  Back
-  </Button>
-  
-        </Box>
        
     )
   }
 
-  export default ViewSubmittedAssignments;
+  export default ViewSubmittedAssignment;

@@ -44,6 +44,7 @@ var upload =multer({
 
 router.post('/submitassigns',  upload.array('uplassign',4),async (req,res,next) =>
 {
+
    
     let reqFiles = [];
     const url = req.protocol+ '://' +req.get('host');
@@ -58,7 +59,8 @@ router.post('/submitassigns',  upload.array('uplassign',4),async (req,res,next) 
           description: req.body.description,
           tmarks:req.body.tmarks,
           duedate:req.body.duedate,
-           uplassign:reqFiles   
+           uplassign:reqFiles,
+           quizid:req.body.quizid
         });
         try{
             await stdAss.save();
@@ -70,6 +72,8 @@ router.post('/submitassigns',  upload.array('uplassign',4),async (req,res,next) 
             return res.status(422).send({error: err.message});
         }
     }); 
+
+    router.get('/getsameass/:teacherAssignmentId',StudentAssignmentsController.GetSubmittedAssignments)
 
     router.get('/gettchassigns',StudentAssignmentsController.GetAssignments);
 

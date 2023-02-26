@@ -142,12 +142,12 @@ export default function AdminSidebar({navSize, changeNavSize}) {
                     
                 </Flex>
                 
-                <form action={"http://localhost:3000/"}>
+                {/* <form action={"http://localhost:3000/"}>
                 <Button m={4} type='submit' colorScheme='orange' variant='solid' _hover={{ bg: '#a85e32' }} px='20px' position={'relative'} left='50px'
                 width='150px'>
                     Sign out
                 </Button> 
-                </form>
+                </form> */}
             </Flex>
             
         </Flex>

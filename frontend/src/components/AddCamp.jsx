@@ -75,6 +75,7 @@ function AddCamp() {
                 borderBottomColor='orange'
                 id="campname"
                 name="campname"
+                placeholder="e.g., OOP"
                 onChange={(e) => setCampName(e.target.value)}
                 isRequired
                 width={'60%'} 

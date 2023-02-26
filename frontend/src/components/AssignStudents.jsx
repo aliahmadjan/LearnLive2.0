@@ -45,15 +45,15 @@ const AssignStudents =() =>
     const AssignStudentsToCamp=async(e)=>
     {
       e.preventDefault();
-        const url = 'http://localhost:5000/camp/addcamp';
-        setStudents(students=> [...students, `${localStorage.getItem('student_assignid')}`])
-       // setSearches(searches => [...searches, `${localStorage.getItem('teacher_assignid')}`]);
-
-   // setSearches(searches =>
-     //  searches.concat(`${localStorage.getItem('teacher_assignid')}`))
-   await axios.post(url,{
+  
+    await axios.post('http://localhost:5000/camp/addcampstudents',{
       campname:selectedCampus,
        students:`${localStorage.getItem('student_assignid')}`
+    })
+
+    axios.post(`http://localhost:5000/student/addcampname/${localStorage.getItem('student_assignid')}`,
+    {
+      campname:selectedCampus,
     }).then ((res)=>
     {
       setSubmitStatus(1);

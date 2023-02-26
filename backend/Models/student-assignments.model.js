@@ -36,6 +36,11 @@ const studentAssignmentsSchema = new moongose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'Student'
     },
+
+    quizid: {
+        type: Schema.Types.ObjectId,
+        ref: 'Quizzes'
+    }
   
 });
 

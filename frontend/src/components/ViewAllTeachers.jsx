@@ -73,6 +73,15 @@ import { useDisclosure } from '@chakra-ui/react'
         console.log(results)
     },[results])
 
+    // const SetDeleteTeacherId = () => {
+    //   axios.get(`http://localhost:5000/teacher/setdeleteteacherid/${localStorage.getItem('teacher_delid')}`)
+    //     .then((res) => {
+    //       // set session cookie if successful
+    //     }).catch((err) => {
+    //       // handle error
+    //     });
+    // };
+
     const DeleteTeacher=(e)=>
     {
       e.preventDefault();
@@ -85,6 +94,7 @@ import { useDisclosure } from '@chakra-ui/react'
         
         })             
     }
+    
   
   const handleSearch = async(e) =>
   {
@@ -117,7 +127,7 @@ import { useDisclosure } from '@chakra-ui/react'
              borderColor='orange'>
               
              </Input>
-            <Button colorScheme={'orange'}>Search</Button>
+            {/* <Button colorScheme={'orange'}>Search</Button> */}
             
           </Flex>
           {/* <ul>
@@ -182,8 +192,42 @@ import { useDisclosure } from '@chakra-ui/react'
 
 
               {/* Lookk thisss uPPP //Jaaan */}
-              
               <AlertDialog
+  isOpen={isOpen}
+  leastDestructiveRef={cancelRef}
+  onClose={onClose}
+>
+  <AlertDialogOverlay>
+    <AlertDialogContent>
+      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+        Delete
+      </AlertDialogHeader>
+
+      <AlertDialogBody>
+        Are you sure? You can't undo this action afterwards.
+      </AlertDialogBody>
+
+      <AlertDialogFooter>
+        <Button ref={cancelRef} onClick={onClose}>
+          Cancel
+        </Button>
+        <Button
+          colorScheme='red'
+          onClick={(e) => {
+            //SetDeleteTeacherId();
+            DeleteTeacher(e);
+            onClose();
+          }}
+          ml={3}
+        >
+          Delete
+        </Button>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialogOverlay>
+</AlertDialog>
+
+              {/* <AlertDialog
                     isOpen={isOpen}
                     leastDestructiveRef={cancelRef}
                     onClose={onClose}
@@ -202,13 +246,15 @@ import { useDisclosure } from '@chakra-ui/react'
                           <Button ref={cancelRef} onClick={onClose}>
                             Cancel
                           </Button>
-                          <Button colorScheme='red' ref={cancelRef} onClick={DeleteTeacher} ml={3}>
+                          <Button colorScheme='red' ref={cancelRef}
+                          
+                          onClick={DeleteTeacher} ml={3}>
                             Delete
                           </Button>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialogOverlay>
-          </AlertDialog>
+          </AlertDialog> */}
 
            
              

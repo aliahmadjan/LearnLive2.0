@@ -1,20 +1,62 @@
 const express = require('express');
 const https = require('https');
 const Camp = require('../Models/camp.model');
+const Student = require('../Models/student.model')
 
 const jwt = require('jsonwebtoken');
 const router = express.Router()
 
-const AddCamp =  (req,res,next) =>
+const VerifyAndAddCampTeachers =  async(req,res,next) =>
 {
-   
         const {campname, teachers , students} = req.body;
+        try{
+          const camp= await Camp.findOne({campname:campname, teachers:teachers})
+        
+        if (camp) {
+          //console.log("Teacher is present in the camp");
+          res.status(200).json(camp);
+      }
+      else {
+        //console.log("Teacher not found in the camp, adding the teacher...");
         Camp.updateOne({"campname" : campname}, {$push: {teachers: teachers , students:students}}).exec((err, result) => {
             if(err) res.status(500).send({message: err.message});
             else {
                 res.status(200).send(result);
             }
         }) 
+      }
+    }
+    catch (err) {
+      console.log(err);
+      res.status(500).json("Internal server error");
+     }
+    
+}
+
+const VerifyAndAddCampStudents =  async(req,res,next) =>
+{
+        const {campname, teachers , students} = req.body;
+        try{
+          const camp= await Camp.findOne({campname:campname, students:students})
+        
+        if (camp) {
+          //console.log("Teacher is present in the camp");
+          res.status(200).json(camp);
+      }
+      else {
+        //console.log("Teacher not found in the camp, adding the teacher...");
+        Camp.updateOne({"campname" : campname}, {$push: {teachers: teachers , students:students}}).exec((err, result) => {
+            if(err) res.status(500).send({message: err.message});
+            else {
+                res.status(200).send(result);
+            }
+        }) 
+      }
+    }
+    catch (err) {
+      console.log(err);
+      res.status(500).json("Internal server error");
+     }
     
 }
 
@@ -117,10 +159,43 @@ const GetCampName = async(req,res,next) =>
 
 }
 
-exports.AddCamp = AddCamp;
+const AddCampname = (req,res,next) => {
+  const {campname} = req.body;
+  const studentID = req.params.id;
+
+  Student.findByIdAndUpdate({_id: studentID}, {campname:campname}).exec((err, result) => {
+    if(err) res.status(500).send({message: err.message});
+    else {
+      res.status(200).send(result);
+         }
+    })
+  }
+
+   
+
+  const DeleteCamp = (req,res,next) =>
+    {
+    var x= req.query.id;
+        Camp.findByIdAndDelete(req.params.id,(error,data)=> {
+            if(error){
+                return next(error);
+            }
+            else {
+                //res.send("Teacher Deleted Successfully!")
+                res.status(200).json({
+                    msg:data
+                })
+            }
+        })
+    }
+
+exports.VerifyAndAddCampTeachers = VerifyAndAddCampTeachers;
+exports.VerifyAndAddCampStudents = VerifyAndAddCampStudents;
 exports.AddCamp1 = AddCamp1;
 exports.GetCamps = GetCamps;
 exports.GetSingleCamp = GetSingleCamp;
 exports.GetCampName = GetCampName;
 exports.GetCampForTeacher = GetCampForTeacher;
 exports.GetCampForStudent= GetCampForStudent
+exports.AddCampname = AddCampname
+exports.DeleteCamp = DeleteCamp

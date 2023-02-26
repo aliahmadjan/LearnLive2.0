@@ -4,13 +4,13 @@ const mongoose = require('mongoose');
 const Quizzes = require('../Models/quizzes.model')
 const TokenTeacher = require('../Middleware/TeacherToken')
 const QuizzesController = require('../Controllers/quizzes.controller')
-
+const TokenStudent = require('../Middleware/StudentToken');
+const Student = require('../Models/student.model')
 router.post('/addquiz',QuizzesController.AddQuiz);
 
 router.post('/addquizques/:id',QuizzesController.AddQuizQuestions);
 
 router.get('/getquizzes', QuizzesController.GetQuizzes);
-
 
 router.get('/getcurrquizzes',TokenTeacher, async(req,res)=>
 {
@@ -38,6 +38,22 @@ router.get('/getcurrquizzes',TokenTeacher, async(req,res)=>
   res.send(arr)
 })
 
+router.get('/samestdquiz',TokenStudent, async(req,res)=>
+{
+  //console.log(req.teacher._id.toHexString())
+  const tchquiz =  await Quizzes.find()
+  const std = await Student.find()
+    const arr= [];
+
+    for(let i=0; i<tchquiz.length; i++)
+   {
+       if (req.student.campname === tchquiz[i].campname)
+       {
+        arr.push(tchquiz[i] )
+      }
+  }
+  res.send(arr)
+})
 router.get('/getquiz/:id',QuizzesController.GetSingleQuiz);
 
 router.delete('/deletequiz/:id',QuizzesController.DeleteQuiz);

@@ -57,6 +57,7 @@ router.post('/addstudent',  upload.single('profileimg'),async (req,res,next) =>
             phoneno: req.body.phoneno,
             password: req.body.password,
             cpassword: req.body.cpassword,
+            campname: req.body.campname,
             
         });
         try{
@@ -78,6 +79,7 @@ router.post('/addstudent',  upload.single('profileimg'),async (req,res,next) =>
             password: req.body.password,
             cpassword: req.body.cpassword,
             profileimg: url + "/student/" +req.file.filename,
+            campname: req.body.campname,
         });
         try{
             await student.save();
@@ -95,6 +97,8 @@ router.post('/addstudent',  upload.single('profileimg'),async (req,res,next) =>
 //router.post('/addstudent',StudentController.AddStudent)
 
 router.post('/verifylogin',StudentController.VerifyLogin)
+
+router.post('/addcampname/:id',StudentController.AddCampname);
 
 router.get('/getstudents',StudentController.GetStudents)
 
