@@ -11,6 +11,7 @@ const TeacherLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
+    const [isLoggedin , setIsLoggedIn] = useState(false);
 
      const navigate = useNavigate();
     // const handleSubmit1 = () =>
@@ -27,6 +28,7 @@ const TeacherLogin = () => {
             });
 
             localStorage.setItem("logintoken",res.data);
+            setIsLoggedIn(true);
             navigate("/teacher");
         } catch (error) {
             if (error.response) {

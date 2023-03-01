@@ -14,6 +14,7 @@ const EditTeacherDetails = (props) =>
     const [phoneno , setPhoneNo] = useState("");
     const [password, setPassword]= useState("");
     const [profileimg , setProfileImg]= useState("");
+    const [campname , setCampName] = useState("");
     const [teachers , setTeachers]= useState([]);
 
     const [selectedFile, setSelectedFile] =useState(null);
@@ -34,7 +35,8 @@ const EditTeacherDetails = (props) =>
           setGender(res.data.gender);
           setPhoneNo(res.data.phoneno);
           setPassword(res.data.password);
-          setProfileImg(res.data.profileimg)
+          setProfileImg(res.data.profileimg);
+          setCampName(res.data.campname);
         })
         .catch((err) => {
           console.log(err);
@@ -189,6 +191,24 @@ const EditTeacherDetails = (props) =>
             </Stack>
             </RadioGroup>
 
+          </FormControl>
+          <FormControl mb={2} display={'flex'} alignItems='center'>
+            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+            Campname:
+            </FormLabel>
+            <Input textAlign={'center'} 
+                  focusBorderColor='orange.700' 
+                  variant={'flushed'} 
+                  borderBottomColor='orange' 
+                  width={'60%'} 
+                  mr={0} ml='auto' 
+                  onChange={e=>setCampName(e.target.value)}
+                  id='campname' name='campname' label='Campname'
+                  value={campname}
+                  defaultValue={campname}
+                  
+                  isRequired
+            />
           </FormControl>
         </Box>
 

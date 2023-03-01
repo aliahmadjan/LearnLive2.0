@@ -3,9 +3,9 @@ import { devtools, persist} from "zustand/middleware"
 
 const store = (set) => ({
     loginState: false,
+    logoutState: false,
     setLoginState: () =>
-        set((state) => ({loginState: true})),
-        
+        set((state) => ({loginState: true, logoutState: true})),
     user: "student",
     setUser: (role) =>
         set((state) => ({user: role}))

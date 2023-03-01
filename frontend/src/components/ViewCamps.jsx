@@ -83,18 +83,24 @@ import {
          //setTeachers(filteredTeachers);
    }
 
-   const DeleteCamp=(e)=>
-   {
-     e.preventDefault();
-     axios.delete(`http://localhost:5000/camp/deletecamp/${localStorage.getItem('camp_delid')}`)
-     .then((res)=>
-     {
-
-     }).catch((err)=>
-       {
-       
-       })             
-   }
+   const DeleteCamp = (e) => {
+    e.preventDefault();
+    const campId = localStorage.getItem('camp_delid');
+    axios.delete(`http://localhost:5000/camp/deletecamp/${campId}`)
+      .then(() => {
+        axios.get('http://localhost:5000/camp/getcamps')
+          .then((res) => {
+            setResults(res.data)
+          })
+          .catch((error) => {
+          
+          });
+      })
+      .catch((error) => {
+        
+      });
+  };
+  
 
 
     return (
@@ -141,36 +147,40 @@ import {
               
             </Flex>
           ))}
-
-
-            {/* Lookk thisss uPPP //Jaaan */}
             
             <AlertDialog
-                    isOpen={isOpen}
-                    leastDestructiveRef={cancelRef}
-                    onClose={onClose}
-                  >
-                    <AlertDialogOverlay>
-                      <AlertDialogContent>
-                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                          Delete 
-                        </AlertDialogHeader>
+  isOpen={isOpen}
+  leastDestructiveRef={cancelRef}
+  onClose={onClose}
+>
+  <AlertDialogOverlay>
+    <AlertDialogContent>
+      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+        Delete
+      </AlertDialogHeader>
 
-                        <AlertDialogBody>
-                          Are you sure? You can't undo this action afterwards.
-                        </AlertDialogBody>
+      <AlertDialogBody>
+        Are you sure? You can't undo this action afterwards.
+      </AlertDialogBody>
 
-                        <AlertDialogFooter>
-                          <Button ref={cancelRef} onClick={onClose}>
-                            Cancel
-                          </Button>
-                          <Button colorScheme='red' ref={cancelRef} onClick={DeleteCamp} ml={3}>
-                            Delete
-                          </Button>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialogOverlay>
-          </AlertDialog>
+      <AlertDialogFooter>
+        <Button ref={cancelRef} onClick={onClose}>
+          Cancel
+        </Button>
+        <Button
+          colorScheme='red'
+          onClick={(e) => {
+            DeleteCamp(e);
+            onClose();
+          }}
+          ml={3}
+        >
+          Delete
+        </Button>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialogOverlay>
+</AlertDialog>
         </Flex>
       </Box>
 

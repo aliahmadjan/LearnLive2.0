@@ -67,31 +67,53 @@ import { useDisclosure } from '@chakra-ui/react'
 
     useEffect(()=>
     {
-        console.log(results)
+       // console.log(results)
     },[results])
 
-    const DeleteStudent=(e)=>
-    {
-      e.preventDefault();
-      axios.delete(`http://localhost:5000/student/deletestudent/${localStorage.getItem('student_delid')}`)
-      .then((res)=>
-      {
 
-      }).catch((err)=>
-        {
-        
-        })             
-    }
 
     const handleSearch = async(e) =>
   {
-      setQuery(e.target.value);
+      // setQuery(e.target.value);
+      // const filteredStudents = students.filter(student=>
+      //   student.name.toLowerCase().includes(query.toLowerCase())
+      //   );
+        //setResults(filteredStudents);
+        axios.get('http://localhost:5000/student/getstudents')
+          .then((res) => {
+            setQuery(e.target.value);
       const filteredStudents = students.filter(student=>
         student.name.toLowerCase().includes(query.toLowerCase())
         );
-        setResults(filteredStudents);
+            setResults(filteredStudents)
+            //setResults(res.data)
+          })
+          .catch((error) => {
+          
+          });
+        
         //setTeachers(filteredTeachers);
   }
+
+  const DeleteStudent = (e) => {
+    e.preventDefault();
+    const studentId = localStorage.getItem('student_delid');
+    axios.delete(`http://localhost:5000/student/deletestudent/${studentId}`)
+      .then(() => {
+        axios.get('http://localhost:5000/student/getstudents')
+          .then((res) => {
+            setResults(res.data)
+          })
+          .catch((error) => {
+          
+          });
+      })
+      .catch((error) => {
+        
+      });
+  };
+  
+
 
   
     const paperStyle = {padding : 20, height: '400vh', width: 900,
@@ -164,32 +186,39 @@ import { useDisclosure } from '@chakra-ui/react'
             {/* Lookk thisss uPPP //Jaaan */}
             
             <AlertDialog
-                    isOpen={isOpen}
-                    leastDestructiveRef={cancelRef}
-                    onClose={onClose}
-                  >
-                    <AlertDialogOverlay>
-                      <AlertDialogContent>
-                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                          Delete 
-                        </AlertDialogHeader>
+  isOpen={isOpen}
+  leastDestructiveRef={cancelRef}
+  onClose={onClose}
+>
+  <AlertDialogOverlay>
+    <AlertDialogContent>
+      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+        Delete
+      </AlertDialogHeader>
 
-                        <AlertDialogBody>
-                          Are you sure? You can't undo this action afterwards.
-                        </AlertDialogBody>
+      <AlertDialogBody>
+        Are you sure? You can't undo this action afterwards.
+      </AlertDialogBody>
 
-                        <AlertDialogFooter>
-                          <Button ref={cancelRef} onClick={onClose}>
-                            Cancel
-                          </Button>
-                          <Button colorScheme='red' ref={cancelRef} onClick={DeleteStudent} ml={3}>
-                            Delete
-                          </Button>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialogOverlay>
-          </AlertDialog>
-
+      <AlertDialogFooter>
+        <Button ref={cancelRef} onClick={onClose}>
+          Cancel
+        </Button>
+        <Button
+          colorScheme='red'
+          onClick={(e) => {
+            //SetDeleteTeacherId();
+            DeleteStudent(e);
+            onClose();
+          }}
+          ml={3}
+        >
+          Delete
+        </Button>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialogOverlay>
+</AlertDialog>
 
         </Flex>
       </Box>

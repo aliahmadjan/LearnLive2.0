@@ -32,16 +32,19 @@ import NavItem from './NavItem'
 import axios from "axios"
 import LoginPage from '../pages/LoginPage'
 import { Link, useLocation } from 'react-router-dom'
+import { useNavigate, useParams} from "react-router-dom";
 
 export default function TeacherSidebar({navSize, changeNavSize}) {
 
     // To make links active on Sidebar
     const location = useLocation();
     const route = location.pathname.split("/").pop();
-
+    const [isLoggedin , setIsLoggedIn] = useState(false);
     const [ userID , setUserID] = useState("");
     const [name, setName] = useState("");
     const [ profileimg , setProfileImg] = useState(null);
+    const navigate = useNavigate();
+    
 
     const getCuurentUser = () =>
     {
@@ -54,6 +57,13 @@ export default function TeacherSidebar({navSize, changeNavSize}) {
                 setProfileImg(res.data.profileimg);
         }).catch (err=> {
             console.log(err) })
+    }
+
+    const handleLogout = () =>
+    {
+        localStorage.removeItem("logintoken")
+        setIsLoggedIn(false)
+        navigate('/')
     }
 
     useEffect(()=>
@@ -129,12 +139,14 @@ export default function TeacherSidebar({navSize, changeNavSize}) {
 
             </Flex>
 
-            <form action={"http://localhost:3000/"}>
-            <Button m={4} type='submit' colorScheme='orange' variant='solid' _hover={{ bg: '#a85e32' }} px='20px' position={'relative'} left='50px'
+            
+            <Button
+            onClick={handleLogout}
+            m={4} type='submit' colorScheme='orange' variant='solid' _hover={{ bg: '#a85e32' }} px='20px' position={'relative'} left='50px'
             width='150px'>
                 Sign out
             </Button> 
-            </form>
+           
         </Flex>
     )
 }

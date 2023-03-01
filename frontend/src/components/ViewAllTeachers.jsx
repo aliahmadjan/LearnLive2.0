@@ -22,6 +22,7 @@ import { useDisclosure } from '@chakra-ui/react'
     const [profileimg , setProfileImg]= useState("");
 
     const [teachers , setTeachers]= useState([]);
+    const [updatedTeachers , setUpdatedTeachers] = useState([]);
 
     const [ query, setQuery]= useState("");
     const [results , setResults] = useState([]);
@@ -57,7 +58,9 @@ import { useDisclosure } from '@chakra-ui/react'
         .get("http://localhost:5000/teacher/getteachers")
         .then((res) => {
           setTeachers(res.data);
-          setResults(res.data)
+          setResults(res.data);
+          //setUpdatedTeachers(res.data);
+          
         })
         .catch((err) => {
           console.log(err);
@@ -73,27 +76,29 @@ import { useDisclosure } from '@chakra-ui/react'
         console.log(results)
     },[results])
 
-    // const SetDeleteTeacherId = () => {
-    //   axios.get(`http://localhost:5000/teacher/setdeleteteacherid/${localStorage.getItem('teacher_delid')}`)
-    //     .then((res) => {
-    //       // set session cookie if successful
-    //     }).catch((err) => {
-    //       // handle error
-    //     });
-    // };
-
-    const DeleteTeacher=(e)=>
-    {
+    const DeleteTeacher = (e) => {
       e.preventDefault();
-      axios.delete(`http://localhost:5000/teacher/deleteteacher/${localStorage.getItem('teacher_delid')}`)
-      .then((res)=>
-      {
+      const teacherId = localStorage.getItem('teacher_delid');
+      axios.delete(`http://localhost:5000/teacher/deleteteacher/${teacherId}`)
+        .then(() => {
+          axios.get('http://localhost:5000/teacher/getteachers')
+            .then((res) => {
+              // const teachers = res.data;
+              setResults(res.data)
+            })
+            .catch((error) => {
+            
+            });
+        })
+        .catch((error) => {
+          
+        });
+    };
+    
 
-      }).catch((err)=>
-        {
-        
-        })             
-    }
+   
+    
+
     
   
   const handleSearch = async(e) =>
