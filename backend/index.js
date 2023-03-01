@@ -15,6 +15,8 @@ const axios = require("axios")
 
 const app = express();
 const port = process.env.PORT || 5000;
+//const port= process.env.BASE_URL
+//const port = "https://main--reliable-biscuit-f62ccb.netlify.app";
 
 app.use(cors());
 
@@ -81,13 +83,13 @@ app.get('/admin/viewprofile', TokenAdmin, (req,res) =>
   res.send(req.admin);
 });
 
-app.get('/' , (req,res) =>
-{
-  res.setHeader('Cache-Control' , 'no-cache , no-store, must-revalidate');
-  res.setHeader('Pragma' ,'no-cache')
-  res.setHeader('Expires' ,'0')
-  res.render("http://localhost:3000");
-})
+// app.get('/' , (req,res) =>
+// {
+//   res.setHeader('Cache-Control' , 'no-cache , no-store, must-revalidate');
+//   res.setHeader('Pragma' ,'no-cache')
+//   res.setHeader('Expires' ,'0')
+//   res.render("http://localhost:3000");
+// })
 
 
 // app.use((req, res, next) => {
