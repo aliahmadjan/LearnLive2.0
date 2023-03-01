@@ -37,7 +37,7 @@ function AdminSettings() {
       setSubmitStatus(-1)
     }
     else{
-    axios.put(`http://localhost:5000/admin/updateadmin/${userID}` ,
+    axios.put(`https://main--reliable-biscuit-f62ccb.netlify.app/admin/updateadmin/${userID}` ,
     {
       password:password,
       cpassword: cpassword,

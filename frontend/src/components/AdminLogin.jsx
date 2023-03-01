@@ -21,7 +21,7 @@ const AdminLogin = () => {
     {
         e.preventDefault();
         try {
-           const res=  await axios.post('http://localhost:5000/admin/verifylogin', {
+           const res=  await axios.post('https://main--reliable-biscuit-f62ccb.netlify.app/admin/verifylogin', {
                 email: email,
                 password: password,
             });
