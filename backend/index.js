@@ -81,6 +81,14 @@ app.get('/admin/viewprofile', TokenAdmin, (req,res) =>
   res.send(req.admin);
 });
 
+app.get('/' , (req,res) =>
+{
+  res.setHeader('Cache-Control' , 'no-cache , no-store, must-revalidate');
+  res.setHeader('Pragma' ,'no-cache')
+  res.setHeader('Expires' ,'0')
+  res.render("http://localhost:3000");
+})
+
 
 // app.use((req, res, next) => {
 //   const err = new Error('Not Found');
