@@ -18,7 +18,10 @@ const port = process.env.PORT || 5000;
 //const port= process.env.BASE_URL
 //const port = "https://main--reliable-biscuit-f62ccb.netlify.app";
 
-app.use(cors());
+//app.use(cors());
+app.use(cors({
+  origin: 'https://learnlive-testing.netlify.app'
+}));
 
 app.use(express.json({limit: '50mb'}));
  mongoose.connect("mongodb+srv://aliahmadjan:12345@cluster0.j5u9lxj.mongodb.net/LearnLive?retryWrites=true&w=majority&ssl=true");
