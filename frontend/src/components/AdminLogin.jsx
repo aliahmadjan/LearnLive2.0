@@ -21,11 +21,13 @@ const AdminLogin = () => {
     {
         e.preventDefault();
         try {
-           const res=  await axios.post('https://main--reliable-biscuit-f62ccb.netlify.app/admin/verifylogin', {
+           const res=  await axios.post('https://learnlive-backend.netlify.app/admin/verifylogin', {
                 email: email,
                 password: password,
+            
             });
             localStorage.setItem("logtoken",res.data);
+            console.log("verified")
             navigate("/admin");
         } catch (error) {
             if (error.response) {
