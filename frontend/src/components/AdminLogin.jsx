@@ -27,7 +27,7 @@ const AdminLogin = () => {
             
             });
             localStorage.setItem("logtoken",res.data);
-            console.log("verified")
+            //console.log("verified")
             navigate("/admin");
         } catch (error) {
             if (error.response) {
