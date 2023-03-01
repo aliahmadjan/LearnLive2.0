@@ -19,9 +19,12 @@ const port = process.env.PORT || 5000;
 //const port = "https://main--reliable-biscuit-f62ccb.netlify.app";
 
 //app.use(cors());
-app.use(cors({
-  origin: 'https://learnlive-testing.netlify.app'
-}));
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://learnlive-testing.netlify.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 app.use(express.json({limit: '50mb'}));
  mongoose.connect("mongodb+srv://aliahmadjan:12345@cluster0.j5u9lxj.mongodb.net/LearnLive?retryWrites=true&w=majority&ssl=true");
