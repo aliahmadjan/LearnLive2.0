@@ -50,7 +50,7 @@ export default function AdminSidebar({navSize, changeNavSize}) {
         }
       let logintoken = localStorage.getItem("logtoken")
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("https://learnlive.onrender.com/admin/viewprofile")
+      axios.get("https://legendary-bavarois-730d1d.netlify.app/admin/viewprofile")
         .then(res=> {
                 //console.log(res.data)
                 setUserID(res.data._id);
