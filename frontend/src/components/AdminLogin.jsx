@@ -28,7 +28,7 @@ const AdminLogin = () => {
             });
             localStorage.setItem("logtoken",res.data);
             //console.log("verified")
-            navigate("/admin");
+            navigate("https://learnlive.onrender.com/admin");
         } catch (error) {
             if (error.response) {
                 setMsg(error.response.data.msg);
