@@ -39,7 +39,7 @@ function TeacherUploadAssignment() {
   {
     let logintoken = localStorage.getItem("logintoken")
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-    axios.get("https://learnlive.onrender.com/teacher/viewprofile")
+    axios.get("http://localhost:5000/teacher/viewprofile")
       .then(res=> {
               setUserID(res.data._id);
               setTeacher(res.data.name);
@@ -52,7 +52,7 @@ function TeacherUploadAssignment() {
   {
     localStorage.setItem('userID',userID)
     //axios.get('http://localhost:5000/camp/getcampteacher/:'}).then(res =>
-    axios.get(`https://learnlive.onrender.com/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
+    axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
     {
       setCampName(res.data);
 
@@ -65,7 +65,7 @@ function TeacherUploadAssignment() {
   const UploadAssignment = (e) => {
     e.preventDefault();
 
-    const url = "https://learnlive.onrender.com";
+    const url = "http://localhost:5000";
      const formData = new FormData();
      formData.append("campname" , selectedCamp)
      formData.append("title", title);
@@ -96,7 +96,7 @@ function TeacherUploadAssignment() {
        formData.append("teacher",userID)
 
 
-    fetch('https://learnlive.onrender.com/tchassignments/uploadassigns', {
+    fetch('http://localhost:5000/tchassignments/uploadassigns', {
       method: 'POST',
       
       body: formData,

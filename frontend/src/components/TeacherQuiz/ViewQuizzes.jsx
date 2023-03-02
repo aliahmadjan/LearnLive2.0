@@ -47,7 +47,7 @@ import {
     {
       let logintoken = localStorage.getItem("logintoken")
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("https://learnlive.onrender.com/teacher/viewprofile")
+      axios.get("http://localhost:5000/teacher/viewprofile")
         .then(res=> {
                 setUserID(res.data._id);
                 setTeachers(res.data.name);
@@ -58,7 +58,7 @@ import {
     const getAllQuizzes = () =>
     {
 
-        axios.get("https://learnlive.onrender.com/quizzes/getcurrquizzes") 
+        axios.get("http://localhost:5000/quizzes/getcurrquizzes") 
         .then(res=> {
           setQuizzes(res.data)
           //console.log(quizzes)
@@ -79,7 +79,7 @@ import {
    {
    
      localStorage.setItem('quiz_deleteid',quiz_deleteid)
-     axios.delete(`https://learnlive.onrender.com/quizzes/deletequiz/${localStorage.getItem('quiz_deleteid')}`)
+     axios.delete(`http://localhost:5000/quizzes/deletequiz/${localStorage.getItem('quiz_deleteid')}`)
      .then((res) => {
        //window.alert("Delete Successfull!")
    }).catch((error) => {

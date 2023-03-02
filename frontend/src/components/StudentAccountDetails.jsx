@@ -19,7 +19,7 @@ const StudentAccountDetails = () => {
   {
     localStorage.setItem('userID',userID)
     //axios.get('http://localhost:5000/camp/getcampteacher/:',{params : {id:localStorage.getItem('userID')}}).then(res =>
-    axios.get(`https://learnlive.onrender.com/camp/getcampstudent/${localStorage.getItem('userID')}`).then(res =>
+    axios.get(`http://localhost:5000/camp/getcampstudent/${localStorage.getItem('userID')}`).then(res =>
     {
       setCampName(res.data);
 
@@ -33,7 +33,7 @@ const StudentAccountDetails = () => {
   {
     let logintoken = localStorage.getItem("ltoken")
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-    axios.get("https://learnlive.onrender.com/student/viewprofile")
+    axios.get("http://localhost:5000/student/viewprofile")
       .then(res=> {
               setUserID(res.data._id);
               setName(res.data.name);

@@ -19,7 +19,7 @@ const ViewQuizResults=()=>
       console.log(`${localStorage.getItem('submitquiz_viewid')}`)
       axios
       
-        .get(`https://learnlive.onrender.com/quizscore/getquizresults/${localStorage.getItem("quiz_viewid")}`)
+        .get(`http://localhost:5000/quizscore/getquizresults/${localStorage.getItem("quiz_viewid")}`)
         .then((res) => {
            setQuizzesScore(res.data)
         //   setQuizID(res.data.quiz_id)

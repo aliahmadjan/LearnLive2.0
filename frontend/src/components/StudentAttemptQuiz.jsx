@@ -56,7 +56,7 @@ import {
   {
     let logintoken = localStorage.getItem("ltoken")
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-    axios.get("https://learnlive.onrender.com/student/viewprofile")
+    axios.get("http://localhost:5000/student/viewprofile")
       .then(res=> {
               setUserID(res.data._id);
               setName(res.data.name)
@@ -93,7 +93,7 @@ import {
       // method: 'POST',
       // body: formData,
       // })
-      axios.post('https://learnlive.onrender.com/quizscore/addquizscore',
+      axios.post('http://localhost:5000/quizscore/addquizscore',
       {
         //body: formData
         quiz_id: `${localStorage.getItem('quiz_viewid')}`,

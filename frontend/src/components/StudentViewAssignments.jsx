@@ -41,7 +41,7 @@ import {
     const getAllAssignments= () =>
     {
 
-        axios.get("https://learnlive.onrender.com/tchassignments/samestdassign") 
+        axios.get("http://localhost:5000/tchassignments/samestdassign") 
         .then(res=> {
           console.log(res.data)
           setAssignments(res.data)

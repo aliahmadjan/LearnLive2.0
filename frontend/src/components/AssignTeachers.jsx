@@ -40,7 +40,7 @@ const AssignTeachers =() =>
 
     const GetCampNames = () =>
     {
-      axios.get('https://learnlive.onrender.com/camp/getcampname')
+      axios.get('http://localhost:5000/camp/getcampname')
       .then(res =>
         {
           setCampName(res.data);
@@ -50,19 +50,19 @@ const AssignTeachers =() =>
             console.log(err)
           })
 
-          // toast.success('Camps Displayed Successfully!',
-          // {
-          //   position: "top-right",
-          //   autoClose: 5000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          //   onRender: playNotificationSound()
+          toast.success('Camps Displayed Successfully!',
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            onRender: playNotificationSound()
             
     
-          // });
+          });
     };
 
     
@@ -71,7 +71,7 @@ const AssignTeachers =() =>
     {
       e.preventDefault();
      
- await axios.post('https://learnlive.onrender.com/camp/addcampteachers',{
+ await axios.post('http://localhost:5000/camp/addcampteachers',{
     campname:selectedCampus,
      teachers:`${localStorage.getItem('teacher_assignid')}`
   }).then((res)=>
@@ -82,7 +82,7 @@ const AssignTeachers =() =>
     setSubmitStatus(1)
   })
 
-  axios.post(`https://learnlive.onrender.com/teacher/addcampname/${localStorage.getItem('teacher_assignid')}`,
+  axios.post(`http://localhost:5000/teacher/addcampname/${localStorage.getItem('teacher_assignid')}`,
   {
     campname:selectedCampus,
   }).then ((res)=>

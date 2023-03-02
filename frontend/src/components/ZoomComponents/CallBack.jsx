@@ -7,7 +7,7 @@ export default function Callback() {
     React.useEffect(() => {
         if (code) {
 
-          fetch('https://learnlive.onrender.com/zoomMain/connectZoom', {
+          fetch('http://localhost:5000/zoomMain/connectZoom', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

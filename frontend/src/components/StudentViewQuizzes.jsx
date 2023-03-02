@@ -40,7 +40,7 @@ import {
     const getAllQuizzes = () =>
     {
 
-        axios.get("https://learnlive.onrender.com/quizzes/samestdquiz") 
+        axios.get("http://localhost:5000/quizzes/samestdquiz") 
         .then(res=> {
           setQuizzes(res.data)
           //console.log(quizzes)

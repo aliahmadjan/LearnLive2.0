@@ -21,7 +21,7 @@ const AdminLogin = () => {
     {
         e.preventDefault();
         try {
-           const res=  await axios.post('https://learnlive.onrender.com/admin/verifylogin', {
+           const res=  await axios.post('https://marvelous-baklava-4f7cee.netlify.app/admin/verifylogin', {
                 email: email,
                 password: password,
             

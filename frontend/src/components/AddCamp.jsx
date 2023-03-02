@@ -15,7 +15,7 @@ function AddCamp() {
   const UploadCamp = (e) => {
     e.preventDefault();
 
-    axios.post("https://learnlive.onrender.com/camp/addcamp1" ,
+    axios.post("http://localhost:5000/camp/addcamp1" ,
     {
         campname: campname,
         startdate: startdate,

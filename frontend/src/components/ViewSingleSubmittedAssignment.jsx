@@ -18,7 +18,7 @@ const TeacherSingleViewSubmitAssignment=()=>
     const getSingleUser = () =>
     {
       axios
-        .get('https://learnlive.onrender.com/stdassignments/singletchassign/:',{params : {id: localStorage.getItem('ssubmitassignment_viewid')}})
+        .get('http://localhost:5000/stdassignments/singletchassign/:',{params : {id: localStorage.getItem('ssubmitassignment_viewid')}})
         .then((res) => {
           setCampName(res.data.campname);
           setTitle(res.data.title);

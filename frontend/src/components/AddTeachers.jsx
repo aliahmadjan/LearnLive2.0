@@ -37,7 +37,7 @@ const AddTeachers = () => {
   const PostTeachers =async (e) =>
   {
     e.preventDefault();
-    const url='https://learnlive.onrender.com/teacher/addteacher'
+    const url='http://localhost:5000/teacher/addteacher'
            const formData = new FormData()
            formData.append('name',name)
            formData.append('email',email)

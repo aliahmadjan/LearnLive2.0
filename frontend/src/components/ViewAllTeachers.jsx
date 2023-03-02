@@ -55,7 +55,7 @@ import { useDisclosure } from '@chakra-ui/react'
     }
     useEffect(() => {
       axios
-        .get("https://learnlive.onrender.com/teacher/getteachers")
+        .get("http://localhost:5000/teacher/getteachers")
         .then((res) => {
           setTeachers(res.data);
           setResults(res.data);
@@ -79,9 +79,9 @@ import { useDisclosure } from '@chakra-ui/react'
     const DeleteTeacher = (e) => {
       e.preventDefault();
       const teacherId = localStorage.getItem('teacher_delid');
-      axios.delete(`https://learnlive.onrender.com/teacher/deleteteacher/${teacherId}`)
+      axios.delete(`http://localhost:5000/teacher/deleteteacher/${teacherId}`)
         .then(() => {
-          axios.get('https://learnlive.onrender.com/teacher/getteachers')
+          axios.get('http://localhost:5000/teacher/getteachers')
             .then((res) => {
               // const teachers = res.data;
               setResults(res.data)

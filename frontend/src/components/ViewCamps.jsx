@@ -51,7 +51,7 @@ import {
     const getAllCamps= () =>
     {
 
-        axios.get("https://learnlive.onrender.com/camp/getcamps") 
+        axios.get("http://localhost:5000/camp/getcamps") 
         .then(res=> {
            setCamps(res.data)
            setResults(res.data)
@@ -86,9 +86,9 @@ import {
    const DeleteCamp = (e) => {
     e.preventDefault();
     const campId = localStorage.getItem('camp_delid');
-    axios.delete(`https://learnlive.onrender.com/camp/deletecamp/${campId}`)
+    axios.delete(`http://localhost:5000/camp/deletecamp/${campId}`)
       .then(() => {
-        axios.get('https://learnlive.onrender.com/camp/getcamps')
+        axios.get('http://localhost:5000/camp/getcamps')
           .then((res) => {
             setResults(res.data)
           })

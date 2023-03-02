@@ -107,7 +107,7 @@ const QuizQuesionsInfo =(props) =>
             }
         })
 
-        axios.post("https://learnlive.onrender.com/quizzes/addquiz",
+        axios.post("http://localhost:5000/quizzes/addquiz",
         {
     //    // campname: selectedCamp,
     //     //teacher:name,
@@ -127,7 +127,7 @@ const QuizQuesionsInfo =(props) =>
     const createQuiz = (event) => {
         event.preventDefault();
         
-        axios.post(`https://learnlive.onrender.com/quizzes/addquizques/${localStorage.getItem('quizID')}`,
+        axios.post(`http://localhost:5000/quizzes/addquizques/${localStorage.getItem('quizID')}`,
         {
         questions:questions
         }).then(res =>

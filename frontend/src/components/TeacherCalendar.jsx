@@ -14,7 +14,7 @@ const TeacherCalendar = props => {
 
     const getAllAssignments = () =>
     {
-    axios.get('https://learnlive.onrender.com/tchassignments/getcurrassigns') 
+    axios.get('http://localhost:5000/tchassignments/getcurrassigns') 
     .then(res=> {
       setAssignments(res.data)
   

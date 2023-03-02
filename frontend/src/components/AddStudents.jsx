@@ -41,7 +41,7 @@ const AddStudents = () => {
     } else {
       // submit the form
       e.preventDefault();
-    const url='https://learnlive.onrender.com/student/addstudent'
+    const url='http://localhost:5000/student/addstudent'
            const formData = new FormData()
            formData.append('name',name)
            formData.append('email',email)

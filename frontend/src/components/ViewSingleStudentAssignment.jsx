@@ -29,7 +29,7 @@ const StudentSingleViewAssignment=()=>
     const getSingleUser = () =>
     {
       axios
-        .get('https://learnlive.onrender.com/tchassignments/singletchassign/:',{params : {id: localStorage.getItem('assignment_viewid')}})
+        .get('http://localhost:5000/tchassignments/singletchassign/:',{params : {id: localStorage.getItem('assignment_viewid')}})
         .then((res) => {
           setCampName(res.data.campname);
           setTitle(res.data.title);
@@ -51,7 +51,7 @@ const StudentSingleViewAssignment=()=>
         e.preventDefault();
     
         axios
-        .get('https://learnlive.onrender.com/tchassignments/singletchassign/:',{params : {id: localStorage.getItem('assignment_viewid')}})
+        .get('http://localhost:5000/tchassignments/singletchassign/:',{params : {id: localStorage.getItem('assignment_viewid')}})
         .then((res) => {
           setCampName(res.data.campname);
           setTitle(res.data.title);
@@ -77,7 +77,7 @@ const StudentSingleViewAssignment=()=>
            }
     
     
-        fetch('https://learnlive.onrender.com/stdassignments/submitassigns', {
+        fetch('http://localhost:5000/stdassignments/submitassigns', {
           method: 'POST',
           
           body: formData,
