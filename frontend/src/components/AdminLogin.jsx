@@ -21,14 +21,14 @@ const AdminLogin = () => {
     {
         e.preventDefault();
         try {
-           const res=  await axios.post('https://legendary-bavarois-730d1d.netlify.app/admin/verifylogin', {
+           const res=  await axios.post('https://learnlive.onrender.com/admin/verifylogin', {
                 email: email,
                 password: password,
             
             });
             localStorage.setItem("logtoken",res.data);
             //console.log("verified")
-            navigate("https://legendary-bavarois-730d1d.netlify.app/admin");
+            navigate("/admin");
         } catch (error) {
             if (error.response) {
                 setMsg(error.response.data.msg);
