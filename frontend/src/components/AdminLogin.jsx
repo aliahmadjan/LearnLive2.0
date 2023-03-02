@@ -21,7 +21,7 @@ const AdminLogin = () => {
     {
         e.preventDefault();
         try {
-           const res=  await axios.post('http://localhost:10000/admin/verifylogin', {
+           const res=  await axios.post('https://learnlive.onrender.com/admin/verifylogin', {
                 email: email,
                 password: password,
             
