@@ -55,7 +55,7 @@ import { useDisclosure } from '@chakra-ui/react'
     }
     useEffect(() => {
       axios
-        .get("http://localhost:5000/student/getstudents")
+        .get("https://learnlive.onrender.com/student/getstudents")
         .then((res) => {
           setStudents(res.data);
           setResults(res.data)
@@ -79,7 +79,7 @@ import { useDisclosure } from '@chakra-ui/react'
       //   student.name.toLowerCase().includes(query.toLowerCase())
       //   );
         //setResults(filteredStudents);
-        axios.get('http://localhost:5000/student/getstudents')
+        axios.get('https://learnlive.onrender.com/student/getstudents')
           .then((res) => {
             setQuery(e.target.value);
       const filteredStudents = students.filter(student=>
@@ -98,9 +98,9 @@ import { useDisclosure } from '@chakra-ui/react'
   const DeleteStudent = (e) => {
     e.preventDefault();
     const studentId = localStorage.getItem('student_delid');
-    axios.delete(`http://localhost:5000/student/deletestudent/${studentId}`)
+    axios.delete(`https://learnlive.onrender.com/student/deletestudent/${studentId}`)
       .then(() => {
-        axios.get('http://localhost:5000/student/getstudents')
+        axios.get('https://learnlive.onrender.com/student/getstudents')
           .then((res) => {
             setResults(res.data)
           })

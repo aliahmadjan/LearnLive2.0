@@ -3,7 +3,12 @@ import { Box,Button, Avatar,Heading, Text, Link ,FormControl,FormLabel, Input,Ra
 import axios from "axios"
 import { Divider } from '@chakra-ui/react'
 import { useNavigate, useParams} from "react-router-dom";
-
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
 
 const EditStudentDetails = () =>
 {
@@ -15,7 +20,7 @@ const EditStudentDetails = () =>
     const [password, setPassword]= useState("");
     const [profileimg , setProfileImg]= useState("");
     const [students , setStudents]= useState([]);
-
+    const [submitStatus, setSubmitStatus] = useState(0);
     const [selectedFile, setSelectedFile] =useState(null);
     const [fileInputState, setFileInputState ] = useState("");
     const [previewSource , setPreviewSource] = useState("");
@@ -24,7 +29,7 @@ const EditStudentDetails = () =>
   const navigate = useNavigate();
     const getSingleUser = ()=>
     {
-      axios.get('http://localhost:5000/student/getstudent/:', {params : {id: localStorage.getItem('studentid')}})
+      axios.get('https://learnlive.onrender.com/student/getstudent/:', {params : {id: localStorage.getItem('studentid')}})
       .then(res=> {
         setName(res.data.name);
         setEmail(res.data.email);
@@ -41,7 +46,7 @@ const EditStudentDetails = () =>
    
     e.preventDefault();
     //setName(name);
-    axios.put(`http://localhost:5000/student/updatestudent/${localStorage.getItem('studentid')}`,
+    axios.put(`https://learnlive.onrender.com/student/updatestudent/${localStorage.getItem('studentid')}`,
     {
       name:name,
       email:email,
@@ -53,10 +58,10 @@ const EditStudentDetails = () =>
     }).then((res)=>
     {
       //console.log(category)
-      window.alert("EditSuccesFUll")
+      submitStatus(1)
     }).catch((err)=>
       {
-        window.alert("EditNOTSuccesFUll")
+       submitStatus(-1)
       })
            
   }
@@ -65,6 +70,23 @@ const EditStudentDetails = () =>
   {
     navigate("/admin/viewstudents");
   }
+
+  const StatusAlert = () => {
+    if (submitStatus === -1)
+      return (
+        <Alert status='error'>
+        <AlertIcon />
+       Student was not updated!
+      </Alert>
+      );
+    if (submitStatus === 1)
+      return (
+        <Alert status='success'>
+        <AlertIcon />
+       Student was updated!
+      </Alert>
+      );
+  };
 
   const handleFileInputChange =(e)=>
   {
@@ -214,8 +236,10 @@ const EditStudentDetails = () =>
         </Flex>
 
       </form>
+      <StatusAlert/>
     </Box>
   </Box>
+  
 
 //           <div>
 

@@ -29,7 +29,7 @@ const AssignStudents =() =>
 
     const GetCampNames = () =>
     {
-      axios.get('http://localhost:5000/camp/getcampname')
+      axios.get('https://learnlive.onrender.com/camp/getcampname')
       .then(res =>
         {
           setCampName(res.data);
@@ -46,12 +46,12 @@ const AssignStudents =() =>
     {
       e.preventDefault();
   
-    await axios.post('http://localhost:5000/camp/addcampstudents',{
+    await axios.post('https://learnlive.onrender.com/camp/addcampstudents',{
       campname:selectedCampus,
        students:`${localStorage.getItem('student_assignid')}`
     })
 
-    axios.post(`http://localhost:5000/student/addcampname/${localStorage.getItem('student_assignid')}`,
+    axios.post(`https://learnlive.onrender.com/student/addcampname/${localStorage.getItem('student_assignid')}`,
     {
       campname:selectedCampus,
     }).then ((res)=>

@@ -20,7 +20,7 @@ export default function MakeMeet() {
     function ScheduleClass(e) {
         e.preventDefault();
 
-        const zoomMainRes = fetch("http://localhost:5000/zoomMain/zoom-refresh", {
+        const zoomMainRes = fetch("https://learnlive.onrender.com/zoomMain/zoom-refresh", {
           method: "GET",
         });
         var data = JSON.stringify({
@@ -31,7 +31,7 @@ export default function MakeMeet() {
       
           var config = {
               method: 'post',
-              url: 'http://localhost:5000/zoomMain/createMeeting',
+              url: 'https://learnlive.onrender.com/zoomMain/createMeeting',
               headers: {
                   "Content-Type": "application/json; charset=UTF-8"
               },
@@ -48,7 +48,7 @@ export default function MakeMeet() {
         
             var config1 = {
                 method: 'get',
-                url: 'http://localhost:5000/zoomMeet/getData'
+                url: 'https://learnlive.onrender.com/zoomMeet/getData'
             };
         
             var zoomRes1 = axios(config1)
@@ -77,7 +77,7 @@ export default function MakeMeet() {
     {
       let logintoken = localStorage.getItem("logintoken")
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("http://localhost:5000/teacher/viewprofile")
+      axios.get("https://learnlive.onrender.com/teacher/viewprofile")
         .then(res=> {
                // console.log(res.data)
                 setUserID(res.data._id);
@@ -91,7 +91,7 @@ export default function MakeMeet() {
     {
       //console.log(userID)
     // localStorage.setItem('userID',userID)
-    axios.get('http://localhost:5000/zoomMeet/getData')
+    axios.get('https://learnlive.onrender.com/zoomMeet/getData')
         //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
         .then(res=> {
            setZoomMeets(res.data)

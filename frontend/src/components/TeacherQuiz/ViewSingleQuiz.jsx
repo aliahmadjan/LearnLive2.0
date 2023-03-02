@@ -28,7 +28,7 @@ import {
     const getSingleUser = () =>
     {
       axios
-        .get('http://localhost:5000/quizzes/getquiz/:',{params : {id: localStorage.getItem('quiz_viewid')}})
+        .get('https://learnlive.onrender.com/quizzes/getquiz/:',{params : {id: localStorage.getItem('quiz_viewid')}})
         .then((res) => {
           setCampName(res.data.campname);
           setTeacherName(res.data.teacher_name);

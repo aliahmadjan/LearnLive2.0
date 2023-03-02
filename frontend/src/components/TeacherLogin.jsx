@@ -22,7 +22,7 @@ const TeacherLogin = () => {
     {
         e.preventDefault();
         try {
-           const res=  await axios.post('http://localhost:5000/teacher/verifylogin', {
+           const res=  await axios.post('https://learnlive.onrender.com/teacher/verifylogin', {
                 email: email,
                 password: password,
             });

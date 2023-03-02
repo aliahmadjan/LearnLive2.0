@@ -23,7 +23,7 @@ import {
     const getSingleUser = () =>
     {
       axios
-         .get('http://localhost:5000/camp/getcamp/:',{params : {id: localStorage.getItem('camp_viewid')}})
+         .get('https://learnlive.onrender.com/camp/getcamp/:',{params : {id: localStorage.getItem('camp_viewid')}})
         .then((res) => {
           //setCamps(res.data);
           //console.log(camps)

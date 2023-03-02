@@ -21,7 +21,8 @@ const QuizInfo = () => {
     {
       let logintoken = localStorage.getItem("logintoken")
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("http://localhost:5000/teacher/viewprofile")
+      //axios.get("http://learnlive.onrender.com/teacher/viewprofile")
+      axios.get("https://learnlive.onrender.com/teacher/viewprofile")
         .then(res=> {
                 setUserID(res.data._id);
                 setName(res.data.name);
@@ -34,7 +35,7 @@ const QuizInfo = () => {
     {
       localStorage.setItem('userID',userID)
       //axios.get('http://localhost:5000/camp/getcampteacher/:',{params : {id:localStorage.getItem('userID')}}).then(res =>
-      axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
+      axios.get(`https://learnlive.onrender.com/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
       {
         setCampName(res.data);
   
@@ -74,7 +75,7 @@ const QuizInfo = () => {
             }
         })
         
-        axios.post("http://localhost:5000/quizzes/addquiz",
+        axios.post("https://learnlive.onrender.com/quizzes/addquiz",
         {
          campname: selectedCamp,
          teacher:userID,

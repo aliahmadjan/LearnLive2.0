@@ -12,7 +12,7 @@ export default function StudentViewMeets() {
     {
       let logintoken = localStorage.getItem("logintoken")
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("http://localhost:5000/teacher/viewprofile")
+      axios.get("https://learnlive.onrender.com/teacher/viewprofile")
         .then(res=> {
                 setUserID(res.data._id);
                 localStorage.setItem('userID',res.data._id)
@@ -23,7 +23,7 @@ export default function StudentViewMeets() {
 
     const getAllMeets= () =>
     {
-    axios.get('http://localhost:5000/zoomMeet/getData')
+    axios.get('https://learnlive.onrender.com/zoomMeet/getData')
         .then(res=> {
            setZoomMeets(res.data)
     }).catch (err=> {

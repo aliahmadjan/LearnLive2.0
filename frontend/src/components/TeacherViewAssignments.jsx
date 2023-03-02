@@ -42,7 +42,7 @@ import {
     {
       let logintoken = localStorage.getItem("logintoken")
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("http://localhost:5000/teacher/viewprofile")
+      axios.get("https://learnlive.onrender.com/teacher/viewprofile")
         .then(res=> {
                // console.log(res.data)
                 setUserID(res.data._id);
@@ -57,7 +57,7 @@ import {
     {
       //console.log(userID)
      //localStorage.setItem('userID',userID)
-    axios.get('http://localhost:5000/tchassignments/getcurrassigns' )
+    axios.get('https://learnlive.onrender.com/tchassignments/getcurrassigns' )
    // axios.get('http://localhost:5000/tchassignments/gettchassigns')
         //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
         .then(res=> {

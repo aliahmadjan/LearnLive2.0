@@ -21,7 +21,7 @@ const StudentLogin = () => {
 
         e.preventDefault();
         try {
-           const res=  await axios.post('http://localhost:5000/student/verifylogin', {
+           const res=  await axios.post('https://learnlive.onrender.com/student/verifylogin', {
                 email: email,
                 password: password,
             });

@@ -41,7 +41,7 @@ export default function StudentSidebar({navSize, changeNavSize}) {
     {
       let logintoken = localStorage.getItem("ltoken")
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("http://localhost:5000/student/viewprofile")
+      axios.get("https://learnlive.onrender.com/student/viewprofile")
         .then(res=> {
                 setUserID(res.data._id);
                 setName(res.data.name);

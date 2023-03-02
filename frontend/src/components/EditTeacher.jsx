@@ -3,6 +3,12 @@ import { Box,Button, Avatar,Heading, Text, Link ,FormControl,FormLabel, Input,Ra
 import axios from "axios"
 import { Divider } from '@chakra-ui/react'
 import { useNavigate, useParams} from "react-router-dom";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
 
 
 const EditTeacherDetails = (props) =>
@@ -16,7 +22,7 @@ const EditTeacherDetails = (props) =>
     const [profileimg , setProfileImg]= useState("");
     const [campname , setCampName] = useState("");
     const [teachers , setTeachers]= useState([]);
-
+    const [submitStatus, setSubmitStatus] = useState(0);
     const [selectedFile, setSelectedFile] =useState(null);
     const [fileInputState, setFileInputState ] = useState("");
     const [previewSource , setPreviewSource] = useState("");
@@ -28,7 +34,7 @@ const EditTeacherDetails = (props) =>
     const getSingleUser = () =>
     {
       axios
-        .get('http://localhost:5000/teacher/getteacher/:',{params : {id: localStorage.getItem('teacherid')}})
+        .get('https://learnlive.onrender.com/teacher/getteacher/:',{params : {id: localStorage.getItem('teacherid')}})
         .then((res) => {
           setName(res.data.name);
           setEmail(res.data.email);
@@ -51,7 +57,7 @@ const EditTeacherDetails = (props) =>
     e.preventDefault();
    // ${localStorage.getItem('teacherid')}
     //setName(name);
-    axios.put(`http://localhost:5000/teacher/updateteacher/${localStorage.getItem('teacherid')}`,
+    axios.put(`https://learnlive.onrender.com/teacher/updateteacher/${localStorage.getItem('teacherid')}`,
     {
       name:name,
       email:email,
@@ -62,13 +68,30 @@ const EditTeacherDetails = (props) =>
     }).then((res)=>
     {
       //console.log(category)
-      window.alert("EditSuccesFUll")
+      submitStatus(1)
     }).catch((err)=>
       {
-        window.alert("EditNOTSuccesFUll")
+        submitStatus(-1)
       })
            
   }
+
+  const StatusAlert = () => {
+    if (submitStatus === -1)
+      return (
+        <Alert status='error'>
+        <AlertIcon />
+       Teacher was not updated!
+      </Alert>
+      );
+    if (submitStatus === 1)
+      return (
+        <Alert status='success'>
+        <AlertIcon />
+       Teacher was updated!
+      </Alert>
+      );
+  };
 
   const Back = ()=>
   {
@@ -224,6 +247,7 @@ const EditTeacherDetails = (props) =>
         </Flex>
 
       </form>
+      <StatusAlert/>
     </Box>
   </Box>
 
