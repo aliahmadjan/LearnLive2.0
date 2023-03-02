@@ -22,7 +22,7 @@ function AdminSettings() {
   {
     let logintoken = localStorage.getItem("logtoken")
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-    axios.get("https://learnlive-backend.netlify.app/admin/viewprofile")
+    axios.get("http://localhost:5000/admin/viewprofile")
       .then(res=> {
               setUserID(res.data._id);
       }).catch (err=> {
@@ -37,7 +37,7 @@ function AdminSettings() {
       setSubmitStatus(-1)
     }
     else{
-    axios.put(`https://learnlive-backend.netlify.app/admin/updateadmin/${userID}` ,
+    axios.put(`http://localhost:5000/admin/updateadmin/${userID}` ,
     {
       password:password,
       cpassword: cpassword,
