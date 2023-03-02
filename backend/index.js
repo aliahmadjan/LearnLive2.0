@@ -9,10 +9,6 @@ const bodyParser = require('body-parser')
 const KJUR = require('jsrsasign')
 const axios = require("axios")
 
-
-
-
-
 const app = express();
 const port = process.env.PORT || 5000;
 //const port= process.env.BASE_URL
