@@ -21,7 +21,7 @@ const AdminLogin = () => {
     {
         e.preventDefault();
         try {
-           const res=  await axios.post('https://sea-lion-app-7u3ed.ondigitalocean.app:8080/admin/verifylogin', {
+           const res=  await axios.post('https://marvelous-baklava-4f7cee.netlify.app/admin/verifylogin', {
                 email: email,
                 password: password,
             
