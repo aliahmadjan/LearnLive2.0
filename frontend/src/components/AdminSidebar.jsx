@@ -44,10 +44,6 @@ export default function AdminSidebar({navSize, changeNavSize}) {
 
     const getCuurentUser = () =>
     {
-        if(!localStorage.getItem("logintoken"))
-        {
-                naviagte('/');
-        }
       let logintoken = localStorage.getItem("logtoken")
       axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
       axios.get("https://learnlive.onrender.com/admin/viewprofile")
