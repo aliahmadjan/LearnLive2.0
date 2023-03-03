@@ -55,7 +55,7 @@ import { useDisclosure } from '@chakra-ui/react'
     }
     useEffect(() => {
       axios
-        .get("http://localhost:5000/teacher/getteachers")
+        .get("https://learnlive.onrender.com/teacher/getteachers")
         .then((res) => {
           setTeachers(res.data);
           setResults(res.data);
