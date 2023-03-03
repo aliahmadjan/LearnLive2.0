@@ -4,7 +4,6 @@ import { Box } from '@chakra-ui/react'
 import LoginPage from './LoginPage'
 import StudentDashboard from './StudentDashboard'
 import TeacherDashboard from './TeacherDashboard'
-import ViewProfileTeacher from './ViewProfileTeacher'
 import useStore from '../store'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import AdminDashboard from './AdminDashboard'
