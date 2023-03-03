@@ -1,6 +1,6 @@
 import { Heading, Text, VStack, Flex, Container, SimpleGrid, GridItem, FormControl, FormLabel, Input, Button, Image, color } from '@chakra-ui/react'
 import React, {useContext,useEffect, useState} from 'react'
-import LogInNavBar from '../components/LogInNavBar'
+import LogInNavBar from './LogInNavBar'
 import useStore from '../store'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'

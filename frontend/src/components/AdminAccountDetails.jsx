@@ -15,7 +15,7 @@ const AdminAccountDetails = () => {
   {
     let logintoken = localStorage.getItem("logtoken")
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-    axios.get("https://marvelous-baklava-4f7cee.netlify.app/admin/viewprofile")
+    axios.get("https://learnlive.onrender.com/admin/viewprofile")
       .then(res=> {
               setUserID(res.data._id);
               setName(res.data.name);
