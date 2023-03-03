@@ -17,6 +17,7 @@ const AdminAccountDetails = () => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
     axios.get("https://learnlive.onrender.com/admin/viewprofile")
       .then(res=> {
+        console.log(res.data);
               setUserID(res.data._id);
               setName(res.data.name);
               setEmail(res.data.email);
