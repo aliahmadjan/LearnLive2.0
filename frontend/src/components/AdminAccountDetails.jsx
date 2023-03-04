@@ -15,7 +15,7 @@ const AdminAccountDetails = () => {
   {
     let logintoken = localStorage.getItem("logtoken")
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-    axios.get("https://learnlive.onrender.com/admin/viewprofile")
+    axios.get("http://localhost:5000/admin/viewprofile")
       .then(res=> {
         console.log(res.data);
               setUserID(res.data._id);
