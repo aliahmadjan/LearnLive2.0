@@ -18,29 +18,31 @@ const studentAssignmentsSchema = new moongose.Schema({
         type: String
     },
 
+  
     tmarks : {
         type: Number
     },
 
     duedate: {
-        type: Date,
-        timestamps: false
+        type: String,
+    
     },
    
 
     uplassign: {
         type: Array
     },
+    student_name: {
+        type: String
+     },
 
     student:{
-        type: Schema.Types.ObjectId,
-        ref: 'Student'
+        type: String
     },
 
-    quizid: {
-        type: Schema.Types.ObjectId,
-        ref: 'Quizzes'
-    }
+   assignment_id:{
+    type: String
+   }
   
 });
 

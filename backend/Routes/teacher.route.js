@@ -99,7 +99,7 @@ router.post('/addteacher',  upload.single('profileimg'),async (req,res,next) =>
 
 router.post('/verifylogin',TeacherController.VerifyLogin)
 
-router.post('/addcampname/:id',TeacherController.AddCampname);
+//router.post('/addcampname/:id',TeacherController.AddCampname);
 
 router.get('/getteachers',TeacherController.GetTeachers)
 

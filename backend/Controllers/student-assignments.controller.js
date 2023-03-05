@@ -6,7 +6,7 @@ const TeacherAssignments = require('../Models/teacher-assignments.model')
 
 const GetSubmittedAssignments = async (req, res, next) => {
     const teacherAssignmentId = req.params.teacherAssignmentId; // get the teacher assignment id from the request parameter
-    const stdass = await StudentAssignments.find({ quizid: teacherAssignmentId }); // only find submitted assignments that match the teacher assignment id
+    const stdass = await StudentAssignments.find({ assignment_id: teacherAssignmentId }); // only find submitted assignments that match the teacher assignment id
     res.send(stdass);
   };
 

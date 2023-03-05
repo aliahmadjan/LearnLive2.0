@@ -8,22 +8,9 @@ export default function StudentViewMeets() {
     const [userID , setUserID] = useState("")
     const [ students , setStudents] =useState('')
 
-    const getCurentUser = () =>
-    {
-      let logintoken = localStorage.getItem("logintoken")
-      axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("http://localhost:5000/teacher/viewprofile")
-        .then(res=> {
-                setUserID(res.data._id);
-                localStorage.setItem('userID',res.data._id)
-                setStudents(res.data.name);
-        }).catch (err=> {
-            console.log(err) })
-    }
-
     const getAllMeets= () =>
     {
-    axios.get('http://localhost:5000/zoomMeet/getData')
+    axios.get('http://localhost:5000/zoomMeet/getcurrcampclasses')
         .then(res=> {
            setZoomMeets(res.data)
     }).catch (err=> {
@@ -36,8 +23,7 @@ export default function StudentViewMeets() {
    useEffect(()=>
    {   
     getAllMeets();
-    getCurentUser();
-   })
+   },[zoommeets])
     return (
 
     

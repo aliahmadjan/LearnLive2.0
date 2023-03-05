@@ -42,18 +42,21 @@ router.get('/samestdquiz',TokenStudent, async(req,res)=>
 {
   //console.log(req.teacher._id.toHexString())
   const tchquiz =  await Quizzes.find()
-  const std = await Student.find()
     const arr= [];
 
     for(let i=0; i<tchquiz.length; i++)
    {
-       if (req.student.campname === tchquiz[i].campname)
+       if (req.student.campname.includes(tchquiz[i].campname))
        {
         arr.push(tchquiz[i] )
       }
   }
   res.send(arr)
 })
+
+
+
+
 router.get('/getquiz/:id',QuizzesController.GetSingleQuiz);
 
 router.delete('/deletequiz/:id',QuizzesController.DeleteQuiz);

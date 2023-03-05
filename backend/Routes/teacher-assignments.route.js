@@ -126,7 +126,7 @@ router.get('/samestdassign',TokenStudent, async(req,res)=>
     const arr= [];
     for(let i=0; i<tchass.length; i++)
    {
-       if (req.student.campname === tchass[i].campname)
+       if (req.student.campname.includes(tchass[i].campname))
        {
         arr.push(tchass[i])
       }

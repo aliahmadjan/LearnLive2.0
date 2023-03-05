@@ -32,9 +32,10 @@ const studentSchema = new moongose.Schema({
     profileimg: {
         type: String
     },
-    campname: {
-        type: String
-    },
+    campname: 
+{
+    type: Array
+        },
        tokens : [
 {
     token: {

@@ -40,10 +40,9 @@ import {
 
     const getAllAssignments= () =>
     {
-
         axios.get("http://localhost:5000/tchassignments/samestdassign") 
         .then(res=> {
-          console.log(res.data)
+          //console.log(res.data)
           setAssignments(res.data)
           //console.log(quizzes)
     }).catch (err=> {
@@ -57,7 +56,7 @@ import {
    { 
   
     getAllAssignments();
-   },[])
+   },[assignments])
 
 
 
