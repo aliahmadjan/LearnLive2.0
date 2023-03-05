@@ -47,7 +47,7 @@ const TeacherDashboard = () => {
             <TeacherSidebar navSize={navSize} changeNavSize={ (size) => changeNavSize(size) }></TeacherSidebar>
             <Flex 
                 w={ navSize=="small" ? "95%" : "85%"} 
-                mt={4} ml={6} mr={1} borderRadius={30}
+                mt={4} borderRadius={30}
                 backgroundColor={'#FFFFFF'}>
 
                 <Routes>

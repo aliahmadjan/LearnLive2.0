@@ -38,9 +38,9 @@ const TeacherLogin = () => {
     }
 
   return (
-    <Container maxW="full" p={0} bg='orange.100' >
+    <Container maxW="full" h="88vh" bg='orange.100' >
 
-        <Flex h={{base: "full", md: '90vh'}} 
+        <Flex h={{base: "full", md: '88vh'}} 
             py={{base: '12'}} 
             px={{base: '10px', md: "20px", lg:"140px"}} 
             align="center" justify="space-between" 
@@ -62,7 +62,7 @@ const TeacherLogin = () => {
                              name='email'
                               label='Email'
                             variant={'filled'}
-                             placeholder='Username'
+                             placeholder='Email'
                              required/>  
                         </FormControl>
                     </GridItem>

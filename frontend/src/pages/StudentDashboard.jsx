@@ -30,7 +30,7 @@ const StudentDashboard = () => {
         <StudentSidebar navSize={navSize} changeNavSize={ (size) => changeNavSize(size) }></StudentSidebar>
             <Flex 
                 w={ navSize=="small" ? "95%" : "85%"} 
-                mt={4} ml={6} mr={1} borderRadius={30}
+                mt={4} borderRadius={30}
                 backgroundColor={'#FFFFFF'}>
 
                 <Routes>
