@@ -10,8 +10,8 @@ const KJUR = require('jsrsasign')
 const axios = require("axios")
 
 const app = express();
-//const port = process.env.PORT || 5000;
-const port = process.env.PORT || 10000;
+const port = process.env.PORT || 5000;
+// const port = process.env.PORT || 10000;
 //const port= process.env.BASE_URL
 //const port = "https://main--reliable-biscuit-f62ccb.netlify.app";
 

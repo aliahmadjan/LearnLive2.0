@@ -82,16 +82,12 @@ const StudentLogin = () => {
                         </FormControl>
                     </GridItem>
 
-                    <GridItem colSpan={2} textAlign="end">
-                        <Text fontSize={'xs'} color="gray">Forgot Password?</Text>
+                    <GridItem colSpan={2}>
+                        <Button variant='solid' width="100%" colorScheme='brand1' onClick={LoginStudent}>Log In</Button>
                     </GridItem>
 
-                    <GridItem colSpan={1}>
-                        <Button variant='ghost'>Sign Up</Button>
-                    </GridItem>
-
-                    <GridItem colSpan={1}>
-                        <Button variant='solid' colorScheme='brand1' onClick={LoginStudent}>Log In</Button>
+                    <GridItem colSpan={2} textAlign="center">
+                        <Text fontSize={'xs'} color="black">Forgotten Password?</Text>
                     </GridItem>
 
                 </SimpleGrid>

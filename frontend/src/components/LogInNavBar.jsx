@@ -8,7 +8,7 @@ const LogInNavBar = () => {
 
   return (
     <Stack justifyContent={"space-between"} p={2}  boxShadow="md" direction={"row"}>
-        <Img w={10} src="logo.png"></Img>
+        <Img width="140px" src="LearnLiveLogo.png"></Img>
         <HStack>
             <Button variant={"outline"} colorScheme="facebook" onClick={ () => changeUser("admin")}>Admin Login</Button>
             <Button variant={"outline"} colorScheme="brand1" onClick={ () => changeUser("teacher")}>Teacher Login</Button>
