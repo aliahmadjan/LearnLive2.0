@@ -5,11 +5,11 @@ const Camp = require('../Models/camp.model')
 const CampController = require('../Controllers/camp.controller')
 const StudentController = require('../Controllers/student.controller')
 
-router.post('/addcampteachers',CampController.VerifyAndAddCampTeachers);
+router.post('/addcampteachers/:id',CampController.VerifyAndAddCampTeachers);
 
-router.post('/addcampstudents',CampController.VerifyAndAddCampStudents)
+router.post('/addcampstudents/:id',CampController.VerifyAndAddCampStudents)
 
-router.post('/addcamp1',CampController.AddCamp1);
+router.post('/addcamp',CampController.AddCamp);
 
 //router.post('/addcampname',CampController.AddCampname)
 

@@ -5,12 +5,19 @@ import { useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Viewer } from 'react-doc-viewer';
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
 
 //import DatePicker from "react-datepicker"
 //import 'react-datepicker/dist/react-datepicker.css';
 //import  DatePicker  from '@chakra-ui/react';
 
 function TeacherUploadAssignment() {
+  const [submitStatus, setSubmitStatus] = useState(0);
   const [userID , setUserID] = useState("");
   const [campname , setCampName] = useState([]);
   const [selectedCamp , setSelectedCamp] = useState([]);
@@ -102,10 +109,34 @@ function TeacherUploadAssignment() {
       body: formData,
     
     })
-      .then((res) => res.json())
+      .then((res) =>     
+      {
+        setSubmitStatus(1)
+        res.json()
+        })
       .then((data) => console.log(data))
-      .catch((err) => console.error(err));
+      .catch((err) => 
+      {
+        setSubmitStatus(-1)
+        console.error(err)});
  
+  };
+
+  const StatusAlert = () => {
+    if (submitStatus === -1)
+      return (
+        <Alert status='error'>
+        <AlertIcon />
+       Assignment was not uploaded!
+      </Alert>
+      );
+    if (submitStatus === 1)
+      return (
+        <Alert status='success'>
+        <AlertIcon />
+        Assignment was uploaded!
+      </Alert>
+      );
   };
 
   useEffect(()=>
@@ -269,8 +300,7 @@ function TeacherUploadAssignment() {
           focusBorderColor='orange.700' 
           variant={'flushed'} 
           borderBottomColor='orange'
-          accept="application/pdf , image/png , .zip , 
-          .docx"
+          accept="application/pdf , image/png"
           onChange={onSelectFile}
           name="uplassign"
           isRequired
@@ -334,7 +364,7 @@ function TeacherUploadAssignment() {
       </Button>
 
       </form>
-       
+       <StatusAlert/>
     
 
   </Box>

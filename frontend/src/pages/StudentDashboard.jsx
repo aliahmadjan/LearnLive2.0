@@ -6,12 +6,14 @@ import { Route, Routes } from 'react-router-dom'
 import StudentAccountDetails from '../components/StudentAccountDetails'
 import ViewAssignments from '../components/StudentViewAssignments'
 import StudentSingleViewAssignment from '../components/ViewSingleStudentAssignment'
+//import AssignmentForm from '../components/AssignmentForm'
 import StudentSettings from '../components/StudentSettings'
 import StudentCalendar from '../components/StudentCalendar'
 import ViewQuizzes from '../components/StudentViewQuizzes'
 import StudentAttemptQuiz from '../components/StudentAttemptQuiz'
 import StudentQuizResult from '../components/StudentQuizResult'
 import StudentViewMeets from '../components/ZoomComponents/StudentViewMeets'
+import ViewAssignmentMarks from '../components/ViewAssignmentMarks'
 
 const StudentDashboard = () => {
     
@@ -39,6 +41,7 @@ const StudentDashboard = () => {
                     <Route path="attemptquiz" element={<StudentAttemptQuiz/>}/>
                     <Route path="quizresult" element={<StudentQuizResult />} />
                     <Route path="viewassignment" element={<StudentSingleViewAssignment/>}/>
+                    <Route path="viewassignmentmarks" element={<ViewAssignmentMarks/>}/>
                     <Route path="viewmeets" element={<StudentViewMeets/>}/>
                     <Route path="calendar" element={<StudentCalendar />}/>
                     <Route path="settings" element={<StudentSettings />} />

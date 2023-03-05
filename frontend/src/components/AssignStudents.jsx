@@ -15,7 +15,7 @@ const AssignStudents =() =>
 
     const [campname , setCampName]= useState("");
     const [students , setStudents]= useState([]);
-    const [selectedCampus, setSelectedCampus] = useState("");
+    const [selectedCampus, setSelectedCampus] = useState([]);
     const [searches, setSearches] = useState([])
 
     const [submitStatus, setSubmitStatus] = useState(0);
@@ -46,22 +46,28 @@ const AssignStudents =() =>
     {
       e.preventDefault();
   
-    await axios.post('http://localhost:5000/camp/addcampstudents',{
+    await axios.post(`http://localhost:5000/camp/addcampstudents/${localStorage.getItem('student_assignid')}`,{
       campname:selectedCampus,
        students:`${localStorage.getItem('student_assignid')}`
-    })
-
-    axios.post(`http://localhost:5000/student/addcampname/${localStorage.getItem('student_assignid')}`,
-    {
-      campname:selectedCampus,
-    }).then ((res)=>
+    }).then((res)=>
     {
       setSubmitStatus(1);
-      //console.log(res.data)
     }).catch((err)=>
     {
       setSubmitStatus(-1)
     })
+
+    // axios.post(`http://localhost:5000/student/addcampname/${localStorage.getItem('student_assignid')}`,
+    // {
+    //   campname:selectedCampus,
+    // }).then ((res)=>
+    // {
+    //   setSubmitStatus(1);
+    //   //console.log(res.data)
+    // }).catch((err)=>
+    // {
+    //   setSubmitStatus(-1)
+    // })
 
     }
 

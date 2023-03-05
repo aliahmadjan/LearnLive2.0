@@ -2,12 +2,18 @@ import React from "react";
 import { Grid,Select, Box, FormControl, FormLabel, Input, Text, FormErrorMessage, Button, Heading, Flex } from "@chakra-ui/react";
 import { useState , useEffect} from "react";
 import axios from "axios"
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
 
 export default function MakeMeet() {
     const CLIENT_ID="AmLk_2YKQhyCHIsewBxyJA"
     const REDIRECT_URL="https://localhost:3000/teacher/oauth-callback"
+    const [submitStatus, setSubmitStatus] = useState(0);
     const [email , setEmail] = useState("");
-    const [selectedCamp , setSelectedCamp] = useState("");
     const [duration , setDuration] = useState();
     const [agenda , setAgenda] = useState("");
     const [zoom_id , setZoomid] = useState("");
@@ -17,57 +23,9 @@ export default function MakeMeet() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [campname, setCampName] = useState("");
-    function ScheduleClass(e) {
-        e.preventDefault();
-
-        const zoomMainRes = fetch("http://localhost:5000/zoomMain/zoom-refresh", {
-          method: "GET",
-        });
-        var data = JSON.stringify({
-            duration: duration,
-            agenda: agenda,
-            campname: campname
-          });
-      
-          var config = {
-              method: 'post',
-              url: 'http://localhost:5000/zoomMain/createMeeting',
-              headers: {
-                  "Content-Type": "application/json; charset=UTF-8"
-              },
-              data: data
-          };
-      
-          var zoomRes = axios(config)
-              .then(function (response) {
-                  return response;
-              })
-              .catch(function (error) {
-                  return error;
-              });
-        
-            var config1 = {
-                method: 'get',
-                url: 'http://localhost:5000/zoomMeet/getData'
-            };
-        
-            var zoomRes1 = axios(config1)
-                .then(function (response) {
-                    setAgenda(response.data.agenda);
-                    setDuration(response.data.duration);
-                    setEmail(response.data.email);
-                    setJoinUrl(response.data.join_url);
-                    setPasscode(response.data.passcode);
-                    setStartUrl(response.data.start_url);
-                    setZoomid(response.data.zoom_id);
-                    return response;
-                })
-                .catch(function (error) {
-                    return error;
-                });
-            //console.log(zoomRes1)
-            //mydata = zoomRes1.data
-    }
+    const [selectedCamp , setSelectedCamp] = useState([]);
+    const [teacher , setTeacher] = useState("");
+    
 
     const [zoommeets , setZoomMeets] = useState([]);
     const [userID , setUserID] = useState("")
@@ -87,26 +45,96 @@ export default function MakeMeet() {
             console.log(err) })
     }
 
-    const getAllMeets= () =>
+    const getCurrentCampName = (userID) =>
     {
-      //console.log(userID)
-    // localStorage.setItem('userID',userID)
-    axios.get('http://localhost:5000/zoomMeet/getData')
-        //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
-        .then(res=> {
-           setZoomMeets(res.data)
-           setStartUrl(res.data.start_url)
-    }).catch (err=> {
-       console.log(err) })
-    
+      localStorage.setItem('userID',userID)
+      //axios.get('http://localhost:5000/camp/getcampteacher/:'}).then(res =>
+      axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
+      {
+        setCampName(res.data);
+  
+      }).catch(err =>
+        {
+          console.log(err);
+        })
     }
- 
 
+    function ScheduleClass(e) {
+      e.preventDefault();
+
+      const zoomMainRes = fetch("http://localhost:5000/zoomMain/zoom-refresh", {
+        method: "GET",
+      });
+      var data = JSON.stringify({
+          duration: duration,
+          agenda: agenda,
+          campname: selectedCamp,
+          teacher: userID
+        });
+    
+        var config = {
+            method: 'post',
+            url: 'http://localhost:5000/zoomMain/createMeeting',
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8"
+            },
+            data: data
+        };
+    
+        var zoomRes = axios(config)
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                return error;
+            });
+      
+          var config1 = {
+              method: 'get',
+              url: 'http://localhost:5000/zoomMeet/getData'
+          };
+      
+          var zoomRes1 = axios(config1)
+              .then(function (response) {
+                  setAgenda(response.data.agenda);
+                  setDuration(response.data.duration);
+                  setEmail(response.data.email);
+                  setJoinUrl(response.data.join_url);
+                  setPasscode(response.data.passcode);
+                  setStartUrl(response.data.start_url);
+                  setZoomid(response.data.zoom_id);
+                  setTeacher(response.data.userID)
+                  setSubmitStatus(1)
+                  return response;
+                  
+              })
+              .catch(function (error) {
+                  setSubmitStatus(-1)
+              });
+          //console.log(zoomRes1)
+          //mydata = zoomRes1.data
+  }
+  const StatusAlert = () => {
+    if (submitStatus === -1)
+      return (
+        <Alert status='error'>
+        <AlertIcon />
+       Class has not been created!
+      </Alert>
+      );
+    if (submitStatus === 1)
+      return (
+        <Alert status='success'>
+        <AlertIcon />
+        Class has been created!
+      </Alert>
+      );
+  };
     
    useEffect(()=>
-   {   
-    getAllMeets();
+   {  
     getCurentUser();
+    getCurrentCampName(userID);
    })
     return (
 
@@ -130,22 +158,33 @@ export default function MakeMeet() {
         <Box border={'1px solid orange'} maxW='2xl' mx='auto' borderRadius='20px' p={4} >
   
             
-            <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel htmlFor="campname" fontWeight="bold" color="orange.500" mr={2}>Camp</FormLabel>
-              <Input
-              id="campname"
-              name="campname"
+        <FormControl mb={2} display={'flex'} alignItems='center'>
+            <FormLabel htmlFor="camp" fontWeight="bold" color="orange.500" mr={2}>Camp Name</FormLabel>
+
+            <Select
               textAlign={'center'}
               focusBorderColor='orange.700' 
               variant={'flushed'} 
               borderBottomColor='orange'
-              onChange={(e) => setCampName(e.target.value)}
-              value={campname}
               isRequired
               width={'60%'} 
               mr={0} ml='auto'
-              />
-            </FormControl>
+              id='camp' name='camp'
+              value={selectedCamp}
+              onChange={e => setSelectedCamp(e.target.value)}>
+
+              <option value="" disabled>
+                  Select
+              </option>
+
+                {Array.isArray(campname) && campname.map((campname) => (  
+                
+                <option value={campname}>{campname}</option>
+
+                ))} 
+
+            </Select> 
+          </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
               <FormLabel htmlFor="agenda" fontWeight="bold" color="orange.500" mr={2}>Agenda</FormLabel>
@@ -191,31 +230,10 @@ export default function MakeMeet() {
         </Button>
   
         </form>
+        <StatusAlert/>
 
-        <Box pt={4} pb={2} mt={4} >
-        <Heading mb={4} >
-          Classes
-        </Heading>
+    
       </Box>
-        {zoommeets.map((meets) => (  
-          <Box ml={0} >
-          <Text>
-          Camp: {meets.campname}
-          </Text> 
-          <Text>
-          Agenda: {meets.agenda}
-          </Text> 
-          <Text>
-          Duration: {meets.duration}
-          </Text>
-          <form action={meets.start_url} target="_blank">
-            <Button m={4} type='submit' colorScheme='orange' variant='solid'>
-                Start
-            </Button> 
-          </form>
-        </Box>
-        ))}
-    </Box>
     );
 
 }

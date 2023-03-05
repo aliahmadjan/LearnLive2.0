@@ -33,7 +33,7 @@ const teacherSchema = new moongose.Schema({
     },
 
     campname:{
-        type: String
+        type: Array
     },
        tokens : [
 {

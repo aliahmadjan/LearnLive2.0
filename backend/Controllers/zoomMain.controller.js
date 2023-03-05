@@ -295,7 +295,7 @@ const createMeeting = async (req,res,next) => {
           });
       
       var data2 = JSON.stringify({
-        zoom_id: zoomRes1.data.id,
+        zoom_id: zoomRes1.data._id,
         host_email: zoomRes1.data.host_email,
         topic: zoomRes1.data.topic,
         start_time: zoomRes1.data.start_time,
@@ -304,7 +304,8 @@ const createMeeting = async (req,res,next) => {
         start_url: zoomRes1.data.start_url,
         join_url: zoomRes1.data.join_url,
         password: zoomRes1.data.password,
-        campname: req.body.campname
+        campname: req.body.campname,
+        teacher: req.body.teacher
       });
   
       var config2 = {

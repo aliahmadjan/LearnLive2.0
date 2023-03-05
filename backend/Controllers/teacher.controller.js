@@ -37,7 +37,7 @@ const AddTeacher = (req,res,next) =>
           phoneno,
           password,
           cpassword,
-          campname,
+          
         })
         try{
           await teacher.save();
@@ -153,17 +153,17 @@ const UpdateTeacher = async(req,res,next) =>
         })
     }
 
-    const AddCampname = (req,res,next) => {
-      const {campname} = req.body;
-      const teacherID = req.params.id;
+    // const AddCampname = (req,res,next) => {
+    //   const {campname} = req.body;
+    //   const teacherID = req.params.id;
     
-      Teacher.findByIdAndUpdate({_id: teacherID}, {campname:campname}).exec((err, result) => {
-        if(err) res.status(500).send({message: err.message});
-        else {
-          res.status(200).send(result);
-             }
-        })
-      }
+    //   Teacher.findByIdAndUpdate({_id: teacherID}, {campname:campname}).exec((err, result) => {
+    //     if(err) res.status(500).send({message: err.message});
+    //     else {
+    //       res.status(200).send(result);
+    //          }
+    //     })
+    //   }
     
 
 exports.AddTeacher=AddTeacher;
@@ -173,6 +173,6 @@ exports.GetSingleTeacher = GetSingleTeacher;
 exports.UpdateTeacher = UpdateTeacher;
 exports.DeleteTeacher = DeleteTeacher;
 //exports.SetDeleteTeacherId = SetDeleteTeacherId;
-exports.AddCampname = AddCampname;
+//exports.AddCampname = AddCampname;
 //exports.AddFollowing = AddFollowing;
 //exports.AddFollow = AddFollow;

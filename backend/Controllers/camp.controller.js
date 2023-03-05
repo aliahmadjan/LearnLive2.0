@@ -1,6 +1,7 @@
 const express = require('express');
 const https = require('https');
 const Camp = require('../Models/camp.model');
+const Teacher = require('../Models/teacher.model')
 const Student = require('../Models/student.model')
 
 const jwt = require('jsonwebtoken');
@@ -8,76 +9,106 @@ const router = express.Router()
 
 const VerifyAndAddCampTeachers =  async(req,res,next) =>
 {
-        const {campname, teachers , students} = req.body;
-        try{
-          const camp= await Camp.findOne({campname:campname, teachers:teachers})
-        
-        if (camp) {
-          //console.log("Teacher is present in the camp");
-          res.status(200).json(camp);
-      }
-      else {
-        //console.log("Teacher not found in the camp, adding the teacher...");
-        Camp.updateOne({"campname" : campname}, {$push: {teachers: teachers , students:students}}).exec((err, result) => {
-            if(err) res.status(500).send({message: err.message});
-            else {
-                res.status(200).send(result);
-            }
-        }) 
-      }
+  const { campname, teachers, students } = req.body;
+  const teacherID = req.params.id;
+  try {
+    const student = await Teacher.findOne({ _id: teacherID, campname: campname });
+    if (student) {
+      // The student is already added to the camp.
+      res.status(200).json(student);
+    } else {
+      // The student is not added to the camp, so add them along with the teacher.
+      const result = await Camp.updateOne(
+        { campname: campname },
+        { $push: { teachers: teachers, students: students } }
+      );
+      // Add the campname to the student's campname array.
+      await Teacher.findByIdAndUpdate(
+        { _id: teacherID },
+        { $push: { campname: campname } }
+      );
+      res.status(200).json(result);
     }
-    catch (err) {
-      console.log(err);
-      res.status(500).json("Internal server error");
-     }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json("Internal server error");
+  }
     
 }
-
-const VerifyAndAddCampStudents =  async(req,res,next) =>
-{
-        const {campname, teachers , students} = req.body;
-        try{
-          const camp= await Camp.findOne({campname:campname, students:students})
-        
-        if (camp) {
-          //console.log("Teacher is present in the camp");
-          res.status(200).json(camp);
-      }
-      else {
-        //console.log("Teacher not found in the camp, adding the teacher...");
-        Camp.updateOne({"campname" : campname}, {$push: {teachers: teachers , students:students}}).exec((err, result) => {
-            if(err) res.status(500).send({message: err.message});
-            else {
-                res.status(200).send(result);
-            }
-        }) 
-      }
+const VerifyAndAddCampStudents = async (req, res, next) => {
+  const { campname, teachers, students } = req.body;
+  const studentID = req.params.id;
+  try {
+    const student = await Student.findOne({ _id: studentID, campname: campname });
+    if (student) {
+      // The student is already added to the camp.
+      res.status(200).json(student);
+    } else {
+      // The student is not added to the camp, so add them along with the teacher.
+      const result = await Camp.updateOne(
+        { campname: campname },
+        { $push: { teachers: teachers, students: students } }
+      );
+      // Add the campname to the student's campname array.
+      await Student.findByIdAndUpdate(
+        { _id: studentID },
+        { $push: { campname: campname } }
+      );
+      res.status(200).json(result);
     }
-    catch (err) {
-      console.log(err);
-      res.status(500).json("Internal server error");
-     }
-    
-}
+  } catch (err) {
+    console.log(err);
+    res.status(500).json("Internal server error");
+  }
+};
 
-const AddCamp1 = (req,res,next) =>
-{
-    const camp = new Camp({   
-          campname : req.body.campname,
-          startdate: req.body.startdate,
-          enddate: req.body.enddate,
+
+
+const AddCamp = async (req, res, next) => {
+  const { campname, startdate, enddate } = req.body;
+
+  try {
+    const camp = await Camp.findOne({ campname});
+    if (camp) {
+      // Camp already exists
+      res.status(200).json(camp);
+    } else {
+      // The camp does not exist, so add a new camp.
+      const newCamp = new Camp({
+        campname: req.body.campname,
+        startdate: req.body.startdate,
+        enddate: req.body.enddate,
+      });
+
+      await newCamp.save();
+      res.status(201).send(newCamp);
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(422).send({ error: err.message });
+  }
+};
+
+      
+
+
+    // const camp = new Camp({   
+    //       campname : req.body.campname,
+    //       startdate: req.body.startdate,
+    //       enddate: req.body.enddate,
         
-        });
-        try{
-            camp.save();
-            res.send(camp);
-        }
-        catch(err)
-        {
-            console.log(err);
-            return res.status(422).send({error: err.message});
-        }
-}
+    //     });
+        // try{
+          
+        //     camp.save();
+        //     res.send(camp);
+        // }
+        // catch(err)
+        // {
+        //     console.log(err);
+        //     return res.status(422).send({error: err.message});
+        // }
+//}
 
 const GetCamps = async(req,res,next) =>
 {
@@ -191,7 +222,7 @@ const AddCampname = (req,res,next) => {
 
 exports.VerifyAndAddCampTeachers = VerifyAndAddCampTeachers;
 exports.VerifyAndAddCampStudents = VerifyAndAddCampStudents;
-exports.AddCamp1 = AddCamp1;
+exports.AddCamp = AddCamp;
 exports.GetCamps = GetCamps;
 exports.GetSingleCamp = GetSingleCamp;
 exports.GetCampName = GetCampName;

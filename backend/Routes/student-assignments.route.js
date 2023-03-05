@@ -45,7 +45,20 @@ var upload =multer({
 router.post('/submitassigns',  upload.array('uplassign',4),async (req,res,next) =>
 {
 
-   
+        const {campname, student_name , title, description,tmarks, 
+            duedate , uplassign , assignment_id , student} = req.body
+
+            const stdAssign = await StudentAssignments.findOne({campname: campname,
+                student_name: student_name, title: title, description 
+   : description, tmarks:tmarks, duedate: duedate, uplassign: uplassign, assignment_id: assignment_id,
+   student:student})
+
+   if (stdAssign) {
+    // Student Assignment exists 
+    res.status(200).json(stdAssign);
+  }
+  else
+  {
     let reqFiles = [];
     const url = req.protocol+ '://' +req.get('host');
     for (let i=0;i<req.files.length;i++)
@@ -55,12 +68,14 @@ router.post('/submitassigns',  upload.array('uplassign',4),async (req,res,next) 
 
         const stdAss = new StudentAssignments({   
             campname: req.body.campname,
+            student_name : req.body.student_name,
           title: req.body.title,
           description: req.body.description,
           tmarks:req.body.tmarks,
           duedate:req.body.duedate,
            uplassign:reqFiles,
-           quizid:req.body.quizid
+           assignment_id:req.body.assignment_id,
+           student: req.body.student
         });
         try{
             await stdAss.save();
@@ -71,6 +86,8 @@ router.post('/submitassigns',  upload.array('uplassign',4),async (req,res,next) 
             console.log(err);
             return res.status(422).send({error: err.message});
         }
+
+    }
     }); 
 
     router.get('/getsameass/:teacherAssignmentId',StudentAssignmentsController.GetSubmittedAssignments)
