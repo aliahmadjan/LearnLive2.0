@@ -24,7 +24,7 @@ import {
 import { IoPawOutline } from 'react-icons/io5'
 import NavItem from './NavItem'
 import axios from "axios"
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 
 export default function StudentSidebar({navSize, changeNavSize}) {
@@ -32,10 +32,11 @@ export default function StudentSidebar({navSize, changeNavSize}) {
     // To make links active on Sidebar
     const location = useLocation();
     const route = location.pathname.split("/").pop();
-
+    const [isLoggedin , setIsLoggedIn] = useState(false);
     const [ userID , setUserID] = useState("");
     const [name, setName] = useState("");
     const [ profileimg , setProfileImg] = useState(null);
+    const navigate = useNavigate();
 
     const getCuurentUser = () =>
     {
@@ -50,6 +51,13 @@ export default function StudentSidebar({navSize, changeNavSize}) {
             console.log(err) })
     }
 
+    const handleLogout = () =>
+    {
+        localStorage.removeItem("logintoken")
+        setIsLoggedIn(false)
+        navigate('/')
+    }
+
     useEffect(()=>
     {
         getCuurentUser();
@@ -58,19 +66,16 @@ export default function StudentSidebar({navSize, changeNavSize}) {
     return (
         <Flex
             pos="sticky"
-            left="5"
-            m={0}
-            w={navSize == "small" ? "75px" : "20%"}
+            w={navSize == "small" ? "4%" : "20%"}
+            mx="14px"
             flexDir="column"     
-            justifyContent={'center'}
-            position='relative'>
+            justifyContent="space-evenly"
+            >
 
             <IconButton
                 background="none"
                 mt={4}        
                 alignSelf='center'
-                position={'absolute'}
-                top={4}
                 color='white'
                 _hover={{background: 'gray.100',  color:'orange' }}
                 icon={<FiMenu />}
@@ -80,6 +85,8 @@ export default function StudentSidebar({navSize, changeNavSize}) {
                     else
                         changeNavSize("small")
                 }} />
+
+            <Divider variant='dashed' borderColor={'orange.500'} />
 
             <Flex
                 flexDir="column"
@@ -101,17 +108,18 @@ export default function StudentSidebar({navSize, changeNavSize}) {
 
             </Flex>
 
-            <Divider display={navSize == "small" ? "none" : "flex"} variant='dashed' borderColor={'orange.900'} />
+            <Divider variant='dashed' borderColor={'orange.500'} />
 
+            <Flex flexDir={'column'}>
             <Flex
-                mt={4}
-                p={2} 
-                align="center" 
+                mx="auto"
+                p={2}
                 border='1px solid' 
                 borderColor={'white'} 
-                width={'100%'} 
+                width={'90%'} 
                 alignItems='center' justifyContent={'center'}
-                borderRadius={30}>
+                borderRadius={30}
+                >
                 
                 <Avatar
                     size="sm"
@@ -123,13 +131,22 @@ export default function StudentSidebar({navSize, changeNavSize}) {
                 </Flex>
 
             </Flex>
+
+            <Flex width = "100%">
+                <Button
+                my={2}
+                borderRadius={navSize == "small" ? "50%" : "4px"}
+                onClick={handleLogout}
+                width={navSize == "small" ? "2px" : "60%"}
+                mx="auto" type='submit' colorScheme='orange' variant='solid' _hover={{ bg: '#a85e32' }} position={'relative'} 
+                >
+                    {navSize == "small" ? <i class="fa-solid fa-power-off"></i> : "Log Out" }
+                </Button>    
+
+            </Flex>
+            </Flex>
             
-            <form action={"http://localhost:3000/"}>
-            <Button m={4} type='submit' colorScheme='orange' variant='solid' _hover={{ bg: '#a85e32' }} px='20px' position={'relative'} left='50px'
-            width='150px'>
-                Sign out
-            </Button> 
-            </form>
+
         </Flex>
     )
 }

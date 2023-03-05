@@ -9,10 +9,10 @@ const LogInNavBar = () => {
   return (
     <Stack justifyContent={"space-between"} p={2}  boxShadow="md" direction={"row"}>
         <Img width="140px" src="LearnLiveLogo.png"></Img>
-        <HStack>
-            <Button variant={"outline"} colorScheme="facebook" onClick={ () => changeUser("admin")}>Admin Login</Button>
-            <Button variant={"outline"} colorScheme="brand1" onClick={ () => changeUser("teacher")}>Teacher Login</Button>
-            <Button colorScheme={"brand1"} onClick={() => changeUser("student")}>Student Login</Button>
+        <HStack gap={4} px={40}>
+            <Button variant="link" colorScheme="linkedin" onClick={ () => changeUser("admin")}>Admin Login</Button>
+            <Button variant="link" colorScheme="pink" onClick={ () => changeUser("teacher")}>Teacher Login</Button>
+            <Button variant="link" colorScheme={"brand1"} onClick={() => changeUser("student")}>Student Login</Button>
         </HStack>
     </Stack>
   )
