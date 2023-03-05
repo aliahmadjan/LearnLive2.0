@@ -42,7 +42,7 @@ const TeacherLogin = () => {
 
         <Flex h={{base: "full", md: '90vh'}} 
             py={{base: '12'}} 
-            px={{base: '10px', md: "20px", lg:"200px"}} 
+            px={{base: '10px', md: "20px", lg:"140px"}} 
             align="center" justify="space-between" 
             direction={{base: 'column', md: 'row'}}>
 
@@ -53,45 +53,41 @@ const TeacherLogin = () => {
           
             <Image src="TeacherLogin3D.png" w={400} overflow="hidden" ml={{lg: '-80px' , md: '-80px'}} pl={{base: '60px', lg:'0px'} }/>
 
-            <SimpleGrid pb={10} columns={2} columnGap={3} rowGap={6} textAlign="center">
+            <SimpleGrid p={10} width="34%" columns={2} columnGap={3} rowGap={6} textAlign="center" boxShadow="0px 2px 10px rgba(0, 0, 0, 0.5)" borderRadius={10} >
                     <GridItem colSpan={2} minW={40}>
                         <FormControl>
-                            <FormLabel>Username</FormLabel>
                             <Input
                             onChange={e => setEmail(e.target.value)} 
                             id='email'
                              name='email'
                               label='Email'
                             variant={'filled'}
-                             placeholder='John'
+                             placeholder='Username'
                              required/>  
                         </FormControl>
                     </GridItem>
 
                     <GridItem colSpan={2} minW={40}>
                         <FormControl>
-                            <FormLabel>Password</FormLabel>
                             <Input
                             onChange={e=>setPassword(e.target.value)}
                              id='password' name='password' label='Password'
                              variant='filled'
+                             placeholder='Password'
                              type='password'
                               required
                              />  
                         </FormControl>
                     </GridItem>
 
-                    <GridItem colSpan={2} textAlign="end">
-                        <Text fontSize={'xs'} color="gray">Forgot Password?</Text>
+                    <GridItem colSpan={2}>
+                        <Button variant='solid' width="100%" colorScheme='brand1' onClick={LoginTeacher}>Log In</Button>
                     </GridItem>
 
-                    <GridItem colSpan={1}>
-                        <Button variant='ghost'>Sign Up</Button>
+                    <GridItem colSpan={2} textAlign="center">
+                        <Text fontSize={'xs'} color="black">Forgotten Password?</Text>
                     </GridItem>
 
-                    <GridItem colSpan={1}>
-                        <Button type ='submit' onClick={LoginTeacher}variant='solid' colorScheme='brand1'>Log In</Button>
-                    </GridItem>
 
                 </SimpleGrid>
         </Flex>

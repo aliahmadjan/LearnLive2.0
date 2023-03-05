@@ -12,7 +12,7 @@ const LoginPage = () => {
   const user = useStore(state => state.user)
 
   return (
-    <Container maxW="100%" p={0} bg="teal.500">
+    <Container maxW="100%" h="100vh" p={0} bg="teal.500">
         <LogInNavBar></LogInNavBar>
         {user == "student" ? <StudentLogin ></StudentLogin> : 
           ( user == "teacher" ? <TeacherLogin ></TeacherLogin> : <AdminLogin></AdminLogin>)}
