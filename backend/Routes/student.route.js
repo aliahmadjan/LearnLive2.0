@@ -98,7 +98,7 @@ router.post('/addstudent',  upload.single('profileimg'),async (req,res,next) =>
 
 router.post('/verifylogin',StudentController.VerifyLogin)
 
-router.post('/addcampname/:id',StudentController.AddCampname);
+//router.post('/addcampname/:id',StudentController.AddCampname);
 
 router.get('/getstudents',StudentController.GetStudents)
 

@@ -11,6 +11,7 @@ const AddMeetingDetails = (req,res,next) => {
         campname: req.body.campname,
         duration: req.body.duration,
         agenda: req.body.agenda,
+        teacher: req.body.teacher,
         start_url: req.body.start_url,
         join_url: req.body.join_url,
         password: req.body.password,

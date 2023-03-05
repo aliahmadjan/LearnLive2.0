@@ -24,6 +24,7 @@ import {
   const ViewSubmittedAssignment = ()=>
   {
     const [userID , setUserID] = useState("")
+    const [stdAssignmentID , setStdAssignmentID] = useState("");
     const [assignments , setAssignments] = useState([]);
     const [questions , setQuestions] = useState([]);
     const [ teachers , setTeachers] =useState('')
@@ -61,7 +62,8 @@ import {
    // axios.get('http://localhost:5000/tchassignments/gettchassigns')
         //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
         .then(res=> {
-          
+          //console.log(`${localStorage.getItem('assignment_viewid')}`)
+          // setStdAssignmentID(res.data._id)
           setAssignments(res.data)
           //console.log(quizzes)
     }).catch (err=> {
@@ -123,7 +125,7 @@ import {
               Teacher Name: {assignment.teacher}
               </Text>  */}
               <Text>
-              Camp: {assignment.campname}
+              Student Name: {assignment.student_name}
               </Text> 
               <Text>
               Title: {assignment.title}

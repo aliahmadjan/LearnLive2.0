@@ -31,7 +31,12 @@ const zoomMeetSchema = new mongoose.Schema({
     },
     password: {
         type: String
+    },
+    
+    teacher:{
+        type : String
     }
+    
 })
 
 const ZoomMeetSchema = mongoose.model('ZoomMeetSchema',zoomMeetSchema);

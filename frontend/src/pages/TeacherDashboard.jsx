@@ -17,6 +17,7 @@ import TeacherSingleViewSubmitAssignment from '../components/ViewSingleSubmitted
 import TeacherSettings from '../components/TeacherSettings'
 import TeacherCalendar from '../components/TeacherCalendar'
 import MakeMeet from '../components/ZoomComponents/makeMeet'
+import TeacherViewMeets from '../components/ZoomComponents/TeacherViewMeets'
 import CallBack from '../components/ZoomComponents/CallBack'
 // import JoinMeet from '../components/ZoomComponents/mainZoom'
 
@@ -65,6 +66,7 @@ const TeacherDashboard = () => {
                     <Route path="calendar" element={<TeacherCalendar />} />
                     {/* <Route path="createclass" element={<JoinMeet payload={payload}/>}/> */}
                     <Route path="createclass" element={<MakeMeet/>}/>
+                    <Route path="viewclass" element={<TeacherViewMeets/>}/>
                     <Route path="oauth-callback" element={<CallBack/>}/>
                                      
                 </Routes>       

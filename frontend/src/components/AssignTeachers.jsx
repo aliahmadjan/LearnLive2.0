@@ -71,28 +71,17 @@ const AssignTeachers =() =>
     {
       e.preventDefault();
      
- await axios.post('http://localhost:5000/camp/addcampteachers',{
+ await axios.post(`http://localhost:5000/camp/addcampteachers/${localStorage.getItem('teacher_assignid')}`,{
     campname:selectedCampus,
      teachers:`${localStorage.getItem('teacher_assignid')}`
   }).then((res)=>
   {
-    setSubmitStatus(-1);
+    setSubmitStatus(1);
   }).catch((err)=>
   {
-    setSubmitStatus(1)
+    setSubmitStatus(-1)
   })
 
-  axios.post(`http://localhost:5000/teacher/addcampname/${localStorage.getItem('teacher_assignid')}`,
-  {
-    campname:selectedCampus,
-  }).then ((res)=>
-  {
-    //setSubmitStatus(1);
-    //console.log(res.data)
-  }).catch((err)=>
-  {
-    //setSubmitStatus(-1)
-  })
     }
      useEffect(() => {
       GetCampNames();
