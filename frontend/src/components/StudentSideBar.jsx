@@ -104,6 +104,7 @@ export default function StudentSidebar({navSize, changeNavSize}) {
                 <NavItem navSize={navSize} icon={'fa-solid fa-calendar'} active={route === "calendar"} title="Calendar" route="calendar" />
                 
                 {/* <NavItem navSize={navSize} icon={FiInfo} title="Reports" /> */}
+                <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Certificate" active={route === "certificate"} route="certificate" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Settings" active={route === "settings"} route="settings" />
 
             </Flex>

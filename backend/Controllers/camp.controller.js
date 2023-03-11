@@ -89,26 +89,7 @@ const AddCamp = async (req, res, next) => {
   }
 };
 
-      
-
-
-    // const camp = new Camp({   
-    //       campname : req.body.campname,
-    //       startdate: req.body.startdate,
-    //       enddate: req.body.enddate,
-        
-    //     });
-        // try{
-          
-        //     camp.save();
-        //     res.send(camp);
-        // }
-        // catch(err)
-        // {
-        //     console.log(err);
-        //     return res.status(422).send({error: err.message});
-        // }
-//}
+    
 
 const GetCamps = async(req,res,next) =>
 {
@@ -220,6 +201,37 @@ const AddCampname = (req,res,next) => {
         })
     }
 
+    const GetCampStartDates = async (req, res, next) => {
+      const studentID = req.params.studentID;
+      const student = await Student.findById(studentID);
+      const camps = await Camp.find();
+      const arr = [];
+    
+      for (let i = 0; i < camps.length; i++) {
+        if (student.campname.includes(camps[i].campname)) {
+          arr.push(camps[i].startdate);
+        }
+      }
+    
+      res.send(arr);
+    }
+    
+    const GetCampEndDates = async (req, res, next) => {
+      const studentID = req.params.studentID;
+      const student = await Student.findById(studentID);
+      const camps = await Camp.find();
+      const arr = [];
+    
+      for (let i = 0; i < camps.length; i++) {
+        if (student.campname.includes(camps[i].campname)) {
+          arr.push(camps[i].enddate);
+        }
+      }
+    
+      res.send(arr);
+    }
+    
+
 exports.VerifyAndAddCampTeachers = VerifyAndAddCampTeachers;
 exports.VerifyAndAddCampStudents = VerifyAndAddCampStudents;
 exports.AddCamp = AddCamp;
@@ -230,3 +242,5 @@ exports.GetCampForTeacher = GetCampForTeacher;
 exports.GetCampForStudent= GetCampForStudent
 exports.AddCampname = AddCampname
 exports.DeleteCamp = DeleteCamp
+exports.GetCampStartDates = GetCampStartDates
+exports.GetCampEndDates = GetCampEndDates

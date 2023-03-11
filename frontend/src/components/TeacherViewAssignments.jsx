@@ -38,6 +38,13 @@ import {
             navigate("/teacher/viewassignment");
     }
 
+    const handleSubmitEdit = (assignment_editid) =>
+    {
+      localStorage.removeItem('assignment_editid')
+      localStorage.setItem('assignment_editid',assignment_editid)
+      navigate("/teacher/editassignment")
+  }
+
     const getCurentUser = () =>
     {
       let logintoken = localStorage.getItem("logintoken")
@@ -133,6 +140,10 @@ import {
             <Flex flexDir={'column'} justifyContent='center'>
                 <Button  onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
                   <i class="fa-solid fa-eye"></i>
+                </Button>
+
+                <Button colorScheme='orange' onClick={()=>handleSubmitEdit(assignment._id)} variant='ghost'>
+                  <i class="fa-solid fa-pen-to-square"></i>
                 </Button>
 
                 <Button  onClick={onOpen} colorScheme='orange' variant='ghost'>

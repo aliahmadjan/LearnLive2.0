@@ -49,8 +49,6 @@ const EditTeacherDetails = (props) =>
   const EditTeachers = async(e) =>
   {
     e.preventDefault();
-   // ${localStorage.getItem('teacherid')}
-    //setName(name);
     axios.put(`http://localhost:5000/teacher/updateteacher/${localStorage.getItem('teacherid')}`,
     {
       name:name,

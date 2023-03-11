@@ -31,14 +31,18 @@ const StudentSingleViewAssignment=()=>
   const[assignment_score , setAssignmentScore] = useState("")
   const [tmarks , setTMarks] = useState("");
   const [duedate , setDate] = useState("");
+  const [uploadeddate , setUploadedDate] = useState("");
   const[uplassign, setUplAssign] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const navigate = useNavigate();
   const [studentName , setStudentName] = useState("")
   const [submitted, setSubmitted] = useState(false);
+  const [submits , setSubmitS] = useState("")
 
 const [selectedFiles, setSelectedFiles] = useState([null]);
 const [selected , setSelected] = useState([null])
+
+const submitted_date = new Date().toISOString().substring(0,10)
 
 const { isOpen, onOpen, onClose } = useDisclosure()
 const cancelRef = React.useRef()
@@ -70,12 +74,13 @@ const handleSubmitAssign = (submit_assignid)=>
 const getTeacherAssignments = () =>
   {
     axios
-      .get('http://localhost:5000/tchassignments/singletchassign/:',{params : {id: localStorage.getItem('assignment_viewid')}})
+      .get(`http://localhost:5000/tchassignments/singletchassign/${localStorage.getItem('sassignment_viewid')}`)
       .then((res) => {
         setCampName(res.data.campname);
         setTitle(res.data.title);
         setDescription(res.data.description);
         setTMarks(res.data.tmarks);
+        setUploadedDate(res.data.uploadeddate)
         setDate(res.data.duedate);
         setUplAssign(res.data.uplassign);
       })
@@ -94,6 +99,7 @@ const getCurentUser = () =>
             //console.log(res.data)
             setStudentID(res.data._id)
             setStudentName(res.data.name);
+            //console.log(submitted_date)
            
            
     }).catch (err=> {
@@ -107,12 +113,13 @@ const SubmitAssignment = (event) =>
   event.preventDefault();
   
       axios
-      .get('http://localhost:5000/tchassignments/singletchassign/:',{params : {id: localStorage.getItem('assignment_viewid')}})
+      .get(`http://localhost:5000/tchassignments/singletchassign/${localStorage.getItem('sassignment_viewid')}`)
       .then((res) => {
         setCampName(res.data.campname);
         setTitle(res.data.title);
         setDescription(res.data.description);
         setTMarks(res.data.tmarks);
+        setUploadedDate(res.data.uploadeddate);
         setDate(res.data.duedate);
         setUplAssign(res.data.uplassign);
         
@@ -123,11 +130,14 @@ const SubmitAssignment = (event) =>
       });
 
       const formData = new FormData();
+       if( submitted_date <= duedate)
+      {
       formData.append('campname',campname);
       formData.append('title',title);
       formData.append('description',description)
       formData.append('tmarks',tmarks);
       formData.append('duedate',duedate)
+      formData.append('submitted_date',submitted_date)
       formData.append('assignment_id',`${localStorage.getItem('assignment_viewid')}`)
       formData.append('student_name', studentName)
       formData.append('student', studentID)
@@ -135,21 +145,49 @@ const SubmitAssignment = (event) =>
           formData.append(`uplassign`,selectedFiles[i]);
          }
   
-  
-      fetch('http://localhost:5000/stdassignments/submitassigns', {
-        method: 'POST',
-        
-        body: formData,
-       // campname:campname,
-      })
+         formData.append('submit_status', submitted_date <= duedate ? 'On time' : 'Late')
+         fetch('http://localhost:5000/stdassignments/submitassigns', {
+          method: 'POST',
+          body: formData,
+         
+        })
+    
         .then((res) => 
           setSubmitStatus(1),
           setSubmitted(true),
-          //localStorage.getItem('submitted', true)
-        
         )
-        .then((data) => console.log(data))
         .catch((err) => setSubmitStatus(-1));
+    }
+
+   else
+   {
+    formData.append('campname',campname);
+    formData.append('title',title);
+    formData.append('description',description)
+    formData.append('tmarks',tmarks);
+    formData.append('duedate',duedate)
+    formData.append('submitted_date',submitted_date)
+    formData.append('assignment_id',`${localStorage.getItem('assignment_viewid')}`)
+    formData.append('student_name', studentName)
+    formData.append('student', studentID)
+       for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append(`uplassign`,selectedFiles[i]);
+       }
+    formData.append('submit_status', submitted_date <= duedate ? 'On time' : 'Late')
+         fetch('http://localhost:5000/stdassignments/submitassigns', {
+          method: 'POST',
+          body: formData,
+   })
+   .then((res) => 
+   setSubmitStatus(1),
+   setSubmitted(true),
+ )
+ .catch((err) => setSubmitStatus(-1));
+   }
+    
+    
+       
+        
    
   
   
@@ -204,7 +242,7 @@ useEffect(()=>
                     Marks : <Text color={'orange.800'} display={'inline'}> {tmarks} </Text> 
                   </Text>
                   <Text>
-                    Due Date : <Text color={'orange.800'} display={'inline'}> {duedate} </Text> 
+                    Uploaded Date : <Text color={'orange.800'} display={'inline'}> {uploadeddate} </Text> 
                   </Text>
                   <Text>
                     Due Date : <Text color={'orange.800'} display={'inline'}> {duedate} </Text> 
@@ -326,7 +364,7 @@ useEffect(()=>
           }}
           ml={3}
         >
-          Delete
+          Turn in
         </Button>
       </AlertDialogFooter>
     </AlertDialogContent>

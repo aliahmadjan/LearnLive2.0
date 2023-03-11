@@ -24,6 +24,8 @@ import {
     const [nofquestions , setNofQuestions] = useState('');
     const [campname , setCampName] = useState("");
 
+    const [isClicked, setIsClicked] = useState(false);
+
     const [userID , setUserID] = useState("");
     
     // ---------------------------------------------------------------------------------------------
@@ -104,6 +106,7 @@ import {
         total_questions: questions.length
      }).then(res =>
         {
+          setIsClicked(true);
         }).catch(err=>
           {
             console.log(err)
@@ -321,7 +324,7 @@ import {
         </Flex>
       </Flex>
 
-      <Button mt={2} onClick={submitQuiz} mx={4} type='button'  colorScheme='orange' variant='solid' >
+      <Button mt={2} onClick={submitQuiz} disabled={isClicked} mx={4} type='button'  colorScheme='orange' variant='solid' >
                           Submit 
       </Button>
 

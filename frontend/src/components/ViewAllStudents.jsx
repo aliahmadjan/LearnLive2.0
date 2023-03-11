@@ -53,6 +53,13 @@ import { useDisclosure } from '@chakra-ui/react'
       localStorage.setItem('student_delid',student_delid)
 
     }
+
+    const handleGenerateCertificate = (student_certid) =>
+    {
+      localStorage.removeItem('student_certid')
+      localStorage.setItem('student_certid',student_certid)
+      navigate("/admin/generatecert")
+    }
     useEffect(() => {
       axios
         .get("http://localhost:5000/student/getstudents")
@@ -177,6 +184,10 @@ import { useDisclosure } from '@chakra-ui/react'
                 <Button onClick={()=>handleSubmitAssign(student._id)} colorScheme='orange' variant='ghost'>
                   <i class="fa-sharp fa-solid fa-person-circle-plus"></i>
                 </Button>
+                <Button onClick={()=>handleGenerateCertificate(student._id)} colorScheme='orange' variant='ghost'>
+                <i class="fa-solid fa-certificate"></i>
+                </Button>
+                
               </Flex>
               
             </Flex>

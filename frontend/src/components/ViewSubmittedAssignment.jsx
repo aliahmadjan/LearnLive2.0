@@ -56,14 +56,12 @@ import {
     
     const getAllAssignments= () =>
     {
-      //console.log(userID)
-     //localStorage.setItem('userID',userID)
+      
     axios.get(`http://localhost:5000/stdassignments/getsameass/${localStorage.getItem('assignment_viewid')}`)
-   // axios.get('http://localhost:5000/tchassignments/gettchassigns')
-        //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
         .then(res=> {
           //console.log(`${localStorage.getItem('assignment_viewid')}`)
           // setStdAssignmentID(res.data._id)
+          //console.log(res.data)
           setAssignments(res.data)
           //console.log(quizzes)
     }).catch (err=> {
@@ -129,6 +127,9 @@ import {
               </Text> 
               <Text>
               Title: {assignment.title}
+              </Text>
+              <Text>
+              Status: {assignment.submit_status}
               </Text>
             </Box>
             

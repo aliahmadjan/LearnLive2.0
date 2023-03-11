@@ -18,9 +18,9 @@ const TeacherSingleViewAssignment=()=>
 
     const getSingleUser = () =>
     {
-      axios
-        .get('http://localhost:5000/tchassignments/singletchassign/:',{params : {id: localStorage.getItem('assignment_viewid')}})
-        .then((res) => {
+      axios.get(`http://localhost:5000/tchassignments/singletchassign/${localStorage.getItem('assignment_viewid')}`)  
+      .then((res) => {
+        //console.log(res.data)
           setCampName(res.data.campname);
           setTitle(res.data.title);
           
@@ -139,52 +139,7 @@ const TeacherSingleViewAssignment=()=>
         </Box>
     </Box>
 
-  //       <Box width="80%" mt={8}  mx={"auto"}>
-  //       <Text my={4} align={"center"} fontWeight="bold" fontSize={30}>Assignment</Text>
-  //           {/* <Grid templateColumns="repeat(3, 1fr)" gap={10} overflow="scroll" height="80%" > */}
-            
-  //           <Text >
-  //                  Campname: {campname}
-  //               </Text>
-  //           <Text >
-  //                  Title: {title}
-  //               </Text>
-  //               <Text> Description: {description}</Text>
-  //               <Text>Total Marks: {tmarks}</Text>
-  //               <Text>Uploaded Date: {uploadeddate}</Text>
-  //               <Text>Due Date: {duedate}</Text>
-                
-            // {uplassign.map((assign,index) => (
-            //     <Box p={5} shadow="md" borderWidth="1px" margin={2} marginBottom={10}>
-                
-            //     <iframe
-            //         src={uplassign[index]}
-            //         style={{
-            //           height: "200px",
-            //           width: "400px",
-            //           class: "center",
-            //           borderRadous: "50%",
-            //         }}
-            //       />
-                  
-            //     </Box>
-            // ))} 
-  //           <Button  onClick={()=>handleSubmitView(assignments._id)} colorScheme='teal' variant='solid'>
 
-  //                   View Submitted Assignments
-
-  //           </Button>
-  //                   <Button  onClick={Back}
-  //     style={{
-  //       position: 'absolute',
-  //       right: 30,
-  //       bottom:10,
-  //     }}
-  //     colorScheme='teal' variant='solid'>
-  // Back
-  // </Button>
-  //           {/* </Grid> */}
-  //       </Box>
   );
 }
 

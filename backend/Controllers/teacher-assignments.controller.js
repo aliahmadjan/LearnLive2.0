@@ -18,8 +18,8 @@ const GetAssignments = async(req,res,next)=>
 
 const GetSingleAssignment = async(req,res,next)=>
 {
-    var x = req.query.id;
-    TeacherAssignments.findById(x , (error,data) =>
+    // var x = req.query.id;
+    TeacherAssignments.findById(req.params.id , (error,data) =>
     {
         if(error)
         {
@@ -78,49 +78,6 @@ const GetCurrTchAssign = async(req,res) =>
   }
   res.send(arr)
 }
-
-// const GetStdSameAssign = async(req,res)=> // assignment and student camp should be same
-// {
-//     const tchass = await TeacherAssignments.find()
-//     const std = await Student.find()
-//     const arr =[]
-//     const arr1 =[]
-//     const arr2 = []
-    
-//      for(let i=0;i<tchass.length ;i++)
-//      {
-//         for (let j=0; j<std.length;j++)
-//           { 
-//          if(tchass[i].campname === std[j].campname)
-//          {
-//             //console.log(tchass[i])
-//              arr.push(tchass[i])
-//           }
-//        }
-//      }
-//     //  for(let k=0;k<std.length ;k++)
-//     //  {
-//     //     for (let l=0; l<arr.length;l++)
-//     //       { 
-//     //      if(std[k].campname === arr[l].campname)
-//     //      {
-//     //         //console.log(tchass[i])
-//     //          arr1.push(arr[l])
-//     //       }
-//     //       else{
-                
-//     //       }
-//     //    }
-//     //  }
-//      if (arr.length != 0)
-//      {
-//         res.send(arr)
-//      }
-//      else{
-//         res.send(arr2)
-//      }
-     
-// }
 
 //exports.AddPost = AddPost;
 exports.GetAssignments=GetAssignments

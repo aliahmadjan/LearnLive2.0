@@ -31,10 +31,10 @@ import {
     const cancelRef = React.useRef()
     const navigate = useNavigate();
 
-    const handleSubmitView = (assignment_viewid) =>
+    const handleSubmitView = (sassignment_viewid) =>
     {
-        localStorage.removeItem('assignment_viewid')
-         localStorage.setItem('assignment_viewid',assignment_viewid)
+        localStorage.removeItem('sassignment_viewid')
+         localStorage.setItem('sassignment_viewid',sassignment_viewid)
             navigate("/student/viewassignment");
     }
 

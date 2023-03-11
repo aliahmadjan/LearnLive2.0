@@ -32,21 +32,6 @@ const storage = multer.diskStorage({
     }
 });
 
-// var upload =multer({
-//     storage: storage,
-//     fileFilter: (req,file,cb) => {
-//         if(file.mimetype == "image/png" ||  file.mimetype =="application/pdf" || file.mimetype =="image/jpg" || file.mimetype == "image/jpeg" 
-//         || file.mimetype == "application/zip")
-//         {
-//             cb(null,true);
-//         }
-//         else
-//         {
-//             cb(null,false);
-//             return cb(new Error('Only .pdf .png .jpg .jpeg and .zip format allowed!'));
-//         }
-//     }
-// });
 
 
 
@@ -88,6 +73,7 @@ router.post('/uploadassigns',  upload.array('uplassign',4),async (req,res,next) 
           duedate:req.body.duedate,
            uplassign:reqFiles,
            teacher: req.body.teacher,  
+           
         });
         try{
             await tchAss.save();
@@ -99,6 +85,8 @@ router.post('/uploadassigns',  upload.array('uplassign',4),async (req,res,next) 
             return res.status(422).send({error: err.message});
         }
     }); 
+
+
 
     router.get('/gettchassigns',TeacherAssignmentsController.GetAssignments);
 
@@ -135,7 +123,37 @@ router.get('/samestdassign',TokenStudent, async(req,res)=>
 })
 
 
-    router.put('/updatetchassigns/:id' , TeacherAssignmentsController.UpdateAssignments);
+    //router.put('/updatetchassigns/:id' , TeacherAssignmentsController.UpdateAssignments);
+
+    router.put('/updatetchassigns/:id', upload.array('uplassign', 4), async (req, res, next) => {
+        try {
+          let reqFiles = [];
+          const url = req.protocol + '://' + req.get('host');
+          for (let i = 0; i < req.files.length; i++) {
+            reqFiles.push(url + '/teacher-assignments/' + req.files[i].filename)
+          }
+      
+          const updatedAssignment = await TeacherAssignments.findByIdAndUpdate(
+            { _id: req.params.id }, // find the document with the given ID
+            {
+              campname: req.body.campname,
+              title: req.body.title,
+              description: req.body.description,
+              tmarks: req.body.tmarks,
+              uploadeddate: req.body.uploadeddate,
+              duedate: req.body.duedate,
+              uplassign: reqFiles,
+            },
+            { new: true } // return the updated document
+          );
+      
+          res.send(updatedAssignment);
+        } catch (err) {
+          console.log(err);
+          return res.status(422).send({ error: err.message });
+        }
+      });
+      
 
     router.delete('/deletetchassigns/:id', TeacherAssignmentsController.DeleteAssignments);
 

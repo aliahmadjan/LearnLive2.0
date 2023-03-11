@@ -13,6 +13,7 @@ import ViewQuizzes from '../components/StudentViewQuizzes'
 import StudentAttemptQuiz from '../components/StudentAttemptQuiz'
 import StudentQuizResult from '../components/StudentQuizResult'
 import StudentViewMeets from '../components/ZoomComponents/StudentViewMeets'
+import ViewCertificate from '../components/ViewCertificate'
 import ViewAssignmentMarks from '../components/ViewAssignmentMarks'
 
 const StudentDashboard = () => {
@@ -44,6 +45,7 @@ const StudentDashboard = () => {
                     <Route path="viewassignmentmarks" element={<ViewAssignmentMarks/>}/>
                     <Route path="viewmeets" element={<StudentViewMeets/>}/>
                     <Route path="calendar" element={<StudentCalendar />}/>
+                    <Route path="certificate" element={<ViewCertificate/>} />
                     <Route path="settings" element={<StudentSettings />} />
 
                 </Routes> 

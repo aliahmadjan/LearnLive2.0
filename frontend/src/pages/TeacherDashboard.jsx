@@ -19,6 +19,7 @@ import TeacherCalendar from '../components/TeacherCalendar'
 import MakeMeet from '../components/ZoomComponents/makeMeet'
 import TeacherViewMeets from '../components/ZoomComponents/TeacherViewMeets'
 import CallBack from '../components/ZoomComponents/CallBack'
+import TeacherEditAssignment from '../components/EditAssignment'
 // import JoinMeet from '../components/ZoomComponents/mainZoom'
 
 const TeacherDashboard = () => {
@@ -60,6 +61,7 @@ const TeacherDashboard = () => {
                     <Route path="viewquiz" element={<ViewSingleQuiz/>}/>
                     <Route path="viewquizresults" element={<ViewQuizResults/>}/>
                     <Route path="viewassignment" element={<TeacherSingleViewAssignment/>}/>
+                    <Route path="editassignment" element={<TeacherEditAssignment/>}/>
                     <Route path="viewsubmittedassignment" element={<ViewSubmittedAssignments/>}/>
                     <Route path="viewssubmitassignment" element={<TeacherSingleViewSubmitAssignment/>}/>
                     <Route path="settings" element={<TeacherSettings />}/>

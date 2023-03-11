@@ -27,6 +27,10 @@ const studentAssignmentsSchema = new moongose.Schema({
         type: String,
     
     },
+
+    submitted_date: {
+        type: String,
+    },
    
 
     uplassign: {
@@ -42,6 +46,10 @@ const studentAssignmentsSchema = new moongose.Schema({
 
    assignment_id:{
     type: String
+   },
+   submit_status : {
+    type: String,
+    required:true
    }
   
 });

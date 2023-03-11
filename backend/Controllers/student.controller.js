@@ -119,8 +119,7 @@ const UpdateStudent = async(req,res,next) =>
           res.json(data)
         }
       })
-    }
-    
+}
     const DeleteStudent =(req,res,next) =>
     {
        Student.findByIdAndDelete(req.params.id,(error,data)=> {

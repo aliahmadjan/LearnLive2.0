@@ -9,6 +9,7 @@ import AddTeachers from '../components/AddTeachers'
 import AddStudents from '../components/AddStudents'
 import ViewAllTeachers from '../components/ViewAllTeachers'
 import ViewAllStudents from '../components/ViewAllStudents'
+import GenerateCertificate from '../components/GenerateCertificate'
 import EditTeacherDetails from '../components/EditTeacher'
 import EditStudentDetails from '../components/EditStudent'
 import AssignTeachers from '../components/AssignTeachers'
@@ -39,7 +40,8 @@ const AdminDashboard = () => {
                     <Route path="addteachers" element={<AddTeachers/>}/>
                     <Route path="addstudents" element={<AddStudents/>}/>
                     <Route path="viewteachers" element={<ViewAllTeachers/>}/>
-                    <Route path="viewstudents" element={<ViewAllStudents/>}/>                 
+                    <Route path="viewstudents" element={<ViewAllStudents/>}/>
+                    <Route path="generatecert" element={<GenerateCertificate/>}/>                 
                     <Route path="editteacher"  element={<EditTeacherDetails/>}/>
                     <Route path="editstudent" element={<EditStudentDetails/>}/>
                     <Route path="assignteacher" element={<AssignTeachers/>}/>

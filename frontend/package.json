@@ -19,6 +19,7 @@
     "eventemitter3": "^5.0.0",
     "framer-motion": "^6.5.1",
     "globalize": "^1.7.0",
+    "html2canvas": "^1.4.1",
     "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-big-calendar": "^1.5.2",
