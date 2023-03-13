@@ -1,6 +1,6 @@
 import React from "react"
 import { useState, useEffect } from "react"
-import { Box,Grid,Button, Text,FormControl, FormLabel, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
+import { Box,Grid,Button, Text, SimpleGrid,Card, CardHeader, Avatar,Tooltip, FormControl, FormLabel, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
 import axios from "axios"
 import { useNavigate, useParams} from "react-router-dom";
 import {
@@ -105,86 +105,121 @@ import {
 
     return (
 
-      <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-      <Box pt={4} pb={2}  >
-        <Heading mb={4} >
-          View Camps
-        </Heading>
-        <Text mb={6}>
-          This page displays Camp details and allows you to edit and view them.
-        </Text>
-      </Box>
+      <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
 
-      <Box maxW='4xl' mx="auto" >
-        <Flex p={4} pt={0}>
-          <Input placeholder="Camp's Name" 
-          onChange={handleSearch}
-          variant={'outlined'} borderColor='orange'></Input>
-          {/* <Button colorScheme={'orange'}>Search</Button> */}
-        </Flex>
+        <Box pt={4} pb={2}  >
+          <Heading mb={4} >
+            View Camps
+          </Heading>
+        </Box>
 
-        <Flex border={'1px solid orange'} gap={2} justifyContent='space-around' height='50vh' borderRadius='20px' p={4} flexWrap='wrap' overflow='scroll'>
+        <Box width={'80%'} mx="auto" >
 
-          {results.map((camp) => (
-            <Flex border={'1px solid orange'} width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
+          <Flex p={4} pt={0}>
+            <Input placeholder="Camp's Name" 
+            onChange={handleSearch}
+            variant={'outlined'}
+            >
+            </Input>
 
-              <Box ml={0} >
-                <Text >
-                  {camp.campname}
-                </Text> 
-              </Box>
+            {/* <Button colorScheme={'orange'}>Search</Button> */}
+          </Flex>
 
-              <Flex flexDir={'column'} justifyContent='center'>
-                <Button  onClick={()=>handleSubmitView(camp._id)} colorScheme='orange' variant='ghost'>
-                  <i class="fa-sharp fa-solid fa-eye"></i>
-                </Button>
+          <SimpleGrid 
+            width={'90%'} 
+            overflowY='scroll' 
+            maxHeight={'66vh'} 
+            mx='auto' 
+            minChildWidth='260px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '16px',
+                borderRadius: '8px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '8px',
+              },
+            }}>
 
-                <Button  onClick={()=>onOpen(handleSubmitDelete(camp._id))} colorScheme='orange' variant='ghost'>
-                    <i class="fa-solid fa-trash"></i>
-                  </Button>
+            {results.map((camp) => (
 
-              </Flex>
-              
-            </Flex>
-          ))}
+              <Card maxWidth={'100%'} maxHeight='160px' m={2}>
+                <CardHeader>
+                  <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+
+                    <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                      <Avatar name={camp.campname} mx={4} />
+                      <Box>
+                        <Heading size='sm'>{camp.campname}</Heading>
+                        {/* <Text>{camp.campname}</Text> */}
+                      </Box>
+                    </Flex>
+
+                    <Flex flexDir={'column'} justifyContent='center'>
+
+                      <Tooltip label="View Camp" hasArrow placement='right'>
+                        <Button  onClick={()=>handleSubmitView(camp._id)} colorScheme='orange' variant='ghost'>
+                          <i class="fa-sharp fa-solid fa-eye"></i>
+                        </Button>
+                      </Tooltip>
+                      
+
+                      <Tooltip label="Delete" hasArrow placement='right'>
+                        <Button  onClick={()=>onOpen(handleSubmitDelete(camp._id))} colorScheme='orange' variant='ghost'>
+                          <i class="fa-solid fa-trash"></i>
+                        </Button>
+                      </Tooltip>
+
+                    </Flex>
+
+                  </Flex>
+
+                </CardHeader>
+
+              </Card>
+            ))}
             
             <AlertDialog
-  isOpen={isOpen}
-  leastDestructiveRef={cancelRef}
-  onClose={onClose}
->
-  <AlertDialogOverlay>
-    <AlertDialogContent>
-      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-        Delete
-      </AlertDialogHeader>
+            isOpen={isOpen}
+            leastDestructiveRef={cancelRef}
+            onClose={onClose}
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                    Delete
+                  </AlertDialogHeader>
 
-      <AlertDialogBody>
-        Are you sure? You can't undo this action afterwards.
-      </AlertDialogBody>
+                  <AlertDialogBody>
+                    Are you sure? You can't undo this action afterwards.
+                  </AlertDialogBody>
 
-      <AlertDialogFooter>
-        <Button ref={cancelRef} onClick={onClose}>
-          Cancel
-        </Button>
-        <Button
-          colorScheme='red'
-          onClick={(e) => {
-            DeleteCamp(e);
-            onClose();
-          }}
-          ml={3}
-        >
-          Delete
-        </Button>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialogOverlay>
-</AlertDialog>
-        </Flex>
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme='red'
+                      onClick={(e) => {
+                        DeleteCamp(e);
+                        onClose();
+                      }}
+                      ml={3}
+                    >
+                      Delete
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+           </AlertDialog>
+
+          </SimpleGrid>
+
+        </Box>
       </Box>
-
-    </Box>
 
        
     )

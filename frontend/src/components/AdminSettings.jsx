@@ -96,20 +96,17 @@ function AdminSettings() {
 
   return (
 
-    <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
 
       <Box pt={4} pb={2}  >
         <Heading mb={4} >
           Change Password
         </Heading>
-        <Text mb={6}>
-          Here you can Change Your Password.
-        </Text>
       </Box>
 
       <form onSubmit={UpdatePassword}>
         <Box p={5} maxW="lg" mx="auto" textAlign={'start'} position={'relative'}>
-            <Box border={'1px solid orange'} borderRadius='20px' p={4} >
+            <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF" >
 
             {error && <Text color="red.500">{error}</Text>}
             {success && <Text color="green.500">{success}</Text>}
@@ -149,7 +146,7 @@ function AdminSettings() {
             </Box>
         </Box>
 
-        <Button type='submit' colorScheme='orange' variant='solid'>
+        <Button mt={4} type='submit' colorScheme='orange' variant='solid'>
                 Update Password
         </Button>
 

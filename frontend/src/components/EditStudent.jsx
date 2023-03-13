@@ -90,32 +90,30 @@ const EditStudentDetails = () =>
   
   return (
 
-    <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
     <Box pt={4} pb={2}  >
       <Heading mb={4} >
         Student Details
       </Heading>
-      <Text mb={6}>
-        This page displays account details.
-      </Text>
     </Box>
 
-    <Box p={5} maxW="lg" mx="auto" textAlign={'start'} position={'relative'}>
+    <Box p={5} width="60%" mx="auto" textAlign={'start'} position={'relative'}>
 
       <Box align="center" mb={4} mx='auto' px='auto' >
-        <Avatar size='2xl' src={profileimg} />
+        <Avatar name={name} size='2xl' src={profileimg} />
       </Box>
 
       <form onSubmit={EditStudents}>
 
-        <Box border={'1px solid orange'} borderRadius='20px' p={4} >
+        <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF" >
 
           <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+            <FormLabel fontWeight="bold" color="#F57C00" mr={2}>
               Name:
             </FormLabel>
             <Input textAlign={'center'} 
-                  focusBorderColor='orange.700' 
+                  focusBorderColor='#F57C00' 
                   variant={'flushed'} 
                   borderBottomColor='orange' 
                   width={'60%'} 
@@ -130,11 +128,11 @@ const EditStudentDetails = () =>
 
 
           <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+            <FormLabel fontWeight="bold" color="#F57C00" mr={2}>
               Email:
             </FormLabel>
             <Input textAlign={'center'} 
-                  focusBorderColor='orange.700' 
+                  focusBorderColor='#F57C00' 
                   variant={'flushed'} 
                   borderBottomColor='orange' 
                   width={'60%'} 
@@ -149,12 +147,12 @@ const EditStudentDetails = () =>
           </FormControl>
 
           <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+            <FormLabel fontWeight="bold" color="#F57C00" mr={2}>
               Phone No:
             </FormLabel>
             <Input value={phoneno} 
                   textAlign={'center'} 
-                  focusBorderColor='orange.700' 
+                  focusBorderColor='#F57C00' 
                   variant={'flushed'} 
                   borderBottomColor='orange' 
                   width={'60%'} 
@@ -166,12 +164,12 @@ const EditStudentDetails = () =>
           </FormControl>
 
           <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+            <FormLabel fontWeight="bold" color="#F57C00" mr={2}>
               Password:
             </FormLabel>
             <Input
                   textAlign={'center'} 
-                  focusBorderColor='orange.700' 
+                  focusBorderColor='#F57C00' 
                   variant={'flushed'} 
                   borderBottomColor='orange' 
                   width={'60%'} 
@@ -184,14 +182,15 @@ const EditStudentDetails = () =>
           </FormControl>
 
           <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+            <FormLabel fontWeight="bold" color="#F57C00" mr={2} width="40%">
               Gender:
             </FormLabel>
 
             <RadioGroup onChange={setGender} value={gender}
             defaultValue={gender}
+            colorScheme='orange'
             id='gender' aria-label="gender" name="gender"
-            mr={2} ml='auto'>
+            mx='auto'>
             <Stack direction='row'>
               <Radio  value="male">Male</Radio>
               <Radio  value="female">Female</Radio>
@@ -202,7 +201,7 @@ const EditStudentDetails = () =>
           </FormControl>
         </Box>
 
-        <Flex mb={2} mt={2} justifyContent={'center'} gap={4}>
+        <Flex mb={2} mt={8} justifyContent={'center'} gap={4}>
           <Button type='submit' colorScheme='orange' variant='solid' >
             Update Student
           </Button>

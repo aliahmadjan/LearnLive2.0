@@ -95,9 +95,9 @@ export default function AdminSidebar({navSize, changeNavSize}) {
                 as="nav"
             >
                 <NavItem navSize={navSize} icon={'fa-solid fa-user'} title="Account" route="account" active={route === "account"} description="All About You" />
-                <NavItem navSize={navSize} icon ={'fa-solid fa-person-circle-plus'} title="Add Teachers" active={route === "addteachers"} route="addteachers"/>
+                <NavItem navSize={navSize} icon ={'fa-solid fa-person-circle-plus'} title="Add Teacher" active={route === "addteachers"} route="addteachers"/>
                 <NavItem navSize={navSize} icon ={"fa-solid fa-users"} title="View Teachers" active={route === "viewteachers"} route="viewteachers"/>               
-                <NavItem navSize={navSize} icon ={"fa-sharp fa-solid fa-user-plus"} title="Add Students" active={route === "addstudents"} route="addstudents"/>
+                <NavItem navSize={navSize} icon ={"fa-sharp fa-solid fa-user-plus"} title="Add Student" active={route === "addstudents"} route="addstudents"/>
                 <NavItem navSize={navSize} icon ={"fa-sharp fa-solid fa-users-line"} title="View Students" active={route === "viewstudents"} route="viewstudents"/>
                 <NavItem navSize={navSize} icon ={"fa-solid fa-tent"} title="Add Camp" active={route === "addcamp"} route="addcamp"/>
                 <NavItem navSize={navSize} icon={"fa-solid fa-tents"} title="View Camps" active={route === "viewcamps"} route="viewcamps"/>
