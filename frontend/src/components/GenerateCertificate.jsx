@@ -81,122 +81,122 @@ const GenerateCertificate = () =>
     }
 
     return(
-        <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'90%'} borderRadius={30}>
+        <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
 
-        <Box pt={4} pb={2}  >
-          <Heading mb={4} >
-            Generate Certificate
-          </Heading>
-          <Text mb={6}>
-            Here you can Generate Certificate for a Student!
-          </Text>
+            <Box pt={4} pb={2}  >
+                <Heading mb={4} >
+                Assign Camp
+                </Heading>
+            </Box>
        
-      <Box border={'1px solid orange'} borderRadius='20px' p={4} >
+            <Box p={5} width="60%" mx="auto" textAlign={'start'}>
+                <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF" >
 
-        <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
-              Name:
-            </FormLabel>
-            <Input textAlign={'center'} 
-                  focusBorderColor='orange.700' 
-                  variant={'flushed'} 
-                  borderBottomColor='orange' 
-                  width={'60%'} 
-                  mr={0} ml='auto' 
-                  id='name' name='name' label='Name'
-                  value={name}
-                  defaultValue={name}
-                  isRequired
-            />
-          </FormControl>
+                    <FormControl mb={2} display={'flex'} alignItems='center'>
+                        <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+                        Name:
+                        </FormLabel>
+                        <Input textAlign={'center'} 
+                            focusBorderColor='orange.700' 
+                            variant={'flushed'} 
+                            borderBottomColor='orange' 
+                            width={'60%'} 
+                            mr={0} ml='auto' 
+                            id='name' name='name' label='Name'
+                            value={name}
+                            defaultValue={name}
+                            isRequired
+                        />
+                    </FormControl>
 
-          
-
-{campname.map((campname) => (
-
-    <FormControl mb={2} display={'flex'} alignItems='center'>
-        <FormLabel fontWeight="bold" color="orange.500" mr={2}>
-            Campname:
-        </FormLabel>
-        <Input textAlign={'center'}
-            focusBorderColor='orange.700'
-            variant={'flushed'}
-            borderBottomColor='orange'
-            width={'60%'}
-            mr={0} ml='auto'
-            id='campname' name='campname' label='Campname'
-            value={campname}
-            defaultValue={campname}
-            type='campname'
-            isRequired />
-    </FormControl>
-
-))} 
-{startdate.map((startdate) => (
-    <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
-                Start Date :
-            </FormLabel>
-            <Input textAlign={'center'}
-                focusBorderColor='orange.700'
-                variant={'flushed'}
-                borderBottomColor='orange'
-                width={'60%'}
-                mr={0} ml='auto'
-                id='startdate' name='startdate' label='Start Date'
-                value={startdate}
-                defaultValue={startdate}
-                isRequired />
-        </FormControl>
-        ))}
-        {enddate.map((enddate) => (
-        <FormControl mb={2} display={'flex'} alignItems='center'>
-        <FormLabel fontWeight="bold" color="orange.500" mr={2}>
-            End Date:
-        </FormLabel>
-        <Input textAlign={'center'}
-            focusBorderColor='orange.700'
-            variant={'flushed'}
-            borderBottomColor='orange'
-            width={'60%'}
-            mr={0} ml='auto'
-
-            id='name' name='name' label='Name'
-            value={enddate}
-            defaultValue={enddate}
-            isRequired />
-    </FormControl>
             
-         ))}
 
-<FormControl mb={2} display={'flex'} alignItems='center'>
-          <FormLabel htmlFor="dueDate" fontWeight="bold" color="orange.500" mr={2}>Issued Date</FormLabel>
-          <Input
-          id="issued_date"
-          name='issued_date'
-          label="Date"
-          type="date"
-          textAlign={'center'}
-          focusBorderColor='orange.700' 
-          variant={'flushed'} 
-          borderBottomColor='orange'
-          onChange = {e=>setIssuedDate(e.target.value)}
-          isRequired
-          width={'60%'} 
-          mr={0} ml='auto'
-          />
-        </FormControl>
-        </Box>
-        <Button 
-        colorScheme='orange' variant='solid'
-        onClick ={GenerateCert}>
-            Generate Certificate
+                    {campname.map((campname) => (
+
+                        <FormControl mb={2} display={'flex'} alignItems='center'>
+                            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+                                Campname:
+                            </FormLabel>
+                            <Input textAlign={'center'}
+                                focusBorderColor='orange.700'
+                                variant={'flushed'}
+                                borderBottomColor='orange'
+                                width={'60%'}
+                                mr={0} ml='auto'
+                                id='campname' name='campname' label='Campname'
+                                value={campname}
+                                defaultValue={campname}
+                                type='campname'
+                                isRequired />
+                        </FormControl>
+
+                    ))} 
+                    {startdate.map((startdate) => (
+                        <FormControl mb={2} display={'flex'} alignItems='center'>
+                                <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+                                    Start Date :
+                                </FormLabel>
+                                <Input textAlign={'center'}
+                                    focusBorderColor='orange.700'
+                                    variant={'flushed'}
+                                    borderBottomColor='orange'
+                                    width={'60%'}
+                                    mr={0} ml='auto'
+                                    id='startdate' name='startdate' label='Start Date'
+                                    value={startdate}
+                                    defaultValue={startdate}
+                                    isRequired />
+                            </FormControl>
+                            ))}
+                            {enddate.map((enddate) => (
+                            <FormControl mb={2} display={'flex'} alignItems='center'>
+                            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+                                End Date:
+                            </FormLabel>
+                            <Input textAlign={'center'}
+                                focusBorderColor='orange.700'
+                                variant={'flushed'}
+                                borderBottomColor='orange'
+                                width={'60%'}
+                                mr={0} ml='auto'
+
+                                id='name' name='name' label='Name'
+                                value={enddate}
+                                defaultValue={enddate}
+                                isRequired />
+                        </FormControl>
+                                
+                            ))}
+
+                        <FormControl mb={2} display={'flex'} alignItems='center'>
+                                <FormLabel htmlFor="dueDate" fontWeight="bold" color="orange.500" mr={2}>Issued Date</FormLabel>
+                                <Input
+                                id="issued_date"
+                                name='issued_date'
+                                label="Date"
+                                type="date"
+                                textAlign={'center'}
+                                focusBorderColor='orange.700' 
+                                variant={'flushed'} 
+                                borderBottomColor='orange'
+                                onChange = {e=>setIssuedDate(e.target.value)}
+                                isRequired
+                                width={'60%'} 
+                                mr={0} ml='auto'
+                                />
+                                </FormControl>
+                                
+                </Box>
+            </Box>
+
+            <Button 
+                colorScheme='orange' variant='solid'
+                onClick ={GenerateCert}>
+                    Generate Certificate
             </Button>
 
         </Box>
     
-
-        </Box>
     );
 }
 

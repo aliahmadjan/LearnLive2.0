@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react'
-import { Box,Button, Avatar,Heading, Text, Link ,FormControl,FormLabel, Input,RadioGroup,Radio,Stack, Flex} from '@chakra-ui/react'
+import { Box,Button, Avatar,Heading, Text, SimpleGrid, Card, CardHeader, Tooltip, Link ,FormControl,FormLabel, Input,RadioGroup,Radio,Stack, Flex} from '@chakra-ui/react'
 import axios from "axios"
 import { Divider } from '@chakra-ui/react'
 import { useNavigate, useParams} from "react-router-dom";
@@ -127,111 +127,135 @@ import { useDisclosure } from '@chakra-ui/react'
       margin: '80px 0px 50px 240px'}
     const btStyle = { margin: "30px 0px 12px" };
     const textStyle = { margin: "3px 0" };
+
     return (
 
-      <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
+      <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
       <Box pt={4} pb={2}  >
         <Heading mb={4} >
           View Students
         </Heading>
-        <Text mb={6}>
-          This page account details od all students and allows you to edit them.
-        </Text>
       </Box>
 
-      <Box maxW='4xl' mx="auto" >
-        <Flex p={4} pt={0}>
+      <Box width={'80%'} mx="auto" >
+
+        <Flex p={4}>
           <Input placeholder="Student's Name"
           onChange={handleSearch}
-          variant={'outlined'} borderColor='orange'></Input>
+          variant={'outlined'} borderColor='orange'
+          >
+          </Input>
+          
           {/* <Button colorScheme={'orange'}>Search</Button> */}
         </Flex>
 
-        <Flex border={'1px solid orange'} gap={2} justifyContent='space-around' height='50vh' borderRadius='20px' p={4} flexWrap='wrap' overflow='scroll'>
+        <SimpleGrid 
+            width={'90%'} 
+            overflowY='scroll' 
+            maxHeight={'66vh'} 
+            mx='auto' 
+            minChildWidth='260px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '16px',
+                borderRadius: '8px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '8px',
+              },
+            }}>
 
-          {results.map((student) => (
-            <Flex border={'1px solid orange'} width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
+            {results.map((student) => (
+              <Card maxWidth={'100%'} maxHeight='160px' m={2}>
+                <CardHeader>
+                  <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+                    <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                      <Avatar name={student.name} src={student.profileimg} mx={4} />
+                      <Box>
+                        <Heading size='sm'>{student.name}</Heading>
+                        <Text>{student.email}</Text>
+                        <Text>{student.gender}</Text>
+                      </Box>
+                    </Flex>
 
-              <Avatar
-                src={student.profileimg}
-                size="lg"
-                ml={0}/>
+                    <Flex flexDir={'column'} justifyContent='center'>
 
-              <Box ml={0} >
-                <Text>
-                  {student.name}
-                </Text> 
-                <Text>
-                  {student.email}
-                </Text> 
-                <Text>
-                  {student.gender}
-                </Text> 
-                <Text>
-                  {student.password}
-                </Text>
-              </Box>
+                      <Tooltip label="Edit" hasArrow placement='right'>
+                        <Button size='sm' onClick={()=>handleSubmit(student._id)} colorScheme='orange' variant='ghost'>
+                          <i class="fa-solid fa-pen-to-square"></i>               
+                        </Button>
+                      </Tooltip>
+                      
 
-              <Flex flexDir={'column'} justifyContent='center'>
-                <Button  onClick={()=>handleSubmit(student._id)} colorScheme='orange' variant='ghost'>
-                  <i class="fa-solid fa-pen-to-square"></i>
-                </Button>
-
-                <Button  onClick={()=>onOpen(handleSubmitDelete(student._id))} colorScheme='orange' variant='ghost'>
-                    <i class="fa-solid fa-trash"></i>
-                  </Button>
-
-                <Button onClick={()=>handleSubmitAssign(student._id)} colorScheme='orange' variant='ghost'>
-                  <i class="fa-sharp fa-solid fa-person-circle-plus"></i>
-                </Button>
-                <Button onClick={()=>handleGenerateCertificate(student._id)} colorScheme='orange' variant='ghost'>
-                <i class="fa-solid fa-certificate"></i>
-                </Button>
-                
-              </Flex>
-              
-            </Flex>
-          ))}
+                      <Tooltip label="Delete" hasArrow placement='right'>
+                        <Button size='sm' onClick={()=>onOpen(handleSubmitDelete(student._id))} colorScheme='orange' variant='ghost'>
+                        <i class="fa-solid fa-trash"></i>
+                        </Button>
+                      </Tooltip>
 
 
-            {/* Lookk thisss uPPP //Jaaan */}
-            
+                      <Tooltip label="Assign Camp" hasArrow placement='right'>
+                        <Button size='sm' onClick={()=>handleSubmitAssign(student._id)} colorScheme='orange' variant='ghost'>
+                        <i class="fa-sharp fa-solid fa-person-circle-plus"></i>
+                        </Button>
+                      </Tooltip>
+
+                      <Tooltip label="Generate Certificate" hasArrow placement='right'>
+                        <Button size='sm' onClick={()=>handleGenerateCertificate(student._id)} colorScheme='orange' variant='ghost'>
+                          <i class="fa-solid fa-certificate"></i>
+                        </Button>
+                      </Tooltip>
+
+                    </Flex>
+
+                  </Flex>
+
+                </CardHeader>
+  
+              </Card>
+            ))}
+
             <AlertDialog
-  isOpen={isOpen}
-  leastDestructiveRef={cancelRef}
-  onClose={onClose}
->
-  <AlertDialogOverlay>
-    <AlertDialogContent>
-      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-        Delete
-      </AlertDialogHeader>
+              isOpen={isOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                    Delete
+                  </AlertDialogHeader>
 
-      <AlertDialogBody>
-        Are you sure? You can't undo this action afterwards.
-      </AlertDialogBody>
+                  <AlertDialogBody>
+                    Are you sure? You can't undo this action afterwards.
+                  </AlertDialogBody>
 
-      <AlertDialogFooter>
-        <Button ref={cancelRef} onClick={onClose}>
-          Cancel
-        </Button>
-        <Button
-          colorScheme='red'
-          onClick={(e) => {
-            //SetDeleteTeacherId();
-            DeleteStudent(e);
-            onClose();
-          }}
-          ml={3}
-        >
-          Delete
-        </Button>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialogOverlay>
-</AlertDialog>
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme='red'
+                      onClick={(e) => {
+                        //SetDeleteTeacherId();
+                        DeleteStudent(e);
+                        onClose();
+                      }}
+                      ml={3}
+                    >
+                      Delete
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>
 
-        </Flex>
+          </SimpleGrid>
+
       </Box>
 
     </Box>

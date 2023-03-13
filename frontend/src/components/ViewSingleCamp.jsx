@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
-import {Avatar, Box,Button, Text,FormControl, FormLabel, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
+import {Avatar, Box,Button,SimpleGrid,Center,Divider, Text,Card, FormControl, FormLabel, Input, Select, Textarea, Heading, Flex, CardHeader} from "@chakra-ui/react";
 import axios from "axios"
-import { Divider } from '@chakra-ui/react'
 import { useNavigate, useParams} from "react-router-dom";
 import {
     Alert,
@@ -50,98 +49,111 @@ import {
     }
   
     return (
-      <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
+      <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
         <Box pt={4} pb={2}  >
-          <Heading mb={4} >
+          <Heading mb={2} >
             View Camp
           </Heading>
         </Box>
 
-        <Heading size='lg'>Camp Name : {campname}</Heading>
+        <Heading size='md' color={'orange.900'}>Camp Name: {campname}</Heading>
 
-        <Flex mt={4} maxW='4xl' mx="auto" width={'100%'} gap={4} >
-          {/* <Flex p={4} pt={0}>
-            <Input placeholder="Student's Name" variant={'outlined'} borderColor='orange'></Input>
-            <Button colorScheme={'orange'}>Search</Button>
-          </Flex> */}
-          <Box width={'50%'}>
-            <Heading size={'md'} mb={4}> Teachers </Heading>
-            <Flex width="100%" border={'1px solid orange'} gap={2} justifyContent='space-around' height='50vh' borderRadius='20px' p={4} flexWrap='wrap' overflow='scroll'>
+        <Flex width={'80%'} mx='auto' mt={4} textAlign={'start'} p={4} gap={4}>
 
-              {teachers.map((teacher,index) => (         
-                <Box p={2} height="100px">  
-                  <Avatar
-                      src={teachers[index].profileimg}
-                      size="lg"
-                    />         
-                  <Text>{teachers[index].name}</Text>   
-                </Box>
-              ))}   
+          <Flex width={'50%'} flexDirection='column' textAlign={'center'}>
+            <Heading size='lg' mb={4}>Teachers</Heading>
 
-            </Flex>
-          </Box>
-          
-          <Box width={'50%'}>
-            <Heading size={'md'} mb={4}> Students </Heading>
-            <Flex width="100%" border={'1px solid orange'} gap={2} justifyContent='space-around' height='50vh' borderRadius='20px' p={4} flexWrap='wrap' overflow='scroll'>
-              
-              {students.map((student,index) => (         
-                <Box p={2} height="100px">  
-                  <Avatar
-                      src={students[index].profileimg}
-                      size="lg"
-                    />         
-                  <Text>{students[index].name}</Text>   
-                </Box>
-              ))} 
+            <SimpleGrid
+              width={'100%'}
+              overflowY='scroll' 
+              maxHeight={'66vh'} 
+              mx='auto' 
+              minChildWidth='160px' 
+              spacingX='10px' spacingY='10px'
+              sx={{
+                '&::-webkit-scrollbar': {
+                  width: '16px',
+                  borderRadius: '8px',
+                  backgroundColor: 'white',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: `orange.500`,
+                  borderRadius: '8px',
+                },
+              }}>
+                  
+                {teachers.map((teacher,index) => (  
+                  <Card maxWidth={'100%'} maxHeight='160px' m={2}>
+                  <CardHeader>
+                    <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+                      <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                        <Avatar name={teachers[index].name} src={teachers[index].profileimg} mx={4} />
+                        <Box>
+                          <Heading size='sm'>{teachers[index].name}</Heading>
+                          {/* <Text>{student.email}</Text>
+                          <Text>{student.gender}</Text> */}
+                        </Box>
+                      </Flex>
+                    </Flex>
+                  </CardHeader>      
+                  </Card> 
+                  
+                ))}
 
-            </Flex>
-          </Box>
+            </SimpleGrid>
+
+          </Flex>
+
+          <Center height={'60vh'} m='auto' >
+            <Divider orientation='vertical' variant='dashed' borderColor={'orange.500'} />
+          </Center>
+
+          <Flex width={'50%'} flexDirection='column' textAlign={'center'}>
+            <Heading size='lg' mb={4}>Students</Heading>
+
+            <SimpleGrid
+              width={'100%'}
+              overflowY='scroll' 
+              maxHeight={'66vh'} 
+              mx='auto' 
+              minChildWidth='160px' 
+              spacingX='10px' spacingY='10px'
+              sx={{
+                '&::-webkit-scrollbar': {
+                  width: '16px',
+                  borderRadius: '8px',
+                  backgroundColor: 'white',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: `orange.500`,
+                  borderRadius: '8px',
+                },
+            }}>
+                
+                {students.map((student,index) => (         
+                  <Card maxWidth={'100%'} maxHeight='160px' m={2}>
+                  <CardHeader>
+                    <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+                      <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                        <Avatar name={students[index].name} src={students[index].profileimg} mx={4} />
+                        <Box>
+                          <Heading size='sm'>{students[index].name}</Heading>
+                          {/* <Text>{student.email}</Text>
+                          <Text>{student.gender}</Text> */}
+                        </Box>
+                      </Flex>
+                    </Flex>
+                  </CardHeader>      
+                  </Card> 
+                ))} 
+
+            </SimpleGrid>
+          </Flex>
 
         </Flex>
+
       </Box>
-
-  //      <Box width="100%" p={4} className="question-container" textAlign={"center"} >
-  //                 <Text mt={4} textStyle='h1'>    
-                  
-  //      Camp Name : {campname} 
-  //     </Text>
-  //     <Divider orientation='horizontal' />
-  //     <Text textStyle='h1'> Teachers: </Text>
-  //            {teachers.map((teacher,index) => (         
-  //           <>  
-  //           <Avatar
-  //               src={teachers[index].profileimg}
-  //               size="lg"
-  //             />         
-  //           <Text>{teachers[index].name}</Text>   
-  //           </>
-  //           ))}   
-                       
-  //           <Divider orientation='horizontal' />
-  //            <Text textStyle='h1'> Students: </Text>
-             
-  //            {students.map((student,index) => (         
-  //           <>           
-  //           <Avatar
-  //               src={students[index].profileimg}
-  //               size="lg"
-                
-  //             />
-  //           <Text>{students[index].name}</Text>  
-  //           </>
-  //           ))}   
-
-  //           <Button  onClick={Back}
-  //       style={{
-  //       position: 'absolute',
-  //       right: 30,
-  //       bottom:10,
-  //     }}
-  //     colorScheme='teal' variant='solid'>
-  // Back
-  // </Button>
-  //       </Box> 
        
     )
   }

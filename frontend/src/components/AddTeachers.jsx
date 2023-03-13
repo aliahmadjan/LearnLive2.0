@@ -89,26 +89,24 @@ const AddTeachers = () => {
   };
 
   return (
-    <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
 
       <Box pt={4} pb={2}  >
         <Heading mb={4} >
           Add Teacher
         </Heading>
-        <Text mb={6}>
-          Here you can Add a Teacher.
-        </Text>
       </Box>
 
       <form onSubmit={PostTeachers}>
-      <Box p={5} maxW="lg" mx="auto" textAlign={'start'} position={'relative'}>
-        <Box border={'1px solid orange'} borderRadius='20px' p={4} >
-          
+      <Box p={5} width="60%" mx="auto" textAlign={'start'}>
+
+        <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
+
             <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel fontWeight="bold" color="orange.500" mr={2}>Full Name</FormLabel>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Full Name</FormLabel>
                 <Input
                   textAlign={'center'}
-                  focusBorderColor='orange.700' 
+                  focusBorderColor='#F57C00' 
                   variant={'flushed'} 
                   borderBottomColor='orange' 
                   onChange={e=>setName(e.target.value)}
@@ -120,10 +118,10 @@ const AddTeachers = () => {
             </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel fontWeight="bold" color="orange.500" mr={2}>Email</FormLabel>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Email</FormLabel>
               <Input
                 textAlign={'center'}
-                focusBorderColor='orange.700' 
+                focusBorderColor='#F57C00' 
                 variant={'flushed'} 
                 borderBottomColor='orange' 
                 onChange={e=>setEmail(e.target.value)}
@@ -136,23 +134,24 @@ const AddTeachers = () => {
             </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel fontWeight="bold" color="orange.500" mr={2}>Gender</FormLabel>
-              <RadioGroup onChange={setGender} value={gender}
-                id='gender' aria-label="gender" name="gender" mr={2} ml='auto'>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2} width="40%">Gender</FormLabel>
+              <RadioGroup onChange={setGender} value={gender} colorScheme='orange'
+                id='gender' aria-label="gender" name="gender" mx="auto">
                 <Stack direction='row'>
                   <Radio isRequired value="male">Male</Radio>
                   <Radio value="female">Female</Radio>
-                  <Radio  value="other">Other</Radio>
+                  <Radio value="other">Other</Radio>
                 </Stack>
               </RadioGroup>
 
             </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel fontWeight="bold" color="orange.500" mr={2}>Phone Number</FormLabel>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Phone Number</FormLabel>
               <Input
+                type={'number'}
                 textAlign={'center'}
-                focusBorderColor='orange.700' 
+                focusBorderColor='#F57C00' 
                 variant={'flushed'} 
                 borderBottomColor='orange' 
                 onChange={e=>setPhoneNo(e.target.value)}
@@ -164,13 +163,14 @@ const AddTeachers = () => {
             </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel fontWeight="bold" color="orange.500" mr={2}>Password</FormLabel>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Password</FormLabel>
               <Input
                 textAlign={'center'}
-                focusBorderColor='orange.700' 
+                focusBorderColor='#F57C00' 
                 variant={'flushed'} 
                 borderBottomColor='orange' 
                 onChange={e=>setPassword(e.target.value)}
+                placeholder="**************"
                 id='password' name='password' label='password'
                 type="password"
                 isRequired
@@ -179,13 +179,14 @@ const AddTeachers = () => {
             </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel fontWeight="bold" color="orange.500" mr={2}>Confirm Password</FormLabel>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Confirm Password</FormLabel>
               <Input
                 textAlign={'center'}
-                focusBorderColor='orange.700' 
+                focusBorderColor='#F57C00' 
                 variant={'flushed'} 
                 borderBottomColor='orange' 
                 onChange={e=>setConPassword(e.target.value)}
+                placeholder="**************"
                 id='cpassword' name='cpassword' label='cpassword'
                 type="password"
                 isRequired
@@ -194,12 +195,12 @@ const AddTeachers = () => {
             </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel fontWeight="bold" color="orange.500" mr={2}>Picture</FormLabel>
-              <Input 
-                width={'60%'} 
-                mr={0} ml='auto'
-                textAlign={'center'}
-                focusBorderColor='orange.700' 
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2} width="40%">Picture</FormLabel>
+              <Input
+                colorScheme={'orange'}
+                width={'40%'}
+                mx='auto'
+                focusBorderColor='#F57C00' 
                 variant={'flushed'} 
                 borderBottomColor='orange' 
                 type="file"
@@ -207,6 +208,7 @@ const AddTeachers = () => {
                 onChange={handleFileInputChange} 
                 value={fileInputState}
                 />
+
                 {previewSource && (
                   <Image
                     src={previewSource}
@@ -223,7 +225,7 @@ const AddTeachers = () => {
           </Box>
         </Box>
               
-        <Button type='submit' colorScheme='orange' variant='solid'>
+        <Button mt={4} type='submit' colorScheme='orange' variant='solid'>
               Add Teacher
         </Button>
 

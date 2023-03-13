@@ -32,7 +32,7 @@ const AdminDashboard = () => {
             <Flex 
                 w={ navSize=="small" ? "95%" : "85%"} 
                 mt={4} borderRadius={30}
-                backgroundColor={'#FFFFFF'}
+                backgroundColor={'#FFF2DE'}
             >
                 <Routes>
                     <Route path="account" element={<AdminAccountDetails />} />

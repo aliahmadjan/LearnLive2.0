@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react'
-import { Box,Button, Avatar,Heading, Text, Link ,FormControl,FormLabel, Input,RadioGroup,Radio,Stack, InputGroup, Flex} from '@chakra-ui/react'
+import { Box,Button, Avatar,Heading,IconButton, Tooltip, Text, Link ,FormControl,FormLabel, Input,RadioGroup,Radio,Stack, InputGroup, Flex, SimpleGrid, Card, CardHeader, CardBody, CardFooter} from '@chakra-ui/react'
 import axios from "axios"
 import { Divider } from '@chakra-ui/react'
 import { useNavigate, useParams} from "react-router-dom";
@@ -114,127 +114,127 @@ import { useDisclosure } from '@chakra-ui/react'
 
     return (
 
-      <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
+      <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
         <Box pt={4} pb={2}  >
           <Heading mb={4} >
             View Teachers
           </Heading>
-          <Text mb={6}>
-            This page displays your account details and allows you to edit them.
-          </Text>
         </Box>
 
-        <Box maxW='4xl' mx="auto" >
-          <Flex p={4} pt={0}>
-            <Input placeholder="Teacher's Name"
-             variant={'outlined'} 
-            onChange={handleSearch}
-             borderColor='orange'>
-              
-             </Input>
+        <Box width={'80%'} mx="auto" >
+
+          <Flex p={4}>
+            <Input 
+              placeholder="Teacher's Name"
+              variant={'outlined'} 
+              onChange={handleSearch}>
+            </Input>
+
             {/* <Button colorScheme={'orange'}>Search</Button> */}
-            
           </Flex>
-          {/* <ul>
-              {results.map(teacher => 
-                (
-                  <li key={teacher.name}>
-                    Name: {teacher.name}
-                  </li>
-                ))}
-            </ul> */}
 
-          <Flex border={'1px solid orange'} gap={2} justifyContent='space-around' height='50vh' borderRadius='20px' p={4} flexWrap='wrap' overflow='scroll'>
+          <SimpleGrid 
+            width={'90%'} 
+            overflowY='scroll' 
+            maxHeight={'66vh'} 
+            mx='auto' 
+            minChildWidth='260px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '16px',
+                borderRadius: '8px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '8px',
+              },
+            }}>
 
-  
             {results.map((teacher,i) => (
-              <Flex border={'1px solid orange'} width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
+              <Card maxWidth={'100%'} maxHeight='160px' m={2}>
+              <CardHeader>
+                <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+                  <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                    <Avatar name={teacher.name} src={teacher.profileimg} mx={4} />
+                    <Box>
+                      <Heading size='sm'>{teacher.name}</Heading>
+                      <Text>{teacher.email}</Text>
+                      <Text>{teacher.gender}</Text>
+                    </Box>
+                  </Flex>
 
-                <Avatar
-                  src={teacher.profileimg}
-                  size="lg"
-                  ml={0}/>
+                  <Flex flexDir={'column'} justifyContent='center'>
 
-                <Box ml={0} >
-                  <Text>
-                    {teacher.name}
-                  </Text> 
-                  <Text>
-                    {teacher.email}
-                  </Text> 
-                  <Text>
-                    {teacher.gender}
-                  </Text> 
-                  <Text>
-                    {teacher.password}
-                  </Text>
-                </Box>
+                    <Tooltip label="Edit" hasArrow placement='right'>
+                      <Button  onClick={()=>handleSubmitEdit(teacher._id)} colorScheme='orange' variant='ghost'>
+                        <i class="fa-solid fa-pen-to-square"></i>               
+                      </Button>
+                    </Tooltip>
+                    
 
-                <Flex flexDir={'column'} justifyContent='center'>
-                  <Button  onClick={()=>handleSubmitEdit(teacher._id)} colorScheme='orange' variant='ghost'>
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  </Button>
+                    <Tooltip label="Delete" hasArrow placement='right'>
+                      <Button  onClick={()=>onOpen(handleSubmitDelete(teacher._id))} colorScheme='orange' variant='ghost'>
+                      <i class="fa-solid fa-trash"></i>
+                      </Button>
+                    </Tooltip>
 
-                  <Button  onClick={()=>onOpen(handleSubmitDelete(teacher._id))} colorScheme='orange' variant='ghost'>
-                    <i class="fa-solid fa-trash"></i>
-                  </Button>
 
-                  <Button onClick={()=>handleSubmitAssign(teacher._id)} colorScheme='orange' variant='ghost'>
-                    <i class="fa-sharp fa-solid fa-person-circle-plus"></i>
-                  </Button>
+                    <Tooltip label="Assign Camp" hasArrow placement='right'>
+                      <Button onClick={()=>handleSubmitAssign(teacher._id)} colorScheme='orange' variant='ghost'>
+                      <i class="fa-sharp fa-solid fa-person-circle-plus"></i>
+                      </Button>
+                    </Tooltip>
 
-                  
-                  
+                  </Flex>
 
                 </Flex>
-                
-              </Flex>
 
-
-
-              
+              </CardHeader>
+  
+            </Card>
             ))}
 
+            <AlertDialog
+              isOpen={isOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                    Delete
+                  </AlertDialogHeader>
 
-              {/* Lookk thisss uPPP //Jaaan */}
-              <AlertDialog
-  isOpen={isOpen}
-  leastDestructiveRef={cancelRef}
-  onClose={onClose}
->
-  <AlertDialogOverlay>
-    <AlertDialogContent>
-      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-        Delete
-      </AlertDialogHeader>
+                  <AlertDialogBody>
+                    Are you sure? You can't undo this action afterwards.
+                  </AlertDialogBody>
 
-      <AlertDialogBody>
-        Are you sure? You can't undo this action afterwards.
-      </AlertDialogBody>
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme='red'
+                      onClick={(e) => {
+                        //SetDeleteTeacherId();
+                        DeleteTeacher(e);
+                        onClose();
+                      }}
+                      ml={3}
+                    >
+                      Delete
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>
 
-      <AlertDialogFooter>
-        <Button ref={cancelRef} onClick={onClose}>
-          Cancel
-        </Button>
-        <Button
-          colorScheme='red'
-          onClick={(e) => {
-            //SetDeleteTeacherId();
-            DeleteTeacher(e);
-            onClose();
-          }}
-          ml={3}
-        >
-          Delete
-        </Button>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialogOverlay>
-</AlertDialog>
-   
-             
+          
+          </SimpleGrid>
 
-          </Flex>
         </Box>
 
       </Box>

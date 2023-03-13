@@ -78,20 +78,17 @@ function AddCamp() {
 
   return (
 
-    <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
 
       <Box pt={4} pb={2}  >
         <Heading mb={4} >
           Add Camp
         </Heading>
-        <Text mb={6}>
-          Here you can Add a Study Camp.
-        </Text>
       </Box>
 
       <form onSubmit={UploadCamp}>
-        <Box p={5} maxW="lg" mx="auto" textAlign={'start'} position={'relative'}>
-            <Box border={'1px solid orange'} borderRadius='20px' p={4} >
+        <Box p={5} width="60%" mx="auto" textAlign={'start'}>
+          <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
 
             {error && <Text color="red.500">{error}</Text>}
             {success && <Text color="green.500">{success}</Text>}
