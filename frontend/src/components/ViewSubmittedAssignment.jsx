@@ -56,7 +56,7 @@ import {
     
     const getAllAssignments= () =>
     {
-      
+      //console.log(`${localStorage.getItem('assignment_viewid')}`)
     axios.get(`http://localhost:5000/stdassignments/getsameass/${localStorage.getItem('assignment_viewid')}`)
         .then(res=> {
           //console.log(`${localStorage.getItem('assignment_viewid')}`)

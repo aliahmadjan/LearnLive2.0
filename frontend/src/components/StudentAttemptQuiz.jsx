@@ -88,7 +88,7 @@ import {
              
           }
       }
-      // const formData = new FormData();
+      const formData = new FormData();
       // formData.append('quiz_id',`${localStorage.getItem('quiz_viewid')}`)
       // fetch('http://localhost:5000/quizscore/addquizscore',
       // {
@@ -111,6 +111,24 @@ import {
           {
             console.log(err)
           })
+
+         
+          axios.post('http://localhost:5000/leaderboard/addquizscore',
+          {
+            campname: campname,
+            student_name : name,
+            student_id: userID,
+             quiz_score: score,
+            total_quizscore: questions.length,
+            tchquiz_id: `${localStorage.getItem('quiz_viewid')}`
+            
+          }).then (res =>
+            {
+
+            }).catch(err => 
+              {
+                console.log(err)
+              })
    
     
 

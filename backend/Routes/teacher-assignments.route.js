@@ -121,7 +121,27 @@ router.get('/samestdassign',TokenStudent, async(req,res)=>
   }
   res.send(arr)
 })
+router.get('/lateststdassign', TokenStudent, async (req, res) => {
+  const latestDate = await TeacherAssignments.find({}, { uploadeddate: 1 }).sort({ uploadeddate: 'desc' }).limit(1);
 
+  if (latestDate.length === 0) {
+    return res.status(404).send('No assignments found');
+  }
+
+  const latestAssignments = await TeacherAssignments.find({ uploadeddate: latestDate[0].uploadeddate });
+
+  if (latestAssignments.length === 0) {
+    return res.status(404).send('No assignments found for your camp');
+  }
+
+  const filteredAssignments = latestAssignments.filter(assignment => req.student.campname.includes(assignment.campname));
+
+  if (filteredAssignments.length === 0) {
+    return res.status(404).send('No assignments found for your camp');
+  }
+
+  res.send(filteredAssignments);
+});
 
     //router.put('/updatetchassigns/:id' , TeacherAssignmentsController.UpdateAssignments);
 

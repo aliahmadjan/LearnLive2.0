@@ -52,6 +52,8 @@ router.post('/submitassigns',  upload.array('uplassign',4),async (req,res,next) 
         reqFiles.push(url +'/student-assignments/'+ req.files[i].filename)
     }
 
+    const submitted = Boolean(req.body.submitted);
+    const submittedString = submitted.toString();
         const stdAss = new StudentAssignments({   
             campname: req.body.campname,
             student_name : req.body.student_name,
@@ -63,7 +65,8 @@ router.post('/submitassigns',  upload.array('uplassign',4),async (req,res,next) 
            uplassign:reqFiles,
            assignment_id:req.body.assignment_id,
            student: req.body.student,
-           submit_status: req.body.submit_status
+           submit_status: req.body.submit_status,
+        //    submitted: submittedString
         });
         try{
             await stdAss.save();

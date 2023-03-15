@@ -15,10 +15,13 @@ import StudentQuizResult from '../components/StudentQuizResult'
 import StudentViewMeets from '../components/ZoomComponents/StudentViewMeets'
 import ViewCertificate from '../components/ViewCertificate'
 import ViewAssignmentMarks from '../components/ViewAssignmentMarks'
+import StudentLeaderboard from '../components/StudentLeaderboard'
+import ViewSingleStudentLeaderboard from '../components/ViewSingleStudentLeaderboard'
 
 const StudentDashboard = () => {
     
     const [navSize, setNavSize] = useState("large")
+    const [campName, setCampName] = useState("")
 
     function changeNavSize(size) {
         setNavSize(size)
@@ -46,6 +49,8 @@ const StudentDashboard = () => {
                     <Route path="viewmeets" element={<StudentViewMeets/>}/>
                     <Route path="calendar" element={<StudentCalendar />}/>
                     <Route path="certificate" element={<ViewCertificate/>} />
+                    <Route path="leaderboard" element={<StudentLeaderboard setCampus={(value)=>setCampName(value)}/>}/>
+                    <Route path="viewleaderboard" element={<ViewSingleStudentLeaderboard campName={campName}/>}/>
                     <Route path="settings" element={<StudentSettings />} />
 
                 </Routes> 

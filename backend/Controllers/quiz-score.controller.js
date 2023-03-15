@@ -7,8 +7,18 @@ const jwt = require('jsonwebtoken');
 //const requireLogin = require('../Middleware/UserToken.js')
 const router = express.Router()
 
-const AddQuizScore = (req,res,next)=>
+const AddQuizScore = async(req,res,next)=>
 {
+    const {quiz_id , student_name , student_id , campname , quiz_score,total_questions} = req.body
+
+    try
+    {
+        const qzsc = await QuizzesScore.findOne({quiz_id,student_name,student_id})
+        if(qzsc)
+        {
+            return res.status(400).send({ error: 'A quiz score already exists for this student and quiz.' });
+        }
+    
     const quizscore = new QuizzesScore({   
      quiz_id:req.body.quiz_id,
      student_name: req.body.student_name,
@@ -18,10 +28,11 @@ const AddQuizScore = (req,res,next)=>
      total_questions: req.body.total_questions
       
       });
-      try{
-          quizscore.save();
-          res.send(quizscore);
-      }
+
+    await quizscore.save();
+    res.send(quizscore);
+
+    }
       catch(err)
       {
           console.log(err);

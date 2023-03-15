@@ -18,6 +18,11 @@ import {
     AlertDialogContent,
     AlertDialogOverlay,
   } from '@chakra-ui/react'
+  import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSound } from 'use-sound';
+import notificationSound from '../notification.mp3';
+  
 
 
 
@@ -25,11 +30,19 @@ import {
   {
 
     const [assignments , setAssignments] = useState([]);
+    const [ latestAssignment  , setLatestAssignment ] = useState([])
+    const [notificationData, setNotificationData] = useState(null);
     const [questions , setQuestions] = useState([]);
     const [ teachers , setTeachers] =useState('')
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
     const navigate = useNavigate();
+    const [audio] = useState(new Audio(notificationSound));
+    const [playNotification] = useSound(notificationSound);
+
+    // const playNotificationSound = () => {
+    //   audio.play();
+    // };
 
     const handleSubmitView = (sassignment_viewid) =>
     {
@@ -41,25 +54,54 @@ import {
     const getAllAssignments= () =>
     {
         axios.get("http://localhost:5000/tchassignments/samestdassign") 
+       
         .then(res=> {
-          //console.log(res.data)
-          setAssignments(res.data)
-          //console.log(quizzes)
+          setAssignments(res.data)       
+          
     }).catch (err=> {
        console.log(err) })
+
+       axios.get("http://localhost:5000/tchassignments/lateststdassign")
+       .then(res=> {
+         setLatestAssignment(res.data)
+         
+        
+   }).catch (err=> {
+      console.log(err) })
     
     }
 
 
     
-   useEffect(()=>
-   { 
+
   
-    getAllAssignments();
-   },[assignments])
 
+    useEffect(() => {
+      getAllAssignments();
+    }, []);
 
-
+    useEffect(() => {
+      if (latestAssignment.length > 0) {
+        latestAssignment.forEach((assignments) => {
+          toast.success(`New Assignment: ${assignments.title} for ${assignments.campname}
+          camp`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            onRender: playNotification(),
+            onClick: () => {
+              setNotificationData(assignments);
+              onOpen();
+            },
+          });
+        });
+      }
+    }, [latestAssignment]);
+    
     return (
     
       <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
@@ -93,7 +135,7 @@ import {
                 },
               }}>
 
-        {assignments.map((assignment) => (  
+        {assignments.map((assignment) => (   
 
             <Flex border={'1px solid orange'} width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
 
@@ -111,18 +153,18 @@ import {
             </Box>
             
             <Flex flexDir={'column'} justifyContent='center'>
-                <Button  onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
+                 <Button  onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
                   <i class="fa-solid fa-eye"></i>
-                </Button>
-
+                </Button> 
             </Flex>
         
             
-            </Flex>  ))} 
+            </Flex>  
+             ))}  
 
         </Flex>
       </Flex>
-
+      <ToastContainer/>
     </Box>
        
     )

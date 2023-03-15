@@ -20,6 +20,8 @@ import MakeMeet from '../components/ZoomComponents/makeMeet'
 import TeacherViewMeets from '../components/ZoomComponents/TeacherViewMeets'
 import CallBack from '../components/ZoomComponents/CallBack'
 import TeacherEditAssignment from '../components/EditAssignment'
+import TeacherLeaderboard from '../components/TeacherLeaderboard'
+import ViewSingleTeacherLeaderboard from '../components/ViewSingleTeacherLeaderboard'
 // import JoinMeet from '../components/ZoomComponents/mainZoom'
 
 const TeacherDashboard = () => {
@@ -37,6 +39,7 @@ const TeacherDashboard = () => {
     // }
     
     const [navSize, setNavSize] = useState("large")
+    const [campName, setCampName] = useState("")
 
     function changeNavSize(size) {
         setNavSize(size)
@@ -69,6 +72,8 @@ const TeacherDashboard = () => {
                     {/* <Route path="createclass" element={<JoinMeet payload={payload}/>}/> */}
                     <Route path="createclass" element={<MakeMeet/>}/>
                     <Route path="viewclass" element={<TeacherViewMeets/>}/>
+                    <Route path="leaderboard" element={<TeacherLeaderboard setCampus={(value)=>setCampName(value)}/>}/>
+                    <Route path="viewleaderboard" element ={<ViewSingleTeacherLeaderboard campName={campName}/>}/>
                     <Route path="oauth-callback" element={<CallBack/>}/>
                                      
                 </Routes>       
