@@ -36,6 +36,7 @@ const zoomMeetRouter= require('./Routes/zoomMeet.route');
 const QuizzesScoreRouter = require('./Routes/quiz-score.route')
 const AssignmentScoreRouter = require('./Routes/assignment-score.route')
 const CertificateRouter= require('./Routes/certificate.route')
+const LeaderboardRouter = require('./Routes/leaderboard.route')
 
 
 const TokenTeacher = require('./Middleware/TeacherToken');
@@ -61,6 +62,7 @@ app.use('/zoomMeet',zoomMeetRouter);
 app.use('/quizscore',QuizzesScoreRouter);
 app.use('/assignmentscore',AssignmentScoreRouter);
 app.use('/certificate',CertificateRouter)
+app.use('/leaderboard',LeaderboardRouter)
 
 app.get('/teacher/viewprofile',TokenTeacher,(req,res)=>
 {

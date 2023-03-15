@@ -23,6 +23,9 @@ const AddTeachers = () => {
   const [campname , setCampName]= useState("");
   const [teachers , setTeachers] = useState([]);
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
+
   const [msg,setMsg]=useState('');
 
   const [selectedFile, setSelectedFile] =useState(null);
@@ -37,6 +40,11 @@ const AddTeachers = () => {
   const PostTeachers =async (e) =>
   {
     e.preventDefault();
+    if (password !== cpassword) {
+      setSubmitStatus(-1)
+    } else {
+      // submit the form
+      e.preventDefault();
     const url='http://localhost:5000/teacher/addteacher'
            const formData = new FormData()
            formData.append('name',name)
@@ -46,13 +54,26 @@ const AddTeachers = () => {
            formData.append('password',password)
            formData.append('cpassword',cpassword)
            formData.append('profileimg',selectedFile)
+           //formData.append('campname',campname)
            axios.post(url,formData).then ((res)=>
            {
             setSubmitStatus(1);
             //console.log(res.data)
-           })    
+           })
+          
+    }    
   }
   
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleShowCPassword = () => {
+    setShowCPassword(!showCPassword);
+  };
+
+
   const handleFileInputChange =(e)=>
   {
       const file = e.target.files[0];
@@ -172,10 +193,13 @@ const AddTeachers = () => {
                 borderBottomColor='orange' 
                 onChange={e=>setPassword(e.target.value)}
                 id='password' name='password' label='password'
-                type="password"
+                type={showPassword ? "text" : "password"}
                 isRequired
                 width={'60%'} 
                 mr={0} ml='auto'/>  
+                <Button  onClick={toggleShowPassword} colorScheme='orange' variant='ghost'>
+            {showPassword} <i class="fa-sharp fa-solid fa-eye"></i>
+                </Button>
             </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
@@ -187,11 +211,15 @@ const AddTeachers = () => {
                 borderBottomColor='orange' 
                 onChange={e=>setConPassword(e.target.value)}
                 id='cpassword' name='cpassword' label='cpassword'
-                type="password"
+                type={showCPassword ? "text" : "password"}
                 isRequired
                 width={'60%'} 
-                mr={0} ml='auto'/>  
+                mr={0} ml='auto'/> 
+                <Button  onClick={toggleShowCPassword} colorScheme='orange' variant='ghost'>
+                {showCPassword} <i class="fa-sharp fa-solid fa-eye"></i>
+                </Button> 
             </FormControl>
+            
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
               <FormLabel fontWeight="bold" color="orange.500" mr={2}>Picture</FormLabel>

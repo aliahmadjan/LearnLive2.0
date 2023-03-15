@@ -97,6 +97,7 @@ const getCurentUser = () =>
   axios.get("http://localhost:5000/student/viewprofile")
     .then(res=> {
             //console.log(res.data)
+            
             setStudentID(res.data._id)
             setStudentName(res.data.name);
             //console.log(submitted_date)
@@ -111,23 +112,6 @@ const getCurentUser = () =>
 const SubmitAssignment = (event) =>
 {
   event.preventDefault();
-  
-      axios
-      .get(`http://localhost:5000/tchassignments/singletchassign/${localStorage.getItem('sassignment_viewid')}`)
-      .then((res) => {
-        setCampName(res.data.campname);
-        setTitle(res.data.title);
-        setDescription(res.data.description);
-        setTMarks(res.data.tmarks);
-        setUploadedDate(res.data.uploadeddate);
-        setDate(res.data.duedate);
-        setUplAssign(res.data.uplassign);
-        
-      })
-      .catch((err) => {
-        
-        console.log(err);
-      });
 
       const formData = new FormData();
        if( submitted_date <= duedate)
@@ -138,9 +122,10 @@ const SubmitAssignment = (event) =>
       formData.append('tmarks',tmarks);
       formData.append('duedate',duedate)
       formData.append('submitted_date',submitted_date)
-      formData.append('assignment_id',`${localStorage.getItem('assignment_viewid')}`)
+      formData.append('assignment_id',`${localStorage.getItem('sassignment_viewid')}`)
       formData.append('student_name', studentName)
       formData.append('student', studentID)
+      // formData.append('submitted', false)
          for (let i = 0; i < selectedFiles.length; i++) {
           formData.append(`uplassign`,selectedFiles[i]);
          }
@@ -167,9 +152,10 @@ const SubmitAssignment = (event) =>
     formData.append('tmarks',tmarks);
     formData.append('duedate',duedate)
     formData.append('submitted_date',submitted_date)
-    formData.append('assignment_id',`${localStorage.getItem('assignment_viewid')}`)
+    formData.append('assignment_id',`${localStorage.getItem('sassignment_viewid')}`)
     formData.append('student_name', studentName)
     formData.append('student', studentID)
+    // formData.append('submitted', false)
        for (let i = 0; i < selectedFiles.length; i++) {
         formData.append(`uplassign`,selectedFiles[i]);
        }
@@ -185,10 +171,6 @@ const SubmitAssignment = (event) =>
  .catch((err) => setSubmitStatus(-1));
    }
     
-    
-       
-        
-   
   
   
 }
@@ -214,6 +196,7 @@ const StatusAlert = () =>
 useEffect(()=>
 {
   //localStorage.setItem('submitted', submitted);
+  
   getCurentUser();
   getTeacherAssignments();
 },[uplassign])

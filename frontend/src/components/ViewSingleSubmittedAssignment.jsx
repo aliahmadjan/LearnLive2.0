@@ -62,6 +62,16 @@ const TeacherSingleViewSubmitAssignment=()=>
           tmarks: tmarks,
          
         })
+
+        axios.post("http://localhost:5000/leaderboard/addassignscore",{
+          campname:campname,
+          student_id : studentID,
+          student_name: studentName,
+          tchassignment_id: `${localStorage.getItem('assignment_viewid')}`,
+          assignment_score: Number(assignment_score),
+          total_assignmentscore: tmarks
+          
+        })
         setSubmitStatus(1)
       } else {
         setSubmitStatus(-1);

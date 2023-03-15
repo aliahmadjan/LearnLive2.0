@@ -17,6 +17,9 @@ function AdminSettings() {
   const [submitStatus, setSubmitStatus] = useState(0);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
   
   const getCurentUser = () =>
   {
@@ -54,6 +57,14 @@ function AdminSettings() {
 
           }
         }
+
+        const toggleShowPassword = () => {
+          setShowPassword(!showPassword);
+        };
+      
+        const toggleShowCPassword = () => {
+          setShowCPassword(!showCPassword);
+        };
 
     // const parsedDueDate = new Date(dueDate);
     //  // Formatting the parsed date and time in the same format as the uploadDate state variable
@@ -125,9 +136,12 @@ function AdminSettings() {
                 name="password"
                 onChange={(e) => setPassword(e.target.value)}
                 isRequired
-                type="password"
+                type={showPassword ? "text" : "password"}
                 width={'60%'} 
                 mr={0} ml='auto'/>
+                <Button  onClick={toggleShowPassword} colorScheme='orange' variant='ghost'>
+            {showPassword} <i class="fa-sharp fa-solid fa-eye"></i>
+                </Button>
             </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
@@ -140,10 +154,13 @@ function AdminSettings() {
                 id="cpassword"
                 name="cpassword"
                 onChange={(e) => setCPassword(e.target.value)}
-                type="password"
+                type={showCPassword ? "text" : "password"}
                 isRequired
                 width={'60%'} 
                 mr={0} ml='auto'/>
+                <Button  onClick={toggleShowCPassword} colorScheme='orange' variant='ghost'>
+            {showCPassword} <i class="fa-sharp fa-solid fa-eye"></i>
+                </Button>
             </FormControl>
 
             </Box>

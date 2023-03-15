@@ -49,20 +49,6 @@ const AssignTeachers =() =>
           {
             console.log(err)
           })
-
-          toast.success('Camps Displayed Successfully!',
-          {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            onRender: playNotificationSound()
-            
-    
-          });
     };
 
     
@@ -121,29 +107,7 @@ const AssignTeachers =() =>
         </Alert>
         );
     };
-
-  //  useEffect(()=>
-  //  {
-
-  //     if (Notification.permission === "granted") {
-  //       new Notification("Notification title", {
-  //         body: "Notification message",
-  //         icon: "/path/to/notification-icon.png",
-  //         tag: "notification-tag"
-  //       });
-  //     } else if (Notification.permission !== "denied") {
-  //       Notification.requestPermission().then(permission => {
-  //         if (permission === "granted") {
-  //           new Notification("Notification title", {
-  //             body: "Notification message",
-  //             icon: "/path/to/notification-icon.png",
-  //             tag: "notification-tag"
-  //           });
-  //         }
-  //       });
-  //     }
-  
-  //  })
+   
 
     const Back = ()=>
     {
@@ -201,7 +165,7 @@ const AssignTeachers =() =>
           </Box>
 
       </form>
-     <ToastContainer/>
+     {/* <ToastContainer/> */}
       <StatusAlert />
 
       

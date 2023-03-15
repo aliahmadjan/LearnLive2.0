@@ -4,11 +4,23 @@ const StudentAssignments = require('../Models/student-assignments.model');
 const TeacherAssignments = require('../Models/teacher-assignments.model')
 
 
+// const GetSubmittedAssignments = async (req, res, next) => {
+//     const teacherAssignmentId = req.params.teacherAssignmentId; // get the teacher assignment id from the request parameter
+//     const stdass = await StudentAssignments.find({ assignment_id: teacherAssignmentId }); // only find submitted assignments that match the teacher assignment id
+//     res.send(stdass);
+//   };
+
 const GetSubmittedAssignments = async (req, res, next) => {
-    const teacherAssignmentId = req.params.teacherAssignmentId; // get the teacher assignment id from the request parameter
-    const stdass = await StudentAssignments.find({ assignment_id: teacherAssignmentId }); // only find submitted assignments that match the teacher assignment id
-    res.send(stdass);
+    try {
+      const teacherAssignmentId = req.params.teacherAssignmentId;
+      const submittedAssignments = await StudentAssignments.find({ assignment_id: teacherAssignmentId });
+      res.send(submittedAssignments);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server Error');
+    }
   };
+  
 
 const GetAssignments = async(req,res,next)=>
 {

@@ -24,6 +24,9 @@ const AddStudents = () => {
   const [passwordError, setPasswordError] = useState('');
   const [campname , setCampname] = useState('');
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
+
   
 
   const [selectedFile, setSelectedFile] =useState(null);
@@ -77,6 +80,14 @@ const AddStudents = () => {
             );
         };
   
+        const toggleShowPassword = () => {
+          setShowPassword(!showPassword);
+        };
+      
+        const toggleShowCPassword = () => {
+          setShowCPassword(!showCPassword);
+        };
+      
 
 
   const handleFileInputChange =(e)=>
@@ -185,10 +196,13 @@ const AddStudents = () => {
                 borderBottomColor='orange' 
                 onChange={e=>setPassword(e.target.value)}
                 id='password' name='password' label='password'
-                type="password"
+                type={showPassword ? "text" : "password"} 
                 isRequired
                 width={'60%'} 
                 mr={0} ml='auto'/>  
+                <Button  onClick={toggleShowPassword} colorScheme='orange' variant='ghost'>
+            {showPassword} <i class="fa-sharp fa-solid fa-eye"></i>
+                </Button>
             </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
@@ -200,10 +214,13 @@ const AddStudents = () => {
                 borderBottomColor='orange' 
                 onChange={e=>setConPassword(e.target.value)}
                 id='cpassword' name='cpassword' label='cpassword'
-                type="password"
+                type={showCPassword ? "text" : "password"}
                 isRequired
                 width={'60%'} 
                 mr={0} ml='auto'/>  
+                 <Button  onClick={toggleShowCPassword} colorScheme='orange' variant='ghost'>
+            {showCPassword} <i class="fa-sharp fa-solid fa-eye"></i>
+                </Button>
             </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>

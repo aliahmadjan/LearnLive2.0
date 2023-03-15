@@ -47,6 +47,10 @@ const studentAssignmentsSchema = new moongose.Schema({
    assignment_id:{
     type: String
    },
+
+   submitted:{
+    type: Boolean
+   },
    submit_status : {
     type: String,
     required:true

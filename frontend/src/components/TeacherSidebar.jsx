@@ -111,6 +111,7 @@ export default function TeacherSidebar({navSize, changeNavSize}) {
                 <NavItem navSize={navSize} icon={'fa-solid fa-calendar'} title="Calendar" active={route === "calendar"} route="calendar" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Schedule Class" active={route === "createclass"} route="createclass" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="View Classes" active={route === "viewclass"} route="viewclass" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Leaderboard" active={route === "leaderboard"} route="leaderboard" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Settings" active={route === "settings"} route="settings" />
                 
 

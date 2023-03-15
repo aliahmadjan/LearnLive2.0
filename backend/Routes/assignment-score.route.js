@@ -9,6 +9,8 @@ router.get('/getassignmentsscores',AssignmentsScoreController.GetQuizzesScore);
 
 router.get('/getassignmentscore/:id',AssignmentsScoreController.GetSingleQuizScore);
 
-router.get('/getassignmentresults/:studentID',AssignmentsScoreController.GetQuizResults);
+router.get('/getassignmentresults/:studentName/:assignmentID',AssignmentsScoreController.GetQuizResults);
+
+router.get('/getassignmentmarks/:studentName',AssignmentsScoreController.GetQuizResultsByName)
 
 module.exports = router;

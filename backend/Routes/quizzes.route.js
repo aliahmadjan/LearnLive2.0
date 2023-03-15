@@ -56,7 +56,6 @@ router.get('/samestdquiz',TokenStudent, async(req,res)=>
 
 
 
-
 router.get('/getquiz/:id',QuizzesController.GetSingleQuiz);
 
 router.delete('/deletequiz/:id',QuizzesController.DeleteQuiz);

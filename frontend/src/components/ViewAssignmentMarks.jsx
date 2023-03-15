@@ -10,7 +10,27 @@ const ViewAssignmentMarks=()=>
     const [tmarks , setTMarks] = useState("")
     const [title, setTitle] = useState("")
     const [ assignmentMarks , setAssignmentMarks ] = useState([])
+    const [ assignmentResults , setAssignmentResults] = useState([])
+    const [name , setName] = useState("")
     const navigate = useNavigate();
+
+
+    const getCurentUser = () =>
+  {
+    let logintoken = localStorage.getItem("ltoken")
+    axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
+    axios.get("http://localhost:5000/student/viewprofile")
+      .then(res=> {
+        localStorage.setItem('name',res.data.name)
+              //setUserID(res.data._id);
+              //setName(res.data.name);
+              //localStorage.setItem('name',name)
+              //setEmail(res.data.email);
+              //setGender(res.data.gender);
+              //setPhoneNo(res.data.phoneno);
+      }).catch (err=> {
+          console.log(err) })
+  }
 
     const getSingleUser = () =>
     {
@@ -18,30 +38,43 @@ const ViewAssignmentMarks=()=>
      
         axios
         .get(`http://localhost:5000/stdassignments/singletchassign/:${localStorage.getItem('marks_viewid')}`) 
-        // .get('http://localhost:5000/stdassignments/singletchassign/:',{params : {id: localStorage.getItem('marks_viewid')}})
+        
           .then((res) => {
           })
           .catch((err) => {
             console.log(err);
           });
       
+
           //axios.get(`http://localhost:5000/assignmentscore/getassignmentresults/${stdAssignmentID}`)
-      axios.get(`http://localhost:5000/assignmentscore/getassignmentresults/${localStorage.getItem("assignment_viewid")}`)      
+      axios.get(`http://localhost:5000/assignmentscore/getassignmentresults/${localStorage.getItem("name")}/${localStorage.getItem("sassignment_viewid")}`)      
       .then((res)=>
       {
-        //console.log(res.data)
+        
         setAssignmentMarks(res.data)
         
-        //setAssignmentScore(res.data.assignment_score)
+       
       }).catch((err)=>
       {
 
       })
 
+      // axios.get(`http://localhost:5000/assignmentscore/getassignmentmarks/${localStorage.getItem('name')}`)      
+      // .then((res)=>
+      // {
+      //   //console.log(res.data)
+      //   setAssignmentResults(res.data)
+        
+      // }).catch((err)=>
+      // {
+
+      // })
+
     }
 
     useEffect(()=>
     {
+        getCurentUser();
         getSingleUser();
     },[])
 
@@ -70,12 +103,12 @@ const ViewAssignmentMarks=()=>
     <Heading size={'md'} mb={4}> Assignment Marks </Heading>
     <Flex width="100%" border={'1px solid orange'} gap={2} justifyContent='space-around' height='50vh' borderRadius='20px' p={4} flexWrap='wrap' overflow='scroll'>
 
-      {assignmentMarks.map((marks,index) => (         
+      {/* {assignmentMarks.map((marks,index) => (          */}
         <Box p={2} height="100px">  
-          <Text> Name : { marks.student_name}</Text>
-          <Text> Assignment Score :  {marks.assignment_score + "/" + marks.tmarks}</Text>   
+          <Text> Name : { assignmentMarks.student_name}</Text>
+          <Text> Assignment Score :  {assignmentMarks.assignment_score + "/" + assignmentMarks.tmarks}</Text>   
         </Box>
-      ))}   
+      {/* ))}    */}
 
     </Flex>
   </Box>
