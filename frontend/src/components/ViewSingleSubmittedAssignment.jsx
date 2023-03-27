@@ -12,7 +12,7 @@ import {
 
 const TeacherSingleViewSubmitAssignment=()=>
  {
-  const [submitStatus , setSubmitStatus] = useState(0);
+  const [submitStatus , setSubmitStatus] = useState("");
   const [stdAssignmentID , setStdAssignmentID] = useState("");
     const [campname , setCampName] = useState("");
     const [title , setTitle] = useState("");
@@ -50,6 +50,19 @@ const TeacherSingleViewSubmitAssignment=()=>
         });
     }
 
+    const GetAssignmentScore = () =>
+    {
+      axios.get(`http://localhost:5000/assignmentscore/getassignmentscore/${localStorage.getItem('ssubmitassignment_viewid')}`)
+      .then((res) =>
+      {
+        console.log(res.data)
+        //setAssignmentScore(res.data.assignment_score)
+      }).catch((err)=>
+      {
+        //console.log(err)
+      })
+    }
+
     const GradeAssignment = () =>
     {
       if (assignment_score <= tmarks) {
@@ -62,6 +75,22 @@ const TeacherSingleViewSubmitAssignment=()=>
           tmarks: tmarks,
          
         })
+        .then((response) => {
+          if (response.status === 200) {
+            setSubmitStatus("Graded");
+          }
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 400) {
+            setSubmitStatus("Already Graded");
+          } else {
+            setSubmitStatus("error");
+          }
+        });
+    } else {
+      setSubmitStatus("error");
+    }
+
 
         axios.post("http://localhost:5000/leaderboard/addassignscore",{
           campname:campname,
@@ -72,31 +101,35 @@ const TeacherSingleViewSubmitAssignment=()=>
           total_assignmentscore: tmarks
           
         })
-        setSubmitStatus(1)
-      } else {
-        setSubmitStatus(-1);
-      }
-    }
-      const StatusAlert = () =>
-      {
-        if (submitStatus === 1)
-        return(
-          <Alert status='success'>
-            <AlertIcon/>
+          };
+
+    const StatusAlert = () => {
+      if (submitStatus === "Graded")
+        return (
+          <Alert status="success">
+            <AlertIcon />
             Assignment has been graded!
           </Alert>
         );
-        if(submitStatus === -1)
-        return(
-          <Alert status='error'>
-            <AlertIcon/>
+      if (submitStatus === "Already Graded")
+        return (
+          <Alert status="warning">
+            <AlertIcon />
+            Assignment has already been graded!
+          </Alert>
+        );
+      if (submitStatus === "error")
+        return (
+          <Alert status="error">
+            <AlertIcon />
             Assignment has not been graded!
           </Alert>
-        )
-      };
+        );
+    };
     useEffect(()=>
     {
         getSingleUser();
+        //GetAssignmentScore();
     },[uplassign])
 
     const Back = ()=>
@@ -142,6 +175,8 @@ const TeacherSingleViewSubmitAssignment=()=>
               focusBorderColor='orange.700' 
               variant={'flushed'} 
               borderBottomColor='orange'
+              value={assignment_score}
+              
               onChange={(e) => setAssignmentScore(e.target.value)}
               width={'60%'} 
               mr={0} ml='auto'

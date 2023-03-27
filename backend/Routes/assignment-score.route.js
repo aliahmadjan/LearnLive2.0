@@ -13,4 +13,6 @@ router.get('/getassignmentresults/:studentName/:assignmentID',AssignmentsScoreCo
 
 router.get('/getassignmentmarks/:studentName',AssignmentsScoreController.GetQuizResultsByName)
 
+router.put('/updateassignscore/:id',AssignmentsScoreController.UpdateAssignmentScore)
+
 module.exports = router;

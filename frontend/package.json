@@ -6,10 +6,13 @@
     "@chakra-ui/react": "^2.3.6",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@vitejs/plugin-basic-ssl": "^1.0.1",
+    "@widgetbot/embed-api": "^1.2.8",
+    "@widgetbot/react-embed": "^1.7.0",
     "@zoomus/websdk": "^2.9.5",
     "axios": "^1.2.1",
     "date-fns": "^2.29.3",
@@ -17,6 +20,7 @@
     "dotenv": "^16.0.3",
     "eslint": "^8.33.0",
     "eventemitter3": "^5.0.0",
+    "firebase": "^9.18.0",
     "framer-motion": "^6.5.1",
     "globalize": "^1.7.0",
     "html2canvas": "^1.4.1",
@@ -27,9 +31,11 @@
     "react-doc-viewer": "^0.1.5",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.2",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
+    "styled-components": "^5.3.9",
     "use-sound": "^4.0.1",
     "web-vitals": "^2.1.4",
     "zustand": "^4.1.4"
@@ -57,5 +63,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "styled-components": "^5"
   }
 }

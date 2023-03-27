@@ -1,4 +1,4 @@
-import React , {useState, useEffect} from 'react'
+import React , {useState, useEffect , useRef} from 'react'
 import { Box,Button, Select,Heading, Text, Link ,FormControl,FormLabel, Input,RadioGroup,Radio,Stack, InputGroup, Flex} from '@chakra-ui/react'
 import axios from "axios"
 import { useNavigate, useParams} from "react-router-dom";
@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSound } from 'use-sound';
 import notificationSound from '../notification.mp3';
 
+
 const AssignTeachers =() =>
 {
   //const [playNotificationSound] = useSound(notificationSound);
@@ -25,7 +26,7 @@ const AssignTeachers =() =>
     
     const [searches, setSearches] = useState([])
 
-    const [submitStatus, setSubmitStatus] = useState(0);
+    const [submitStatus, setSubmitStatus] = useState("");
   
   const {
     isOpen: isVisible,
@@ -51,6 +52,7 @@ const AssignTeachers =() =>
           })
     };
 
+   
     
 
     const AssignTeachersToCamp=async(e)=>
@@ -60,54 +62,54 @@ const AssignTeachers =() =>
  await axios.post(`http://localhost:5000/camp/addcampteachers/${localStorage.getItem('teacher_assignid')}`,{
     campname:selectedCampus,
      teachers:`${localStorage.getItem('teacher_assignid')}`
-  }).then((res)=>
-  {
-    setSubmitStatus(1);
-  }).catch((err)=>
-  {
-    setSubmitStatus(-1)
-  })
-
+  }).then((response) => {
+    if (response.status === 200) {
+      if (response.data.nModified === 0) {
+        setSubmitStatus("Already Assigned");
+      } else {
+        setSubmitStatus("Assigned");
+      }
     }
+  })
+  .catch((error) => {
+    if (error.response && error.response.status === 400) {
+      setSubmitStatus("Already Assigned");
+    } else {
+      setSubmitStatus("Error");
+    }
+  });
+} 
+
      useEffect(() => {
       GetCampNames();
        //console.log(teachers);
     }, [])
 
     const StatusAlert = () => {
-      if (submitStatus === -1)
+      if (submitStatus === "Already Assigned")
         return (
-          <Alert status='error'>
+          <Alert status='warning'>
           <AlertIcon />
          Teacher was already assigned!
         </Alert>
         );
-      if (submitStatus === 1)
+      if (submitStatus === "Assigned")
         return (
           <Alert status='success'>
           <AlertIcon />
          Teacher was assigned!
         </Alert>
+        );
+
+        if (submitStatus === "Error")
+        return (
+          <Alert status="error">
+            <AlertIcon />
+            Teacher war not added!
+          </Alert>
         );
     };
 
-    const StatusAlert1 = () => {
-      if (submitStatus === -1)
-        return (
-          <Alert status='error'>
-          <AlertIcon />
-         Teacher was not assigned!
-        </Alert>
-        );
-      if (submitStatus === 1)
-        return (
-          <Alert status='success'>
-          <AlertIcon />
-         Teacher was assigned!
-        </Alert>
-        );
-    };
-   
 
     const Back = ()=>
     {
@@ -165,7 +167,8 @@ const AssignTeachers =() =>
      {/* <ToastContainer/> */}
       <StatusAlert />
 
-      
+      {/* <input type="text" id="userInput"/>
+      <button  onClick={createChannel}>Save</button> */}
     </Box>
    
       )

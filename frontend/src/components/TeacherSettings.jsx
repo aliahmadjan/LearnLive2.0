@@ -189,3 +189,51 @@ function TeacherSettings() {
 }
 
 export default TeacherSettings;
+
+// import * as React from 'react'
+// import WidgetBot from '@widgetbot/react-embed'
+
+// const App = () => (
+//   <WidgetBot
+//   server=  "753683384642830457"
+//   //server="299881420891881473"
+//     //channel="355719584830980096"
+//   />
+// )
+
+// export default App
+
+// import * as React from 'react'
+// import WidgetBot, { API } from '@widgetbot/react-embed'
+
+// class App extends React.Component {
+//   api: API
+
+//   onAPI(api: API) {
+//     this.api = api
+//     api.on('signIn', user => {
+//       console.log(`Signed in as ${user.name}`, user)
+//     })
+//   }
+
+//   handleClick() {
+//     this.api.emit('sendMessage', `Hello world! from \`@widgetbot/react-embed\``)
+//   }
+
+//   render() {
+//     return (
+//       <div>
+//         <button onClick={this.handleClick.bind(this)}>
+//           {`Send "Hello world"`}
+//         </button>
+//         <WidgetBot
+//           server="299881420891881473"
+//           channel="355719584830980096"
+//           onAPI={this.onAPI.bind(this)}
+//         />
+//       </div>
+//     )
+//   }
+// }
+
+// export default App

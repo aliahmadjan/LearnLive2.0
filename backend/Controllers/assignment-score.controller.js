@@ -96,6 +96,20 @@ const GetQuizResults = async (req, res, next) => {
       next(error);
     }
   }
+
+  const UpdateAssignmentScore = async(req,res,next) =>
+{
+   AssingmentScore.findByIdAndUpdate(req.params.id, {
+        $set: req.body
+          }, (error, data) => {
+            if (error) {
+              res.send("Error")
+              console.log(error)
+            } else {
+              res.json(data)
+            }
+          })
+    }
   
 
   exports.GetQuizResults = GetQuizResults;
@@ -103,3 +117,4 @@ exports.AddAssingmentScore = AddAssingmentScore;
 exports.GetQuizzesScore = GetQuizzesScore;
 exports.GetSingleQuizScore = GetSingleQuizScore;
 exports.GetQuizResultsByName = GetQuizResultsByName
+exports.UpdateAssignmentScore = UpdateAssignmentScore;

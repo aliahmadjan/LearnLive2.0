@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Outlet, Route, Routes } from 'react-router-dom'
 import { useState } from 'react'
 import TeacherUploadAssignment from '../components/TeacherUploadAssignment'
 import TeacherSidebar from '../components/TeacherSidebar'
@@ -23,10 +23,13 @@ import TeacherEditAssignment from '../components/EditAssignment'
 import TeacherLeaderboard from '../components/TeacherLeaderboard'
 import ViewSingleTeacherLeaderboard from '../components/ViewSingleTeacherLeaderboard'
 import DiscussionForumSidebar from '../components/DiscussionForumSideBar'
-import { DiscussionChat}  from '../components/Discussion.tsx'
 // import JoinMeet from '../components/ZoomComponents/mainZoom'
+import testing from '../components/testing'
+import AddTeachers from '../components/AddTeachers'
+import { DiscussionChat }  from '../components/Discussion.tsx'
+import UnreadDiscussion from '../components/UnreadDiscussion'
 
-const TeacherDashboard = () => {
+const DiscussionForumDashboard = () => {
 
     // let payload={
     //     sdkKey: 'sJ6V1zLdiXFWJ4vJPKhzDOzqt1Hx8GzPCDzp',
@@ -46,43 +49,29 @@ const TeacherDashboard = () => {
     function changeNavSize(size) {
         setNavSize(size)
     }
-
+    
   return (
 
 
 
     <Box  w="100%" h="100vh" backgroundColor='#101010' pt={0} pb={4} pr={4}>
         <Flex width={'100%'} height='100%'>
-            <TeacherSidebar navSize={navSize} changeNavSize={ (size) => changeNavSize(size) }></TeacherSidebar>
+            <DiscussionForumSidebar navSize={navSize} changeNavSize={ (size) => changeNavSize(size) }>
+            </DiscussionForumSidebar>
             <Flex 
                 w={ navSize=="small" ? "95%" : "85%"} 
                 mt={4} borderRadius={30}
-                
-                backgroundImage={'linear-gradient(to bottom, #fddb92 0%, #d1fdff 100%);'}>
+                backgroundColor={'#FFFFFF'}>
 
                 <Routes>
 
-                    <Route path="uploadassignment" element={<TeacherUploadAssignment />} />
-                    <Route path="viewassignments" element={<TeacherViewAssignments />} />
-                    <Route path="account" element={<TeacherAccountDetails />} />
-                    <Route path="uploadquiz" element={<QuizInfo />} />
-                    <Route path="viewquizzes" element={<ViewQuizzes/>}/> 
-                    <Route path="viewquiz" element={<ViewSingleQuiz/>}/>
-                    <Route path="viewquizresults" element={<ViewQuizResults/>}/>
-                    <Route path="viewassignment" element={<TeacherSingleViewAssignment/>}/>
-                    <Route path="editassignment" element={<TeacherEditAssignment/>}/>
-                    <Route path="viewsubmittedassignment" element={<ViewSubmittedAssignments/>}/>
-                    <Route path="viewssubmitassignment" element={<TeacherSingleViewSubmitAssignment/>}/>
-                    <Route path="settings" element={<TeacherSettings />}/>
-                    <Route path="calendar" element={<TeacherCalendar />} />
-                    {/* <Route path="createclass" element={<JoinMeet payload={payload}/>}/> */}
-                    <Route path="createclass" element={<MakeMeet/>}/>
-                    <Route path="viewclass" element={<TeacherViewMeets/>}/>
-                    <Route path="leaderboard" element={<TeacherLeaderboard setCampus={(value)=>setCampName(value)}/>}/>
-                    <Route path="viewleaderboard" element ={<ViewSingleTeacherLeaderboard campName={campName}/>}/>
-                     <Route path="discussionforum" element={<DiscussionChat channelId='1089483253804703839'/>}/> 
-                    <Route path="oauth-callback" element={<CallBack/>}/>
-                                     
+                 {/* <Route path="allunreads" element={<UnreadDiscussion/>} />  */}
+                {/*<Route path="announcements" element={<TeacherCalendar/>}/>
+                <Route path="classroom" element={<TeacherSettings/>}/>
+                <Route path="threads" element={<AddTeachers/>}/> */}
+                {/* <Route path=":name" element={<Discussion/>}/> */}
+                     
+                          
                 </Routes>       
              </Flex>
         </Flex>
@@ -91,4 +80,4 @@ const TeacherDashboard = () => {
   )
 }
 
-export default TeacherDashboard
+export default DiscussionForumDashboard

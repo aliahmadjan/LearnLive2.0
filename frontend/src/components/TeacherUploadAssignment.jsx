@@ -1,7 +1,7 @@
 import { Grid,Select, Box, FormControl, FormLabel, Input, Text, FormErrorMessage, Button, Heading, Flex, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Viewer } from 'react-doc-viewer';
@@ -11,6 +11,7 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@chakra-ui/react'
+
 
 //import DatePicker from "react-datepicker"
 //import 'react-datepicker/dist/react-datepicker.css';
@@ -31,7 +32,8 @@ function TeacherUploadAssignment() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [teacher , setTeacher] = useState("");
-  
+
+
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [selected , setSelected] = useState([])
   var imgURLsArray = []
@@ -69,6 +71,8 @@ function TeacherUploadAssignment() {
       })
   }
 
+
+  
   const UploadAssignment = (e) => {
     e.preventDefault();
 
@@ -342,6 +346,14 @@ function TeacherUploadAssignment() {
 
       </form>
       <StatusAlert/>
+    
+       <StatusAlert/>
+
+       {/* <form onSubmit={createChannel}>
+        <label>Enter Message</label>
+        <input type="text" ref={messageRef} />
+        <button type="submit">Enter</button>
+       </form> */}
     
 
     </Box>

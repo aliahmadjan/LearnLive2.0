@@ -112,6 +112,7 @@ export default function TeacherSidebar({navSize, changeNavSize}) {
                 <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Schedule Class" active={route === "createclass"} route="createclass" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="View Classes" active={route === "viewclass"} route="viewclass" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Leaderboard" active={route === "leaderboard"} route="leaderboard" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Discussion Forum" active={route === "discussionforum"} route="discussionforum" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Settings" active={route === "settings"} route="settings" />
                 
 

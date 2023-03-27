@@ -8,6 +8,8 @@ import useStore from '../store'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import AdminDashboard from './AdminDashboard'
 import CallBack from '../components/ZoomComponents/CallBack'
+import DiscussionForumDashboard from './DiscussionForumDashboard'
+
 
 function App() {
   return  (
@@ -17,6 +19,7 @@ function App() {
      <Route path="teacher/*" element= {<TeacherDashboard/>} />
      <Route path="student/*" element={<StudentDashboard/>}/>
      <Route path="admin/*" element={<AdminDashboard/>}/>
+      {/* <Route path="teacher/discussionforum/*" element={<DiscussionForumDashboard/>}/>  */}
      {/* <Route path="teacher/oauth-callback" element = {<CallBack/>}/>
      <Route path="teacher/*" element={[<TeacherDashboard/>]} */}
 
