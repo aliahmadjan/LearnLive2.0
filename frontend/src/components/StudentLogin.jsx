@@ -39,7 +39,7 @@ const StudentLogin = () => {
 
   return (
     
-    <Container maxW="full" height="88vh" bg='orange.100' >
+    <Container maxW="full" height="88vh" backgroundImage={'linear-gradient(to bottom, #fddb92 0%, #d1fdff 100%);'} >
 
         <Flex h={{base: "full", md: '88vh'}} 
             py={{base: '12px'}} 

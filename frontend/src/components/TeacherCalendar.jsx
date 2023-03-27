@@ -43,14 +43,19 @@ const TeacherCalendar = props => {
   return (
     
     
-    <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-      <Box pt={4} pb={2} mt={4}  >
-        <Heading mb={4} >
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+      <Box pt={4} pb={2}>
+          <Heading mb={4}>
           Calendar
-        </Heading>
+          </Heading>
       </Box>
 
-      <Box p={5} width='4xl' mx='auto' height='70vh' border='1px solid orange' borderRadius={10}>
+      <Box p={5} width='4xl' 
+          mx='auto' height='70vh'
+          boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)"
+          borderRadius='15px'
+          backgroundColor="#FFFFFF">
       
       <Calendar
        views={views}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid,Select, Box, FormControl, FormLabel, Input, Text, FormErrorMessage, Button, Heading, Flex } from "@chakra-ui/react";
+import { Grid,Select, Box, SimpleGrid, Card, CardHeader,Avatar, Tooltip, FormControl, FormLabel, Input, Text, FormErrorMessage, Button, Heading, Flex } from "@chakra-ui/react";
 import { useState , useEffect} from "react";
 import axios from "axios"
 
@@ -22,37 +22,88 @@ function TeacherViewMeets ()
     {
         getAllMeets();
     })
-    return(
-        <Box pt={0} px={0} mx='auto' textAlign={'center'} width='100%' backgroundColor='gray.100' borderRadius={30} flexDirection='row'>
 
-        <Box pt={4} pb={2} mt={4} >
-        <Heading mb={4} >
-          Classes
-        </Heading>
-      </Box>
-        {zoommeets.map((meets) => (  
-          <Box ml={0} >
-          <Text>
-          Camp: {meets.campname}
-          </Text> 
-          <Text>
-          Agenda: {meets.agenda}
-          </Text> 
-          <Text>
-          Duration: {meets.duration}
-          </Text>
-          <Text>
-          Password: {meets.password}
-          </Text>
-          <form action={meets.start_url} target="_blank">
-            <Button m={4} type='submit' colorScheme='orange' variant='solid'>
-                Start
-            </Button> 
-          </form>
-        </Box>
-        ))}
+return(
+
+  <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+    <Box pt={4} pb={2}  >
+      <Heading mb={4} >
+        Scheduled Meetings
+      </Heading>
     </Box>
-    );
+
+    <Box width={'80%'} mx="auto" >
+
+        {/* <Flex p={4}>
+          <Input placeholder="Student's Name"
+          onChange={handleSearch}
+          variant={'outlined'} borderColor='orange'
+          >
+          </Input>
+          
+          <Button colorScheme={'orange'}>Search</Button>
+        </Flex> */}
+
+        <SimpleGrid 
+            width={'90%'} 
+            overflowY='scroll' 
+            maxHeight={'66vh'} 
+            mx='auto' 
+            minChildWidth='260px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '16px',
+                borderRadius: '8px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '8px',
+              },
+            }}>
+
+            {zoommeets.map((meet) => (
+              <Card maxWidth={'100%'}  maxHeight='160px' m={2}>
+                <CardHeader>
+                  <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+                    <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                      <Avatar name={meet.campname} src={meet.campname} mx={4} />
+                      <Box>
+                        <Heading size='sm'>Camp: {meet.campname}</Heading>
+                        <Text>Agenda: {meet.agenda}</Text>
+                        <Text>Duration: {meet.duration} Mins</Text>
+                        <Text>Password: {meet.password}</Text>
+                      </Box>
+                    </Flex>
+
+                    <Flex flexDir={'column'} justifyContent='center'>
+
+                      <Tooltip label="Start Meeting" hasArrow placement='right'>
+                      <form action={meet.start_url} target="_blank">
+                        <Button size='md' type='submit' colorScheme='orange' variant='ghost'>
+                          <i class="fa-solid fa-play"></i>               
+                        </Button>
+                      </form>
+                      </Tooltip>
+
+                    </Flex>
+
+                  </Flex>
+
+                </CardHeader>
+  
+              </Card>
+            ))}
+
+          </SimpleGrid>
+
+      </Box>
+
+  </Box>
+    
+);
 }
 
 export default TeacherViewMeets;
