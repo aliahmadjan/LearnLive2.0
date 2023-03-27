@@ -17,9 +17,9 @@ function QuizQuestionComponent(props){
                             value={props.questionLine}
                             onChange={props.onChange}
                             isRequired 
-                            focusBorderColor='orange.700' 
+                            focusBorderColor='#F57C00' 
                             variant={'outline'} 
-                            borderColor='orange' 
+                            borderColor='#F57C00' 
                             ml={4} 
                             marginBottom={4} 
                             height={24} 
@@ -36,9 +36,9 @@ function QuizQuestionComponent(props){
                             <Input  isRequired
                                     value={props.optionA} 
                                     onChange={props.onChange}
-                                    focusBorderColor='orange.700' 
+                                    focusBorderColor='#F57C00' 
                                     variant={'outline'} 
-                                    borderColor='orange'  
+                                    borderColor='#F57C00'  
                                     placeholder="Option A" 
                                     type="text"
                                     id="optionA" 
@@ -52,9 +52,9 @@ function QuizQuestionComponent(props){
                                 <FormLabel margin={"auto"} pr={2} htmlFor="optionB">b: </FormLabel>
                                 <Input  value={props.optionB} 
                                         onChange={props.onChange}
-                                        focusBorderColor='orange.700' 
+                                        focusBorderColor='#F57C00' 
                                         variant={'outline'} 
-                                        borderColor='orange'
+                                        borderColor='#F57C00'
                                         placeholder="Option B" 
                                         type="text" 
                                         id="optionB" 
@@ -68,9 +68,9 @@ function QuizQuestionComponent(props){
                                 <FormLabel margin={"auto"} pr={2} htmlFor="optionC">c: </FormLabel>
                                 <Input  value={props.optionC} 
                                         onChange={props.onChange}
-                                        focusBorderColor='orange.700' 
+                                        focusBorderColor='#F57C00' 
                                         variant={'outline'} 
-                                        borderColor='orange' 
+                                        borderColor='#F57C00' 
                                         placeholder="Option C" 
                                         type="text" 
                                         id="optionC" 
@@ -84,9 +84,9 @@ function QuizQuestionComponent(props){
                                 <FormLabel margin={"auto"} pr={2} htmlFor="optionD">d: </FormLabel>
                                 <Input  value={props.optionD} 
                                         onChange={props.onChange}
-                                        focusBorderColor='orange.700' 
+                                        focusBorderColor='#F57C00' 
                                         variant={'outline'} 
-                                        borderColor='orange'
+                                        borderColor='#F57C00'
                                         placeholder="Option D" 
                                         type="text" 
                                         id="optionD" 
@@ -104,9 +104,9 @@ function QuizQuestionComponent(props){
                             <Select isRequired
                                     value={props.correctOption}
                                     onChange={props.onChange}
-                                    focusBorderColor='orange.700' 
+                                    focusBorderColor='#F57C00' 
                                     variant={'outline'} 
-                                    borderColor='orange'
+                                    borderColor='#F57C00'
                                     width="20%"
                                     id="correctOption"
                                     name="correctOption"                          

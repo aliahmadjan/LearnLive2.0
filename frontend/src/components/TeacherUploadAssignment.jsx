@@ -1,4 +1,4 @@
-import { Grid,Select, Box, FormControl, FormLabel, Input, Text, FormErrorMessage, Button, Heading, Flex } from "@chakra-ui/react";
+import { Grid,Select, Box, FormControl, FormLabel, Input, Text, FormErrorMessage, Button, Heading, Flex, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
@@ -134,31 +134,30 @@ function TeacherUploadAssignment() {
 
   return (
 
-    <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30} flexDirection='row'>
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
 
-     
+      <Box pt={4} pb={2}>
+        <Heading mb={4}>
+          Upload Assignment
+        </Heading>
+      </Box>
 
-    <Box pt={4} pb={2} mt={4} >
-      <Heading mb={4} >
-        Upload Assignment
-      </Heading>
-    </Box>
+      {error && <Text color="red.500">{error}</Text>}
+      {success && <Text color="green.500">{success}</Text>}
 
-     {error && <Text color="red.500">{error}</Text>}
-     {success && <Text color="green.500">{success}</Text>}
+      <form onSubmit={UploadAssignment}>
+      <Flex p={5} mx="auto" textAlign={'start'}>
 
-    <form onSubmit={UploadAssignment}>
-    <Box p={5} maxW={selectedFiles.length ? "4xl" : 'lg'} mx="auto" gap={4} textAlign={'start'}  position={'relative'} display={'flex'} flexDirection='row'>
-      <Box border={'1px solid orange'} borderRadius='20px' p={4} >
-        
+        <Box width={selectedFiles.length ? '40%' : '50%'} m='auto'  boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
+          
           <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel htmlFor="camp" fontWeight="bold" color="orange.500" mr={2}>Camp Name</FormLabel>
+            <FormLabel htmlFor="camp" fontWeight="bold" color="#F57C00" mr={2}>Camp Name</FormLabel>
 
             <Select
               textAlign={'center'}
-              focusBorderColor='orange.700' 
+              focusBorderColor='#F57C00' 
               variant={'flushed'} 
-              borderBottomColor='orange'
+              borderBottomColor='#F57C00'
               isRequired
               width={'60%'} 
               mr={0} ml='auto'
@@ -180,14 +179,14 @@ function TeacherUploadAssignment() {
           </FormControl>
 
           <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel htmlFor="title" fontWeight="bold" color="orange.500" mr={2}>Title</FormLabel>
+            <FormLabel htmlFor="title" fontWeight="bold" color="#F57C00" mr={2}>Title</FormLabel>
             <Input
               id="title"
               name="title"
               textAlign={'center'}
-              focusBorderColor='orange.700' 
+              focusBorderColor='#F57C00' 
               variant={'flushed'} 
-              borderBottomColor='orange'
+              borderBottomColor='#F57C00'
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               isRequired
@@ -196,15 +195,15 @@ function TeacherUploadAssignment() {
               />
           </FormControl>
           
-          <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel htmlFor="description" fontWeight="bold" color="orange.500" mr={2}>Description</FormLabel>
-            <Input
+          <FormControl mt={4} mb={2} display={'flex'}>
+            <FormLabel htmlFor="description" fontWeight="bold" color="#F57C00" mr={2}>Description</FormLabel>
+            <Textarea 
             id="description"
             name="description"
-            textAlign={'center'}
-            focusBorderColor='orange.700' 
-            variant={'flushed'} 
-            borderBottomColor='orange'
+            focusBorderColor='#F57C00'
+            borderColor='#F57C00'
+            variant='outline'
+            resize={'none'}
             onChange={(e) => setDescription(e.target.value)}
             value={description}
             isRequired
@@ -214,146 +213,138 @@ function TeacherUploadAssignment() {
           </FormControl>
 
           <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel htmlFor="marks" fontWeight="bold" color="orange.500" mr={2}>Marks</FormLabel>
+            <FormLabel htmlFor="marks" fontWeight="bold" color="#F57C00" mr={2}>Marks</FormLabel>
             <Input
             id="marks"
             name="marks"
             type="number"
             textAlign={'center'}
-            focusBorderColor='orange.700' 
+            focusBorderColor='#F57C00' 
             variant={'flushed'} 
-            borderBottomColor='orange'
+            borderBottomColor='#F57C00'
             onChange={(e) => setTMarks(e.target.value)}
             value={tmarks}
             isRequired
             width={'60%'} 
             mr={0} ml='auto'
             />
-        </FormControl>
-        <FormControl mb={2} display={'flex'} alignItems='center'>
-          <FormLabel htmlFor="dueDate" fontWeight="bold" color="orange.500" mr={2}>Uploaded Date</FormLabel>
-          <Input
-          id="uploadeddate"
-          name='uploadeddate'
-          label="Date"
-          type="date"
-          textAlign={'center'}
-          focusBorderColor='orange.700' 
-          variant={'flushed'} 
-          borderBottomColor='orange'
-          onChange = {e=>setUploadedDate(e.target.value)}
-          isRequired
-          width={'60%'} 
-          mr={0} ml='auto'
-          />
-        </FormControl>
-        <FormControl mb={2} display={'flex'} alignItems='center'>
-          <FormLabel htmlFor="dueDate" fontWeight="bold" color="orange.500" mr={2}>Due Date</FormLabel>
-          {/* <DatePicker 
-          textAlign={'center'}
-          focusBorderColor='orange.700' 
-          variant={'flushed'} 
-          borderBottomColor='orange'
-          selected={dueDate}
-          onChange={setDueDate}
-          isRequired
-          width={'60%'} 
-          mr={0} ml='auto'
-           /> */}
-          <Input
-          id="dueDate"
-          name='dueDate'
-          label="Date"
-          type="date"
-          textAlign={'center'}
-          focusBorderColor='orange.700' 
-          variant={'flushed'} 
-          borderBottomColor='orange'
-          onChange = {e=>setDueDate(e.target.value)}
-          isRequired
-          width={'60%'} 
-          mr={0} ml='auto'
-          />
-        </FormControl>
+          </FormControl>
 
-        <FormControl mb={2} display={'flex'} alignItems='center'>
-          <FormLabel htmlFor="pdf" fontWeight="bold" color="orange.500" mr={2} >PDF</FormLabel>
-          <Input
-          id='pdf'
-          type="file"
-          multiple
-          textAlign={'center'}
-          focusBorderColor='orange.700' 
-          variant={'flushed'} 
-          borderBottomColor='orange'
-          accept="application/pdf , image/png"
-          onChange={onSelectFile}
-          name="uplassign"
-          isRequired
-          width={'60%'} 
-          mr={0} ml='auto'
-          />
-        </FormControl>
-      
-    </Box>
+          <FormControl mb={2} display={'flex'} alignItems='center'>
+            <FormLabel htmlFor="dueDate" fontWeight="bold" color="#F57C00" mr={2}>Uploaded Date</FormLabel>
+            <Input
+            id="uploadeddate"
+            name='uploadeddate'
+            label="Date"
+            type="date"
+            textAlign={'center'}
+            focusBorderColor='#F57C00' 
+            variant={'flushed'} 
+            borderBottomColor='#F57C00'
+            onChange = {e=>setUploadedDate(e.target.value)}
+            isRequired
+            width={'60%'} 
+            mr={0} ml='auto'
+            />
+          </FormControl>
+          <FormControl mb={2} display={'flex'} alignItems='center'>
+            <FormLabel htmlFor="dueDate" fontWeight="bold" color="#F57C00" mr={2}>Due Date</FormLabel>
+            <Input
+            id="dueDate"
+            name='dueDate'
+            label="Date"
+            type="date"
+            textAlign={'center'}
+            focusBorderColor='#F57C00' 
+            variant={'flushed'} 
+            borderBottomColor='#F57C00'
+            onChange = {e=>setDueDate(e.target.value)}
+            isRequired
+            width={'60%'} 
+            mr={0} ml='auto'
+            />
+          </FormControl>
 
-        <Box width={'40%'} pt={4} pb={2} textAlign='center' display={selectedFiles.length ? '' : 'none'}>
-          
-        <Heading mb={4} size='md' >
-          Files Preview
-        </Heading>
+          <FormControl mb={2} display={'flex'} alignItems='center'>
+            <FormLabel htmlFor="pdf" fontWeight="bold" color="#F57C00" width='40%' >PDF</FormLabel>
+            <Input
+            id='pdf'
+            type="file"
+            mx='auto'
+            multiple
+            textAlign={'center'}
+            focusBorderColor='#F57C00' 
+            variant={'flushed'} 
+            borderBottomColor='#F57C00'
+            accept="application/pdf , image/png"
+            onChange={onSelectFile}
+            name="uplassign"
+            isRequired
+            width={'40%'}
+            />
+          </FormControl>
         
-        <Flex wrap="wrap" 
-                overflowY="scroll" 
-                height="200px" 
-                border='1px solid orange'
-                borderRadius='10px'
+        </Box>
+
+        <Box width={'50%'} textAlign='center' display={selectedFiles.length ? '' : 'none'}>
+          
+          <Heading mb={2} size='sm' >
+            Files Preview
+          </Heading>
+        
+          <Flex wrap="wrap" 
+                maxHeight={'54vh'}
+                overflowY="scroll"
+                backgroundColor="#FFFFFF" 
+                boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)"
+                borderRadius='15px'
                 gap={4} 
                 justifyContent={'space-around'} 
-                p={2}
+                p={4}
                 sx={{
                   '&::-webkit-scrollbar': {
                     width: '16px',
-                    borderRadius: '8px',
+                    borderRadius: '16px',
                     backgroundColor: 'white',
                   },
                   '&::-webkit-scrollbar-thumb': {
-                    backgroundColor: `orange.500`,
-                    borderRadius: '8px',
+                    backgroundColor: `#F57C00`,
+                    borderRadius: '16px',
                   },
                 }}>
-            {
-              selected.map((file, index) => {
-                return (
-                  //iframe
-                  <iframe
-                    //filePath={file}
-                    src={file}
-                    style={{
-                      height: "80%",
-                      width: "100%",
-                      border: '1px solid orange',
-                      class: "center",
-                      mx: 'auto',
-                      borderRadius: "10px",
-                    }}
-                  />
-                );
-              })}
-            
-          </Flex>
+              {
+                selected.map((file, index) => {
+                  return (
+                    //iframe
+                    <iframe
+                      //filePath={file}
+                      src={file}
+                      style={{
+                        height: '48vh',
+                        width: "100%",
+                        border: '1px solid orange',
+                        class: "center",
+                        mx: 'auto',
+                        borderRadius: "10px",
+                      }}
+                    />
+                  );
+                })}
+              
+            </Flex>
         </Box>
-      </Box>
-            
+        
+      </Flex>
+              
       <Button type='submit' colorScheme='orange' variant='solid'>
-            Upload
+        Upload
       </Button>
 
       </form>
-       <StatusAlert/>
+      <StatusAlert/>
     
 
-  </Box>
+    </Box>
 
   );
 }

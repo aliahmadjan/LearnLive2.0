@@ -107,25 +107,23 @@ const QuizInfo = () => {
         <QuizQuesionsInfo noOfQuestions={details.noOfQuestions}/>
         :
 
-        <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-            <Box pt={4} pb={2} mt={4}  >
-                <Heading mb={4} >
+        <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+            <Box pt={4} pb={2}>
+                <Heading mb={4}>
                 Upload Quiz
                 </Heading>
-                <Text>
-                Please Fill Out Details 
-                </Text>
             </Box>
 
             <form onSubmit={makeQuiz}>
-                <Box p={5} mt={8} maxW="lg" mx="auto" textAlign={'start'} position={'relative'} border='1px solid orange' borderRadius={10}>
+            <Box width={'40%'} m='auto'  boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
                     
                     <FormControl mb={2} display={'flex'} alignItems='center'>
-                        <FormLabel htmlFor="Camp" fontWeight="bold" color="orange.500" mr={2} >Camp</FormLabel>
+                        <FormLabel htmlFor="Camp" fontWeight="bold" color="#F57C00" mr={2} >Camp</FormLabel>
                         <Select textAlign={'center'}
-                                focusBorderColor='orange.700' 
+                                focusBorderColor='#F57C00' 
                                 variant={'flushed'} 
-                                borderBottomColor='orange' 
+                                borderBottomColor='#F57C00' 
                                 isRequired
                                 width={'60%'} 
                                 mr={0} ml='auto'
@@ -148,37 +146,37 @@ const QuizInfo = () => {
                     </FormControl>
 
                     <FormControl mb={2} display={'flex'} alignItems='center'>
-                        <FormLabel htmlFor="Camp" fontWeight="bold" color="orange.500" mr={2} >Quiz No</FormLabel>
+                        <FormLabel htmlFor="Camp" fontWeight="bold" color="#F57C00" mr={2} >Quiz No</FormLabel>
                         <Input 
                             textAlign={'center'}
-                            focusBorderColor='orange.700' 
+                            focusBorderColor='#F57C00' 
                             variant={'flushed'} 
-                            borderBottomColor='orange' 
+                            borderBottomColor='#F57C00' 
                             isRequired
                             width={'60%'} 
                             mr={0} ml='auto'
                             id='quizno'
                             name='quizno'
                             onChange={e=>setQuizNo(e.target.value)}
-                            placeholder= "e.g Quiz 1"
+                            placeholder= "1"
                         /> 
 
                     </FormControl>
 
                     <FormControl mb={2} display={'flex'} alignItems='center'>
-                        <FormLabel htmlFor="noOfQuestions" fontWeight="bold" color="orange.500" mr={2} >No of Questions</FormLabel>
+                        <FormLabel htmlFor="noOfQuestions" fontWeight="bold" color="#F57C00" mr={2} >No of Questions</FormLabel>
                         <Input type="number"
                             textAlign={'center'}
-                            focusBorderColor='orange.700' 
+                            focusBorderColor='#F57C00' 
                             variant={'flushed'} 
-                            borderBottomColor='orange' 
+                            borderBottomColor='#F57C00' 
                             isRequired
                             width={'60%'} 
                             mr={0} ml='auto'
                             id='noOfQuestions'
                             name='noOfQuestions'
                             onChange={handleChange}
-                            placeholder= "e.g 2"
+                            placeholder= "1"
                             
                         /> 
 

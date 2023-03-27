@@ -136,36 +136,34 @@ export default function MakeMeet() {
     getCurentUser();
     getCurrentCampName(userID);
    })
-    return (
 
-    
+  return (
 
-      <Box pt={0} px={0} mx='auto' textAlign={'center'} width='100%' backgroundColor='gray.100' borderRadius={30} flexDirection='row'>
-  
-  
-      <Box pt={4} pb={2} mt={4} >
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+      <Box pt={4} pb={2}  >
         <Heading mb={4} >
           Schedule Class
         </Heading>
       </Box>
       
   
-       {error && <Text color="red.500">{error}</Text>}
-       {success && <Text color="green.500">{success}</Text>}
+      {error && <Text color="red.500">{error}</Text>}
+      {success && <Text color="green.500">{success}</Text>}
   
       <form onSubmit={ScheduleClass}>
       
-        <Box border={'1px solid orange'} maxW='2xl' mx='auto' borderRadius='20px' p={4} >
+      <Box width='40%' mx='auto' borderRadius='15px' p={4} backgroundColor="#FFFFFF" boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" >
   
             
         <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel htmlFor="camp" fontWeight="bold" color="orange.500" mr={2}>Camp Name</FormLabel>
+            <FormLabel htmlFor="camp" fontWeight="bold" color="#F57C00" mr={2}>Camp Name</FormLabel>
 
             <Select
               textAlign={'center'}
-              focusBorderColor='orange.700' 
+              focusBorderColor='#F57C00' 
               variant={'flushed'} 
-              borderBottomColor='orange'
+              borderBottomColor='#F57C00'
               isRequired
               width={'60%'} 
               mr={0} ml='auto'
@@ -187,14 +185,14 @@ export default function MakeMeet() {
           </FormControl>
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel htmlFor="agenda" fontWeight="bold" color="orange.500" mr={2}>Agenda</FormLabel>
+              <FormLabel htmlFor="agenda" fontWeight="bold" color="#F57C00" mr={2}>Agenda</FormLabel>
               <Input
               id="agenda"
               name="agenda"
               textAlign={'center'}
-              focusBorderColor='orange.700' 
+              focusBorderColor='#F57C00' 
               variant={'flushed'} 
-              borderBottomColor='orange'
+              borderBottomColor='#F57C00'
               onChange={(e) => setAgenda(e.target.value)}
               value={agenda}
               isRequired
@@ -204,15 +202,15 @@ export default function MakeMeet() {
             </FormControl>
   
             <FormControl mb={2} display={'flex'} alignItems='center'>
-              <FormLabel htmlFor="duration" fontWeight="bold" color="orange.500" mr={2}>Duration</FormLabel>
+              <FormLabel htmlFor="duration" fontWeight="bold" color="#F57C00" mr={2}>Duration (mins)</FormLabel>
               <Input
               id="duration"
               name="duration"
               type="number"
               textAlign={'center'}
-              focusBorderColor='orange.700' 
+              focusBorderColor='#F57C00' 
               variant={'flushed'} 
-              borderBottomColor='orange'
+              borderBottomColor='#F57C00'
               onChange={(e) => setDuration(e.target.value)}
               value={duration}
               isRequired
@@ -220,8 +218,6 @@ export default function MakeMeet() {
               mr={0} ml='auto'
               />
           </FormControl>
-         
-         
          
         </Box>
               

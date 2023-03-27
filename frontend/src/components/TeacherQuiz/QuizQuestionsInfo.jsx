@@ -179,14 +179,12 @@ const QuizQuesionsInfo =(props) =>
             details.isMade ? 
             <QuizQuesionsInfo noOfQuestions={details.noOfQuestions}/>
             :
-            <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-                <Box pt={4} pb={2} mt={4}  >
-                    <Heading mb={4} >
+            <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+                <Box pt={4} pb={2}>
+                    <Heading mb={4}>
                     Upload Quiz
                     </Heading>
-                    <Text>
-                    Please Fill Out Details 
-                    </Text>
                 </Box>
 
                 <form onSubmit={createQuiz}>
@@ -194,10 +192,12 @@ const QuizQuesionsInfo =(props) =>
                     <Flex maxW='4xl' mx="auto" flexDirection={'column'}>
 
 
-                        <Flex border={'1px solid orange'} 
+                        <Flex boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)"
+                            borderRadius='15px'
+                            backgroundColor="#FFFFFF"
                             gap={2} 
                             justifyContent='space-around' 
-                            height='50vh' borderRadius='10px' 
+                            height='50vh'
                             p={4} flexWrap='wrap' 
                             overflowY='scroll'
                             sx={{
@@ -207,7 +207,7 @@ const QuizQuesionsInfo =(props) =>
                                 backgroundColor: 'white',
                                 },
                                 '&::-webkit-scrollbar-thumb': {
-                                backgroundColor: `orange.500`,
+                                backgroundColor: `#F57C00`,
                                 borderRadius: '8px',
                                 },
                             }}>

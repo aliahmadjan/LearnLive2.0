@@ -52,7 +52,8 @@ const TeacherDashboard = () => {
             <Flex 
                 w={ navSize=="small" ? "95%" : "85%"} 
                 mt={4} borderRadius={30}
-                backgroundColor={'#FFFFFF'}>
+                
+                backgroundImage={'linear-gradient(to bottom, #fddb92 0%, #d1fdff 100%);'}>
 
                 <Routes>
 

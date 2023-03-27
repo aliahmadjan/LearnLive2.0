@@ -1,4 +1,4 @@
-import { Grid, Box,Button, Input, Text, Heading, Flex} from "@chakra-ui/react";
+import { Grid, Box,Button, Input,Textarea, Text, Heading, Flex} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams} from "react-router-dom";
@@ -56,14 +56,15 @@ const TeacherSingleViewAssignment=()=>
 
   return (
 
-    <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-      <Box pt={4} pb={2} mt={4} >
-        <Heading mb={2} >
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+      <Box  >
+        <Heading mb={4} >
           Assignment Details
         </Heading>
       </Box>
 
-      <Flex maxW='80%' mx="auto" justifyContent={'space-around'} gap={2} p={1} >  
+      <Flex width='80%' mx="auto" justifyContent={'space-around'} gap={2} p={1} >  
               <Text>
                 Title: <Text color={'orange.800'} display={'inline'}> {title} </Text> 
               </Text>
@@ -81,52 +82,80 @@ const TeacherSingleViewAssignment=()=>
               </Text>
       </Flex>
 
-      <Flex maxW='2xl' mx="auto" p={2} justifyContent={'center'} pb={2} > 
+      {/* <Flex width='80%' mx="auto" p={2} gap={4} alignItems='center' >
+         
               <Text>
-                Description: <Text color={'orange.800'} display={'inline'}> {description} </Text> 
+                Description:
               </Text> 
-      </Flex>
 
-      <Flex wrap="wrap" 
-            overflowY="scroll"
-            width='80%'
-            mx='auto' 
-            height="sm" 
-            border='1px solid orange'
-            borderRadius='10px'
-            gap={4} 
-            justifyContent={'space-around'} 
-            p={4}
-            sx={{
-              '&::-webkit-scrollbar': {
-                width: '16px',
-                borderRadius: '8px',
-                backgroundColor: 'white',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                backgroundColor: `orange.500`,
-                borderRadius: '8px',
-              },
-            }}>
-            
-              {uplassign.map((assign,index) => (
+              <Textarea                   
+                  id="description"
+                  name="description"
+                  focusBorderColor='#F57C00'
+                  borderColor='#F57C00'
+                  variant='outline'
+                  resize={'none'}
+                  value={description}
+                  sx={{
+                    '&::-webkit-scrollbar': {
+                      width: '16px',
+                      borderRadius: '16px',
+                      backgroundColor: 'white',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                      backgroundColor: `#F57C00`,
+                      borderRadius: '16px',
+                    },
+                  }}
+                  /> 
+  
+      </Flex> */}
+
+      <Box width={'50%'} textAlign='center'>
+          
+          <Heading mb={2} size='sm' >
+            Files Preview
+          </Heading>
+        
+          <Flex wrap="wrap" 
+                maxHeight={'54vh'}
+                overflowY="scroll"
+                backgroundColor="#FFFFFF" 
+                boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)"
+                borderRadius='15px'
+                gap={4} 
+                justifyContent={'space-around'} 
+                p={4}
+                sx={{
+                  '&::-webkit-scrollbar': {
+                    width: '16px',
+                    borderRadius: '16px',
+                    backgroundColor: 'white',
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: `#F57C00`,
+                    borderRadius: '16px',
+                  },
+                }}>
+
+                  {uplassign.map((assign,index) => (
 
                   <iframe
                       src={uplassign[index]}
                       style={{
-                        height: "90%",
-                        padding: '10px',
+                        height: '48vh',
                         width: "100%",
-                        border: '1px dashed orange',
+                        border: '1px solid orange',
                         class: "center",
                         mx: 'auto',
                         borderRadius: "10px",
                       }}
                     />
 
-              ))} 
-    
-      </Flex>
+                  ))}
+              
+            </Flex>
+        </Box>
 
         <Box p={4}>
           <Button mx={4} onClick={()=>handleSubmitView(assignments._id)} colorScheme='orange' variant='solid'>

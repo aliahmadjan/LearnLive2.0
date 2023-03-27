@@ -1,6 +1,6 @@
 import React from "react"
 import { useState, useEffect } from "react"
-import { Box,Grid,Button, Text,FormControl, FormLabel, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
+import { Box,Grid,Button, SimpleGrid, Card,Tooltip, CardHeader, Avatar, Text,FormControl, FormLabel, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
 import axios from "axios"
 import { useNavigate, useParams} from "react-router-dom";
 import {
@@ -89,74 +89,90 @@ import {
 
     return (
 
-      <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-      <Box pt={4} pb={2} my={4}>
+      <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+      <Box pt={4} pb={2}  >
         <Heading mb={4} >
-          View Assigments
+          View Assignments
         </Heading>
       </Box>
 
-      <Flex maxW='2xl' mx="auto" flexDirection={'column'}>
-        <Flex p={4} pt={0}>
-          <Input placeholder="Assigment's Name" variant={'outlined'} borderColor='orange'></Input>
-          <Button colorScheme={'orange'}>Search</Button>
+      <Box width={'80%'} mx="auto" >
+
+        <Flex p={4}>
+          <Input placeholder="Assigment's Name"
+          // onChange={handleSearch}
+          variant={'outlined'} borderColor='orange'
+          >
+          </Input>
+          {/* <Button colorScheme={'orange'}>Search</Button> */}
         </Flex>
 
-        <Flex border={'1px solid orange'} 
-              gap={2} 
-              justifyContent='space-around' 
-              height='50vh' borderRadius='20px' 
-              p={4} flexWrap='wrap' 
-              overflowY='scroll'
-              sx={{
-                '&::-webkit-scrollbar': {
-                  width: '16px',
-                  borderRadius: '8px',
-                  backgroundColor: 'white',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  backgroundColor: `orange.500`,
-                  borderRadius: '8px',
-                },
-              }}>
+        <SimpleGrid 
+            width={'90%'} 
+            overflowY='scroll' 
+            maxHeight={'66vh'} 
+            mx='auto' 
+            minChildWidth='260px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '16px',
+                borderRadius: '8px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '8px',
+              },
+            }}>
 
-        {assignments.map((assignment,index) => (  
+            {assignments.map((assignment) => (
+              <Card maxWidth={'100%'} maxHeight='160px' m={2}>
+                <CardHeader>
+                  <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+                    <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                      <Avatar name={assignment.title} mx={4} />
+                      <Box>
+                        <Heading size='sm'>Title: {assignment.title}</Heading>
+                        <Text>Camp: {assignment.campname}</Text>
+                      </Box>
+                    </Flex>
 
-            <Flex border={'1px solid orange'} height='40%' width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
+                    <Flex flexDir={'column'} justifyContent='center'>
 
-            <Box ml={0} >
-              {/* Jaan Implement this ( displays teacher Id instead of name)*/}
-              {/* <Text>
-              Teacher Name: {assignment.teacher}
-              </Text>  */}
-              <Text>
-              Camp: {assignment.campname}
-              </Text> 
-              <Text>
-              Title: {assignment.title}
-              </Text>
-            </Box>
-            
-            <Flex flexDir={'column'} justifyContent='center'>
-                <Button  onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
-                  <i class="fa-solid fa-eye"></i>
-                </Button>
+                      <Tooltip label="View" hasArrow placement='right'>
+                        <Button size='sm' onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
+                        <i class="fa-solid fa-eye"></i>
+                        </Button>
+                      </Tooltip>
 
-                <Button colorScheme='orange' onClick={()=>handleSubmitEdit(assignment._id)} variant='ghost'>
-                  <i class="fa-solid fa-pen-to-square"></i>
-                </Button>
 
-                <Button  onClick={onOpen} colorScheme='orange' variant='ghost'>
-                  <i class="fa-solid fa-trash"></i>
-                </Button>
+                      <Tooltip label="Edit" hasArrow placement='right'>
+                        <Button size='sm' onClick={()=>handleSubmitEdit(assignment._id)} colorScheme='orange' variant='ghost'>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        </Button>
+                      </Tooltip>
 
-            </Flex>
-        
-            
-            </Flex>  ))} 
+                      <Tooltip label="Delete" hasArrow placement='right'>
+                        <Button size='sm' onClick={onOpen} colorScheme='orange' variant='ghost'>
+                          <i class="fa-solid fa-trash"></i>
+                        </Button>
+                      </Tooltip>
 
-        </Flex>
-      </Flex>
+                    </Flex>
+
+                  </Flex>
+
+                </CardHeader>
+  
+              </Card>
+            ))}
+
+          </SimpleGrid>
+
+      </Box>
+
 
     </Box>
 
