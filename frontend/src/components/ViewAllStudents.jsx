@@ -72,56 +72,44 @@ import { useDisclosure } from '@chakra-ui/react'
         });
     }, []);
 
-    useEffect(()=>
-    {
-       // console.log(results)
-    },[results])
+   
 
 
 
     const handleSearch = async(e) =>
   {
-      // setQuery(e.target.value);
-      // const filteredStudents = students.filter(student=>
-      //   student.name.toLowerCase().includes(query.toLowerCase())
-      //   );
-        //setResults(filteredStudents);
-        axios.get('http://localhost:5000/student/getstudents')
-          .then((res) => {
-            setQuery(e.target.value);
-      const filteredStudents = students.filter(student=>
-        student.name.toLowerCase().includes(query.toLowerCase())
-        );
-            setResults(filteredStudents)
-            //setResults(res.data)
-          })
-          .catch((error) => {
-          
-          });
-        
-        //setTeachers(filteredTeachers);
+    const query = e.target.value;
+    setQuery(query);
+    if (query === '') {
+      setResults(students);
+    } else {
+      const filteredStudents = students.filter((std) =>
+        std.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setResults(filteredStudents);
+    }
   }
 
   const DeleteStudent = (e) => {
     e.preventDefault();
-    const studentId = localStorage.getItem('student_delid');
-    axios.delete(`http://localhost:5000/student/deletestudent/${studentId}`)
-      .then(() => {
-        axios.get('http://localhost:5000/student/getstudents')
-          .then((res) => {
-            setResults(res.data)
-          })
-          .catch((error) => {
+      const studentId = localStorage.getItem('student_delid');
+      axios.delete(`http://localhost:5000/student/deletestudent/${studentId}`)
+        .then(() => {
+          const updatedStudents = students.filter(std => std._id !== studentId);
+          setStudents(updatedStudents);
+          setResults(updatedStudents);
+        })
+        .catch((error) => {
+          console.log(error)
           
-          });
-      })
-      .catch((error) => {
-        
-      });
+        });
   };
   
 
-
+  useEffect(()=>
+  {
+     // console.log(results)
+  },[results])
   
     const paperStyle = {padding : 20, height: '400vh', width: 900,
       margin: '80px 0px 50px 240px'}
@@ -141,8 +129,11 @@ import { useDisclosure } from '@chakra-ui/react'
       <Box width={'80%'} mx="auto" >
 
         <Flex p={4}>
-          <Input placeholder="Student's Name"
+          <Input
+          type="text"
+          placeholder="Student's Name"
           onChange={handleSearch}
+          value={query}
           variant={'outlined'} borderColor='orange'
           >
           </Input>

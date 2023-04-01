@@ -29,6 +29,8 @@ import {
     const [questions , setQuestions] = useState([]);
     const [ teachers , setTeachers] =useState('')
     const [ userID , setUserID] =useState('')
+    const [ query, setQuery]= useState("");
+    const [results , setResults] = useState([]);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
     const navigate = useNavigate();
@@ -42,25 +44,23 @@ import {
             navigate("/teacher/viewquiz");
     }
 
+    const handleSubmitDelete = (quiz_delid)=>
+  {
+    localStorage.removeItem('quiz_delid')
+    localStorage.setItem('quiz_delid',quiz_delid)
 
-    const getCurentUser = () =>
-    {
-      let logintoken = localStorage.getItem("logintoken")
-      axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("http://localhost:5000/teacher/viewprofile")
-        .then(res=> {
-                setUserID(res.data._id);
-                setTeachers(res.data.name);
-        }).catch (err=> {
-            console.log(err) })
-    }
+  }
+
+
+
 
     const getAllQuizzes = () =>
     {
 
         axios.get("http://localhost:5000/quizzes/getcurrquizzes") 
         .then(res=> {
-          setQuizzes(res.data)
+          setQuizzes(res.data);
+          setResults(res.data);
           //console.log(quizzes)
     }).catch (err=> {
        console.log(err) })
@@ -71,22 +71,45 @@ import {
     
    useEffect(()=>
    { 
-    //getCurentUser();
     getAllQuizzes();
    },[])
 
-   const DeleteQuiz=(quiz_deleteid)=>
-   {
+   const DeleteQuiz = (e) => {
+    e.preventDefault();
+    const quizId = localStorage.getItem('quiz_delid');
+    axios.delete(`http://localhost:5000/quizzes/deletequiz/${quizId}`)
+      .then(() => {
+        const updatedQuizzes = quizzes.filter(quiz => quiz._id !== quizId);
+        setQuizzes(updatedQuizzes);
+        setResults(updatedQuizzes);
+      })
+      .catch((error) => {
+        console.log(error)
+        
+      });
+  };
+
    
-     localStorage.setItem('quiz_deleteid',quiz_deleteid)
-     axios.delete(`http://localhost:5000/quizzes/deletequiz/${localStorage.getItem('quiz_deleteid')}`)
-     .then((res) => {
-       //window.alert("Delete Successfull!")
-   }).catch((error) => {
-     //window.alert("Not Deleted! ")
-   })
+   const handleSearch = async(e) =>
+   {
+     const query = e.target.value;
+     setQuery(query);
+     if (query === '') {
+       setResults(quizzes);
+     } else {
+       const filteredQuizzes = quizzes.filter((quiz) =>
+         quiz.quizno.toLowerCase().includes(query.toLowerCase())
+       );
+       setResults(filteredQuizzes);
+     }
+         
    }
 
+
+   useEffect(()=>
+   {
+   
+   },[results])
   
 
 
@@ -103,9 +126,12 @@ import {
         <Box width={'80%'} mx="auto" >
         
           <Flex p={4}>
-            <Input placeholder="Quiz's Name"
-            // onChange={handleSearch}
-            variant={'outlined'} borderColor='orange.700'
+            <Input 
+             type="text"
+             placeholder="Quiz No"
+             onChange={handleSearch}
+             variant={'outlined'} borderColor='orange'
+             value={query}
             >
             </Input>
             {/* <Button colorScheme={'orange'}>Search</Button> */}
@@ -130,7 +156,7 @@ import {
               },
             }}>
 
-            {quizzes.map((quiz) => (
+            {results.map((quiz) => (
               <Card maxWidth={'100%'} maxHeight='160px' m={2}>
                 <CardHeader>
                   <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
@@ -157,7 +183,7 @@ import {
                       </Tooltip> */}
 
                       <Tooltip label="Delete" hasArrow placement='right'>
-                        <Button size='sm' onClick={onOpen} colorScheme='orange' variant='ghost'>
+                        <Button size='sm'  onClick={()=>onOpen(handleSubmitDelete(quiz._id))} colorScheme='orange' variant='ghost'>
                           <i class="fa-solid fa-trash"></i>
                         </Button>
                       </Tooltip>
@@ -171,32 +197,40 @@ import {
               </Card>
             ))}
 
-            <AlertDialog
-                isOpen={isOpen}
-                leastDestructiveRef={cancelRef}
-                onClose={onClose}
-                >
-                <AlertDialogOverlay>
-                  <AlertDialogContent>
-                    <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                      Delete 
-                    </AlertDialogHeader>
+<AlertDialog
+              isOpen={isOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                    Delete
+                  </AlertDialogHeader>
 
-                    <AlertDialogBody>
-                      Are you sure? You can't undo this action afterwards.
-                    </AlertDialogBody>
+                  <AlertDialogBody>
+                    Are you sure? You can't undo this action afterwards.
+                  </AlertDialogBody>
 
-                    <AlertDialogFooter>
-                      <Button ref={cancelRef} onClick={onClose}>
-                        Cancel
-                      </Button>
-                      <Button colorScheme='red' onClick={()=>DeleteQuiz(quizzes._id)} ml={3}>
-                        Delete
-                      </Button>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialogOverlay>
-              </AlertDialog>
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme='red'
+                      onClick={(e) => {
+                        //SetDeleteTeacherId();
+                        DeleteQuiz(e);
+                        onClose();
+                      }}
+                      ml={3}
+                    >
+                      Delete
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>
 
           </SimpleGrid>
       </Box>

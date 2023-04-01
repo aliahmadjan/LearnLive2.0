@@ -3,6 +3,12 @@ import { Box,Button, Avatar,Heading, Text, Link ,FormControl,FormLabel, Input,Ra
 import axios from "axios"
 import { Divider } from '@chakra-ui/react'
 import { useNavigate, useParams} from "react-router-dom";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
 
 
 const EditTeacherDetails = (props) =>
@@ -14,12 +20,15 @@ const EditTeacherDetails = (props) =>
     const [phoneno , setPhoneNo] = useState("");
     const [password, setPassword]= useState("");
     const [profileimg , setProfileImg]= useState("");
-    const [campname , setCampName] = useState("");
+    const [campname , setCampName] = useState();
     const [teachers , setTeachers]= useState([]);
 
     const [selectedFile, setSelectedFile] =useState(null);
     const [fileInputState, setFileInputState ] = useState("");
     const [previewSource , setPreviewSource] = useState("");
+
+    const [submitStatus, setSubmitStatus] = useState("");
+  
    
       const [msg, setMsg] = useState('');
   const navigate = useNavigate();
@@ -56,17 +65,35 @@ const EditTeacherDetails = (props) =>
       gender:gender,
       phoneno:phoneno,
       password:password,
-    
+      //  campname:campname,
     }).then((res)=>
     {
       //console.log(category)
-      window.alert("EditSuccesFUll")
+      setSubmitStatus(1)
+      //window.alert("EditSuccesFUll")
     }).catch((err)=>
       {
-        window.alert("EditNOTSuccesFUll")
+        setSubmitStatus(-1)
       })
            
   }
+
+  const StatusAlert = () => {
+    if (submitStatus === -1)
+      return (
+        <Alert status='error'>
+        <AlertIcon />
+       Teacher Not Updated!
+      </Alert>
+      );
+    if (submitStatus === 1)
+      return (
+        <Alert status='success'>
+        <AlertIcon />
+        Teacher was updated!
+      </Alert>
+      );
+  };
 
   const Back = ()=>
   {
@@ -223,6 +250,7 @@ const EditTeacherDetails = (props) =>
         </Flex>
 
       </form>
+      <StatusAlert/>
     </Box>
   </Box>
 

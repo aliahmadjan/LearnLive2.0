@@ -1,5 +1,5 @@
 import { Grid,Select, Box, FormControl, FormLabel, Input, Text, FormErrorMessage, Button, Heading, Flex } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState , useRef} from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import DatePicker from "react-datepicker";
@@ -37,24 +37,26 @@ function TeacherEditAssignment ()
   const [selected , setSelected] = useState([])
   var imgURLsArray = []
 
+  // Define a ref for the file input element
+const fileInputRef = useRef(null);
 
-  const onSelectFile = (e) => {
-    const selectedImages = [...e.target.files];
-    selectedImages.map(img=> imgURLsArray.push(URL.createObjectURL(img)))
-     setSelected(imgURLsArray)
-     setSelectedFiles(e.target.files)
-  
-  };
 
   // const onSelectFile = (e) => {
   //   const selectedImages = [...e.target.files];
-  //   imgURLsArray = [];
-  //   selectedImages.forEach((img) => {
-  //     imgURLsArray.push(URL.createObjectURL(img));
-  //   });
-  //   setSelected(imgURLsArray);
-  //   setSelectedFiles(e.target.files);
+  //   selectedImages.map(img=> imgURLsArray.push(URL.createObjectURL(img)))
+  //    setSelected(imgURLsArray)
+  //    setSelectedFiles(e.target.files)
+  
   // };
+  const onSelectFile = (e) => {
+    const selectedImages = [...e.target.files];
+    const imgURLsArray = selectedImages.map(img=> URL.createObjectURL(img))
+    setSelected(imgURLsArray)
+    setUplAssign(imgURLsArray) // <-- update the uplassign array
+    setSelectedFiles(e.target.files)
+
+  };
+  
   
 
   const getCurentUser = () =>
@@ -77,7 +79,7 @@ function TeacherEditAssignment ()
     axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`)
     .then((res) =>
     {
-      console.log(res.data)
+      //console.log(res.data)
       setCampName(res.data);
 
     }).catch(err =>
@@ -92,7 +94,7 @@ function TeacherEditAssignment ()
     axios.get(`http://localhost:5000/tchassignments/singletchassign/${localStorage.getItem('assignment_editid')}`)
     .then((res)=>
     {
-        console.log(res.data)
+        //console.log(res.data)
         setAssignmentCamp(res.data.campname)
         setTitle(res.data.title)
         setDescription(res.data.description)
@@ -108,6 +110,39 @@ function TeacherEditAssignment ()
 
   }
 
+  const EditAssignment = async(e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append(`uplassign`, selectedFiles[i]);
+    }
+    formData.append('campname', assignmentCamp);
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('tmarks', tmarks);
+    formData.append('uploadeddate', uploadeddate);
+    formData.append('duedate', duedate);
+    
+    try {
+      const response = await axios.put(`http://localhost:5000/tchassignments/updatetchassigns/${localStorage.getItem('assignment_editid')}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+  
+      // Update the uplassign array with the new file URLs
+      // const updatedFileURLs = response.data.uplassign.map(file => URL.createObjectURL(file));
+      // setUplAssign(updatedFileURLs);
+  
+      setSubmitStatus(1);
+    } catch (err) {
+      setSubmitStatus(-1);
+    }
+  };
+  
+
   useEffect(()=>
   {
     getCurentUser();
@@ -115,27 +150,6 @@ function TeacherEditAssignment ()
     getCurrentAssignment()
   },[campname])
 
-  const EditAssignment = async(e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append(`uplassign`, selectedFiles[i]);
-    }
-    axios.put(`http://localhost:5000/tchassignments/updatetchassigns/${localStorage.getItem('assignment_editid')}`,
-    {
-    campname: assignmentCamp,
-    title:title,
-    description:description,
-    tmarks:tmarks,
-    uploadeddate:uploadeddate,
-    duedate:duedate
-  })
-      .then((res) => {
-        setSubmitStatus(1);
-      }).catch((err) => {
-        setSubmitStatus(-1);
-      });
-  };
 
   const StatusAlert = () => {
     if (submitStatus === -1)
@@ -177,7 +191,7 @@ function TeacherEditAssignment ()
      {success && <Text color="green.500">{success}</Text>}
 
     <form onSubmit={EditAssignment}>
-    <Box p={5} maxW={selectedFiles.length ? "4xl" : 'lg'} mx="auto" gap={4} textAlign={'start'}  position={'relative'} display={'flex'} flexDirection='row'>
+    <Box p={5} maxW={uplassign.length ? "4xl" : 'lg'} mx="auto" gap={4} textAlign={'start'}  position={'relative'} display={'flex'} flexDirection='row'>
       <Box border={'1px solid orange'} borderRadius='20px' p={4} >
         
           <FormControl mb={2} display={'flex'} alignItems='center'>
@@ -316,6 +330,7 @@ function TeacherEditAssignment ()
           borderBottomColor='orange'
           accept="application/pdf , image/png"
           onChange={onSelectFile}
+          // ref={fileInputRef} // Set the ref of the file input element
           name="uplassign"
           isRequired
           width={'60%'} 
@@ -325,7 +340,7 @@ function TeacherEditAssignment ()
       
     </Box>
 
-        <Box width={'40%'} pt={4} pb={2} textAlign='center' display={selectedFiles.length ? '' : 'none'}>
+        <Box width={'40%'} pt={4} pb={2} textAlign='center' display={uplassign.length ? '' : 'none'}>
           
         <Heading mb={4} size='md' >
           Files Preview
@@ -351,7 +366,7 @@ function TeacherEditAssignment ()
                   },
                 }}>
             {
-              selected.map((file, index) => {
+              uplassign.map((file, index) => {
                 return (
                   //iframe
                   <iframe

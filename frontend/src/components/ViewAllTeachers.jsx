@@ -73,43 +73,39 @@ import { useDisclosure } from '@chakra-ui/react'
 
     useEffect(()=>
     {
-        console.log(results)
+        //console.log(results)
     },[results])
 
+  
     const DeleteTeacher = (e) => {
       e.preventDefault();
       const teacherId = localStorage.getItem('teacher_delid');
       axios.delete(`http://localhost:5000/teacher/deleteteacher/${teacherId}`)
         .then(() => {
-          axios.get('http://localhost:5000/teacher/getteachers')
-            .then((res) => {
-              // const teachers = res.data;
-              setResults(res.data)
-            })
-            .catch((error) => {
-            
-            });
+          const updatedTeachers = teachers.filter(teacher => teacher._id !== teacherId);
+          setTeachers(updatedTeachers);
+          setResults(updatedTeachers);
         })
         .catch((error) => {
-          
+          console.log(error)
         });
     };
     
-
-   
-    
-
-    
-  
-  const handleSearch = async(e) =>
-  {
-      setQuery(e.target.value);
-      const filteredTeachers = teachers.filter(teacher =>
-        teacher.name.toLowerCase().includes(query.toLowerCase())
+    const handleSearch = async (e) => {
+      const query = e.target.value;
+      setQuery(query);
+      if (query === '') {
+        // setTeachers(teachers)
+        setResults(teachers);
+      } else {
+        const filteredTeachers = teachers.filter((teacher) =>
+          teacher.name.toLowerCase().includes(query.toLowerCase())
         );
         setResults(filteredTeachers);
-        //setTeachers(filteredTeachers);
-  }
+      }
+    };
+    
+
 
 
     return (
@@ -126,9 +122,12 @@ import { useDisclosure } from '@chakra-ui/react'
 
           <Flex p={4}>
             <Input 
+            type="text"
               placeholder="Teacher's Name"
               variant={'outlined'} 
-              onChange={handleSearch}>
+              onChange={handleSearch}
+              value={query}>
+                
             </Input>
 
             {/* <Button colorScheme={'orange'}>Search</Button> */}

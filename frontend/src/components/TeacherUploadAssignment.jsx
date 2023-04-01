@@ -135,6 +135,14 @@ function TeacherUploadAssignment() {
     getCurrentCampName(userID);
   })
 
+  const getFileExtension = (filename) => {
+  return filename.split('.').pop();
+}
+const getFileName = (url) => {
+  const parts = url.split('/');
+  return parts[parts.length - 1];
+}
+
 
   return (
 
@@ -257,7 +265,7 @@ function TeacherUploadAssignment() {
             id="dueDate"
             name='dueDate'
             label="Date"
-            type="date"
+            type="datetime-local"
             textAlign={'center'}
             focusBorderColor='#F57C00' 
             variant={'flushed'} 
@@ -316,6 +324,27 @@ function TeacherUploadAssignment() {
                     borderRadius: '16px',
                   },
                 }}>
+                  {/* {selected.map((file, index) => {
+  return (
+    <>
+      {getFileExtension(file) === "zip" ? (
+        <p>{getFileName(file)}</p>
+      ) : getFileExtension(file) === "png" || getFileExtension(file) === "jpeg" ? (
+        <iframe
+          src={file}
+          style={{
+            height: '48vh',
+            width: "100%",
+            border: '1px solid orange',
+            class: "center",
+            mx: 'auto',
+            borderRadius: "10px",
+          }}
+        />
+      ) : null}
+    </>
+  )
+})} */}
               {
                 selected.map((file, index) => {
                   return (

@@ -6,6 +6,10 @@ require("dotenv").config();
 
 const certificateSchema  = new mongoose.Schema({
 
+    student_id :{
+        type: String
+    },
+
     student_name : {
         type: String
     },

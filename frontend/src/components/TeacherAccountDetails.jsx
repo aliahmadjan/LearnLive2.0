@@ -14,11 +14,23 @@ const TeacherAccountDetails = () => {
   const [teachers, setTeachers] = useState([]);
   const [camps , setCamps] = useState([]);
   
-
-  const getCurrentCampName = (userID) =>
+  const getCurentUser = () =>
   {
-    localStorage.setItem('userID',userID)
-    //axios.get('http://localhost:5000/camp/getcampteacher/:',{params : {id:localStorage.getItem('userID')}}).then(res =>
+    let logintoken = localStorage.getItem("logintoken")
+    axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
+    axios.get("http://localhost:5000/teacher/viewprofile")
+      .then(res=> {
+              setUserID(res.data._id);
+              // setName(res.data.name);
+              // setEmail(res.data.email);
+              // setGender(res.data.gender);
+              // setPhoneNo(res.data.phoneno);
+      }).catch (err=> {
+          console.log(err) })
+  }
+
+  const getCurrentCampName = () =>
+  {
     axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
     {
       setCampName(res.data);
@@ -29,30 +41,12 @@ const TeacherAccountDetails = () => {
       })
   }
   
-  const getCurentUser = () =>
-  {
-    let logintoken = localStorage.getItem("logintoken")
-    axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-    axios.get("http://localhost:5000/teacher/viewprofile")
-      .then(res=> {
-              setUserID(res.data._id);
-              setName(res.data.name);
-              setEmail(res.data.email);
-              setGender(res.data.gender);
-              setPhoneNo(res.data.phoneno);
-      }).catch (err=> {
-          console.log(err) })
-  }
-
-  
-
-
   useEffect(()=>
   {
       getCurentUser();
-      getCurrentCampName(userID);
+      getCurrentCampName();
      
-  })
+  },[])
 
  
   return (
