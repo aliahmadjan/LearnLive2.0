@@ -1,4 +1,4 @@
-import { Grid, Box,Button, Input, Text, FormControl, FormLabel } from "@chakra-ui/react";
+import { Heading, Flex, SimpleGrid, Textarea, Card, Box,Button, Input, Text, FormControl, FormLabel } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams} from "react-router-dom";
@@ -9,6 +9,32 @@ import {
   AlertDescription,
 } from '@chakra-ui/react'
 
+function getIconByFileType(fileType) {
+  switch (fileType.toLowerCase()) {
+    case 'pdf':
+      return <i class="fa-solid fa-file-pdf fa-4x"></i>;
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+    case 'gif':
+      return <i class="fa-solid fa-image fa-4x"></i>;
+    case 'doc':
+    case 'docx':
+      return <i class="fa-solid fa-file-doc fa-4x"></i>;
+    case 'xls':
+    case 'xlsx':
+      return <i class="fa-solid fa-file-spreadsheet fa-4x"></i>;
+    default:
+      return <i class="fa-solid fa-square-question fa-4x"></i>;
+  }
+}
+
+function getFileName(fileUrl) {
+  const url = new URL(fileUrl);
+  const path = url.pathname;
+  const fileName = path.split('/').pop();
+  return fileName;
+}
 
 const TeacherSingleViewSubmitAssignment=()=>
  {
@@ -138,67 +164,216 @@ const TeacherSingleViewSubmitAssignment=()=>
     }
 
   return (
-        <Box width="80%" mt={8}  mx={"auto"}>
-        <Text my={4} align={"center"} fontWeight="bold" fontSize={30}>Submitted Assignment</Text>
-            {/* <Grid templateColumns="repeat(3, 1fr)" gap={10} overflow="scroll" height="80%" > */}
-            
-            <Text >
-                   Campname: {campname}
-                </Text>
-            <Text >
-                   Title: {title}
-                </Text>
-                <Text> Description: {description}</Text>
-                <Text>Total Marks: {tmarks}</Text>
-                <Text>Due Date: {duedate}</Text>
-            {uplassign.map((assign,index) => (
-                <Box p={5} shadow="md" borderWidth="1px" margin={2} marginBottom={10}>
-                
-                <iframe
-                    src={uplassign[index]}
-                    style={{
-                      height: "200px",
-                      width: "400px",
-                      class: "center",
-                      borderRadous: "50%",
-                    }}
-                  />
-                  
-                </Box>
-            ))} 
-             <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel htmlFor="title" fontWeight="bold" color="orange.500" mr={2}>Grade Assignment</FormLabel>
-            <Input
-              id="title"
-              name="title"
-              textAlign={'center'}
-              focusBorderColor='orange.700' 
-              variant={'flushed'} 
-              borderBottomColor='orange'
-              value={assignment_score}
-              
-              onChange={(e) => setAssignmentScore(e.target.value)}
-              width={'60%'} 
-              mr={0} ml='auto'
-              />
-          </FormControl>
-          <Button onClick={GradeAssignment}>
-            Grade Assignment
-          </Button>
-          <StatusAlert/>
 
-                    <Button  onClick={Back}
-      style={{
-        position: 'absolute',
-        right: 30,
-        bottom:10,
-      }}
-      colorScheme='teal' variant='solid'>
-  Back
-  </Button>
-            {/* </Grid> */}
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+      <Box>
+        <Heading mb={4} >
+          Assignment Details
+        </Heading>
+      </Box>
+
+      <Flex mx="auto" justifyContent={'space-around'} gap={2} p={2} >
+ 
+        <Text>
+          Title: <Text color={'orange.800'} display={'inline'}> {title} </Text> 
+        </Text>
+        <Text>
+          Camp: <Text color={'orange.800'} display={'inline'}> {campname} </Text> 
+        </Text>
+        <Text>
+          Marks: <Text color={'orange.800'} display={'inline'}> {tmarks} </Text> 
+        </Text>
+        <Text>
+          Upload Date: <Text color={'orange.800'} display={'inline'}> Fix this </Text> 
+        </Text>
+        <Text>
+          Due Date: <Text color={'orange.800'} display={'inline'}> {duedate} </Text> 
+        </Text>
+ 
+      </Flex>
+
+      <Flex p={4} justifyContent='space-around' alignItems={'center'}>
+
+        <Box width={'40%'} textAlign='center'>
+          
+          <Heading mb={2} size='sm' >
+            Description
+          </Heading>
+
+          <Textarea
+            boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.1)"
+            textAlign={'center'}                   
+            id="description"
+            name="description"
+            focusBorderColor='#F57C00'
+            backgroundColor={'#FFFFFF'}
+            resize={'none'}
+            value={description}
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '16px',
+                borderRadius: '16px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `#F57C00`,
+                borderRadius: '16px',
+              },
+            }}
+            /> 
+
+          <Heading pt={4} pb={2} size='sm' >
+            Files
+          </Heading>
+
+          <SimpleGrid
+            p={2} 
+            overflowY='scroll' 
+            maxHeight={'32vh'} 
+            m='auto' 
+            minChildWidth='160px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '16px',
+                borderRadius: '8px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '8px',
+              },
+            }}>
+              
+            {uplassign.map((assign, index) => {
+              const fileType = assign.split('.').pop();
+              const fileName = getFileName(assign);
+
+              return (
+                <a href={assign} target='_blank' rel='noopener noreferrer'>
+                  <Card direction='row' textAlign={'center'} p={1}>
+
+                    <Box>
+                      {getIconByFileType(fileType)}
+                    </Box>
+                    
+                    <Text
+                      textAlign={'center'}
+                      m='auto' 
+                      sx={{
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 2,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'normal',
+                      }}>
+                        {fileName}
+                    </Text>
+                    
+              
+                  </Card>
+                </a>
+              );
+            })}
+
+          </SimpleGrid>
+
         </Box>
-  );
+
+        <Box width={'40%'} textAlign='center'>
+          <Heading mb={2} size='sm' >
+            Files Preview
+          </Heading>
+        
+          <Flex wrap="wrap" 
+                maxHeight={'50vh'}
+                overflowY="scroll"
+                borderRadius='15px'
+                gap={2} 
+                justifyContent={'space-around'} 
+                p={2}
+                sx={{
+                  '&::-webkit-scrollbar': {
+                    width: '16px',
+                    borderRadius: '16px',
+                    backgroundColor: 'white',
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: `#F57C00`,
+                    borderRadius: '16px',
+                  },
+                }}>
+                {
+                uplassign.map((assign, index) => {
+                  return (
+                    //iframe
+                    <iframe
+                      //filePath={file}
+                      src={uplassign[index]}
+                      style={{
+                        padding: "8px",
+                        backgroundColor: "#FFFFFF",
+                        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                        height: '48vh',
+                        width: "100%",
+                        class: "center",
+                        mx: 'auto',
+                        borderRadius: "10px",
+                      }}
+                      
+                    />
+                  );
+                })}
+              
+            </Flex>
+        </Box>
+
+      </Flex>
+      
+      <form onSubmit={GradeAssignment}>
+      <FormControl width='70%' m='auto' display={'flex'} alignItems='center'>
+            <FormLabel alignSelf={'flex-end'} htmlFor="marks" fontWeight="bold" color="#F57C00" mr={2}>Grade</FormLabel>
+            <Input
+            id="title"
+            name="title"
+            type="number"
+            placeholder='Score'
+            textAlign={'center'}
+            focusBorderColor='#F57C00' 
+            variant={'flushed'} 
+            borderBottomColor='#F57C00'
+            onChange={(e) => setAssignmentScore(e.target.value)}
+            value={assignment_score}
+            isRequired
+            width={'60%'} 
+            m='auto'
+            />
+
+        <Button ml={12} type='submit' colorScheme='orange' variant='solid'>
+          Grade Assignment
+        </Button>
+
+      </FormControl>
+      </form>
+        
+
+      
+
+      <StatusAlert/>
+
+      <Button 
+        onClick={Back}
+        m='auto'
+        mt={4}
+        colorScheme='teal' variant='solid'>
+         Back
+      </Button>
+            {/* </Grid> */}
+    </Box>
+
+);
 }
 
 export default TeacherSingleViewSubmitAssignment;

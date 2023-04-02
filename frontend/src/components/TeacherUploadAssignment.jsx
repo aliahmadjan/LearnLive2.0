@@ -1,4 +1,4 @@
-import { Grid,Select, Box, FormControl, FormLabel, Input, Text, FormErrorMessage, Button, Heading, Flex, Textarea } from "@chakra-ui/react";
+import { SimpleGrid, Card, Select, Box, FormControl, FormLabel, Input, Text, FormErrorMessage, Button, Heading, Flex, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect, useRef } from "react";
@@ -12,6 +12,32 @@ import {
   AlertDescription,
 } from '@chakra-ui/react'
 
+function getIconByFileType(fileType) {
+  switch (fileType.toLowerCase()) {
+    case 'pdf':
+      return <i class="fa-solid fa-file-pdf fa-4x"></i>;
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+    case 'gif':
+      return <i class="fa-solid fa-image fa-4x"></i>;
+    case 'doc':
+    case 'docx':
+      return <i class="fa-solid fa-file-doc fa-4x"></i>;
+    case 'xls':
+    case 'xlsx':
+      return <i class="fa-solid fa-file-spreadsheet fa-4x"></i>;
+    default:
+      return <i class="fa-solid fa-square-question fa-4x"></i>;
+  }
+}
+
+function getFileName(fileUrl) {
+  const url = new URL(fileUrl);
+  const path = url.pathname;
+  const fileName = path.split('/').pop();
+  return fileName;
+}
 
 //import DatePicker from "react-datepicker"
 //import 'react-datepicker/dist/react-datepicker.css';
@@ -37,6 +63,7 @@ function TeacherUploadAssignment() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [selected , setSelected] = useState([])
   var imgURLsArray = []
+
   const onSelectFile = (e) => {
     const selectedImages = [...e.target.files];
     selectedImages.map(img=> imgURLsArray.push(URL.createObjectURL(img)))
@@ -135,13 +162,13 @@ function TeacherUploadAssignment() {
     getCurrentCampName(userID);
   })
 
-  const getFileExtension = (filename) => {
-  return filename.split('.').pop();
-}
-const getFileName = (url) => {
-  const parts = url.split('/');
-  return parts[parts.length - 1];
-}
+// const getFileExtension = (filename) => {
+//   return filename.split('.').pop();
+// }
+// const getFileName = (url) => {
+//   const parts = url.split('/');
+//   return parts[parts.length - 1];
+// }
 
 
   return (
@@ -158,9 +185,9 @@ const getFileName = (url) => {
       {success && <Text color="green.500">{success}</Text>}
 
       <form onSubmit={UploadAssignment}>
-      <Flex p={5} mx="auto" textAlign={'start'}>
+      <Flex pb={4} mx="auto" textAlign={'start'}>
 
-        <Box width={selectedFiles.length ? '40%' : '50%'} m='auto'  boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
+        <Box display={'flex'} flexDirection='column' justifyContent={'space-between'}  maxHeight='70vh' width={selectedFiles.length ? '40%' : '50%'} m='auto'  boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius={10} p={4} backgroundColor="#FFFFFF">
           
           <FormControl mb={2} display={'flex'} alignItems='center'>
             <FormLabel htmlFor="camp" fontWeight="bold" color="#F57C00" mr={2}>Camp Name</FormLabel>
@@ -195,6 +222,7 @@ const getFileName = (url) => {
             <Input
               id="title"
               name="title"
+              placeholder="e.g. Assignment 1"
               textAlign={'center'}
               focusBorderColor='#F57C00' 
               variant={'flushed'} 
@@ -212,6 +240,7 @@ const getFileName = (url) => {
             <Textarea 
             id="description"
             name="description"
+            placeholder="What is the assignment about? Write here."
             focusBorderColor='#F57C00'
             borderColor='#F57C00'
             variant='outline'
@@ -230,6 +259,7 @@ const getFileName = (url) => {
             id="marks"
             name="marks"
             type="number"
+            placeholder='Max. marks'
             textAlign={'center'}
             focusBorderColor='#F57C00' 
             variant={'flushed'} 
@@ -299,20 +329,75 @@ const getFileName = (url) => {
         </Box>
 
         <Box width={'50%'} textAlign='center' display={selectedFiles.length ? '' : 'none'}>
-          
-          <Heading mb={2} size='sm' >
+
+          <Heading size='sm' >
+            Files
+          </Heading>
+
+          <SimpleGrid
+            p={2} 
+            overflowY='scroll' 
+            maxHeight={'12.5vh'} 
+            m='auto' 
+            minChildWidth='160px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '16px',
+                borderRadius: '8px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '8px',
+              },
+            }}>
+              
+            {selected.map((file, index) => {
+              const fileType = file.split('.').pop();
+              const fileName = getFileName(file);
+
+              return (
+                <a href={file} target='_blank' rel='noopener noreferrer'>
+                  <Card direction='row' textAlign={'center'} p={1}>
+
+                    <Box>
+                      {getIconByFileType(fileType)}
+                    </Box>
+                    
+                    <Text
+                      textAlign={'center'}
+                      m='auto' 
+                      sx={{
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 2,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'normal',
+                      }}>
+                        {fileName}
+                    </Text>
+                    
+              
+                  </Card>
+                </a>
+              );
+            })}
+
+          </SimpleGrid>
+
+          <Heading size='sm' >
             Files Preview
           </Heading>
         
           <Flex wrap="wrap" 
-                maxHeight={'54vh'}
+                maxHeight={'52vh'}
                 overflowY="scroll"
-                backgroundColor="#FFFFFF" 
-                boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)"
                 borderRadius='15px'
-                gap={4} 
+                gap={2} 
                 justifyContent={'space-around'} 
-                p={4}
+                p={2}
                 sx={{
                   '&::-webkit-scrollbar': {
                     width: '16px',
@@ -324,28 +409,7 @@ const getFileName = (url) => {
                     borderRadius: '16px',
                   },
                 }}>
-                  {/* {selected.map((file, index) => {
-  return (
-    <>
-      {getFileExtension(file) === "zip" ? (
-        <p>{getFileName(file)}</p>
-      ) : getFileExtension(file) === "png" || getFileExtension(file) === "jpeg" ? (
-        <iframe
-          src={file}
-          style={{
-            height: '48vh',
-            width: "100%",
-            border: '1px solid orange',
-            class: "center",
-            mx: 'auto',
-            borderRadius: "10px",
-          }}
-        />
-      ) : null}
-    </>
-  )
-})} */}
-              {
+                {
                 selected.map((file, index) => {
                   return (
                     //iframe
@@ -353,18 +417,22 @@ const getFileName = (url) => {
                       //filePath={file}
                       src={file}
                       style={{
+                        padding: "8px",
+                        backgroundColor: "#FFFFFF",
+                        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                         height: '48vh',
                         width: "100%",
-                        border: '1px solid orange',
                         class: "center",
                         mx: 'auto',
                         borderRadius: "10px",
                       }}
+                      
                     />
                   );
                 })}
               
-            </Flex>
+          </Flex>
+  
         </Box>
         
       </Flex>

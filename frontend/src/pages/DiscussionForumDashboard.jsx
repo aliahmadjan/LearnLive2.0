@@ -54,7 +54,7 @@ const DiscussionForumDashboard = () => {
 
 
 
-    <Box  w="100%" h="100vh" backgroundColor='#101010' pt={0} pb={4} pr={4}>
+    <Box  w="100%" h="100vh"  pt={0} pb={4} pr={4}>
         <Flex width={'100%'} height='100%'>
             <DiscussionForumSidebar navSize={navSize} changeNavSize={ (size) => changeNavSize(size) }>
             </DiscussionForumSidebar>
