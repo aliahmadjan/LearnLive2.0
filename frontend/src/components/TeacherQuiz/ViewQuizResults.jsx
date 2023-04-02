@@ -1,4 +1,11 @@
-import { Avatar,Grid, Box,Button, Input, Text, Heading, Flex} from "@chakra-ui/react";
+import { Avatar,Grid, Box,Button, Input, Text, Heading, Flex, Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams} from "react-router-dom";
@@ -28,8 +35,6 @@ const ViewQuizResults=()=>
           // setQuizScore(res.data.quiz_score)
           // setTotalQuestions(res.data.total_questions)
           
-        
-        
          
         })
         .catch((err) => {
@@ -51,85 +56,76 @@ const ViewQuizResults=()=>
   return (
 
     
-    <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-    <Box pt={4} pb={2}  >
-      <Heading mb={4} >
-        View Scores
-      </Heading>
-    </Box>
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+      <Box>
+        <Heading mb={4} >
+          Quiz Results
+        </Heading>
+      </Box>
 
     
-  <Flex mt={4} maxW='4xl' mx="auto" width={'100%'} gap={4} >
-  {/* <Flex p={4} pt={0}>
-    <Input placeholder="Student's Name" variant={'outlined'} borderColor='orange'></Input>
-    <Button colorScheme={'orange'}>Search</Button>
-  </Flex> */}
-  <Box width={'50%'}>
-    <Heading size={'md'} mb={4}> Quiz Scores </Heading>
-    <Flex width="100%" border={'1px solid orange'} gap={2} justifyContent='space-around' height='50vh' borderRadius='20px' p={4} flexWrap='wrap' overflow='scroll'>
+      <Box width={'80%'} mx="auto" >
 
-      {quizzesScore.map((score,index) => (         
-        <Box p={2} height="100px">  
-          <Text> Name : { score.student_name}</Text>
-          <Text> Quiz Score :  {score.quiz_score + "/" + score.total_questions}</Text>   
-        </Box>
-      ))}   
+        <Flex p={4}>
+          <Input 
+          type="text"
+          placeholder="Students's Name"
+          // onChange={handleSearch}
+          variant={'outlined'} borderColor='orange'
+          // value={query}
+          >
+          </Input>
+          <Button colorScheme={'orange'}>Search</Button>
+        </Flex>
+      </Box>
 
-    </Flex>
-  </Box>
-  
+      <Box width={'76%'} mx='auto' py={4}>
+        {/* <Heading size={'md'} mb={4}> Students Scores </Heading> */}
 
-</Flex>
+        <TableContainer
+          px={4} 
+          maxHeight='60vh'
+          overflowY='scroll'
+          sx={{
+            '&::-webkit-scrollbar': {
+              width: '16px',
+              borderRadius: '8px',
+              backgroundColor: 'white',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: `orange.500`,
+              borderRadius: '8px',
+            },
+          }}>
+
+          <Table variant={'simple'} >
+            
+            <TableCaption>Student Quiz Scores</TableCaption>
+            
+            <Thead>
+              <Tr>
+                <Th>Student Name</Th>
+                <Th>Quiz Score</Th>
+              </Tr>
+            </Thead>
+
+            <Tbody>
+              {quizzesScore.map((score, index) => (
+                <Tr key={index}>
+                  <Td>{score.student_name}</Td>
+                  <Td>{score.quiz_score}/{score.total_questions}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+
+          </Table>
+        </TableContainer>
+      </Box>
 
    
   </Box>
 
-  //       <Box width="80%" mt={8}  mx={"auto"}>
-  //       <Text my={4} align={"center"} fontWeight="bold" fontSize={30}>Assignment</Text>
-  //           {/* <Grid templateColumns="repeat(3, 1fr)" gap={10} overflow="scroll" height="80%" > */}
-            
-  //           <Text >
-  //                  Campname: {campname}
-  //               </Text>
-  //           <Text >
-  //                  Title: {title}
-  //               </Text>
-  //               <Text> Description: {description}</Text>
-  //               <Text>Total Marks: {tmarks}</Text>
-  //               <Text>Uploaded Date: {uploadeddate}</Text>
-  //               <Text>Due Date: {duedate}</Text>
-                
-            // {uplassign.map((assign,index) => (
-            //     <Box p={5} shadow="md" borderWidth="1px" margin={2} marginBottom={10}>
-                
-            //     <iframe
-            //         src={uplassign[index]}
-            //         style={{
-            //           height: "200px",
-            //           width: "400px",
-            //           class: "center",
-            //           borderRadous: "50%",
-            //         }}
-            //       />
-                  
-            //     </Box>
-            // ))} 
-  //           <Button  onClick={()=>handleSubmitView(assignments._id)} colorScheme='teal' variant='solid'>
-
-  //                   View Submitted Assignments
-
-  //           </Button>
-  //                   <Button  onClick={Back}
-  //     style={{
-  //       position: 'absolute',
-  //       right: 30,
-  //       bottom:10,
-  //     }}
-  //     colorScheme='teal' variant='solid'>
-  // Back
-  // </Button>
-  //           {/* </Grid> */}
-  //       </Box>
   );
 }
 
