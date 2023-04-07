@@ -21,6 +21,8 @@ import {
     
     const [nofquestions , setNofQuestions] = useState('');
     const [campname , setCampName] = useState("");
+
+    const[uploadeddate , setUploadedDate] = useState("")
     const [q ,setQ] = useState([])
     
 
@@ -34,6 +36,7 @@ import {
           setTeacherName(res.data.teacher_name);
           setNofQuestions(res.data.nofquestions);
           setQuestions(res.data.questions);
+          setUploadedDate(res.data.uploadeddate)
 
          
         })
@@ -76,6 +79,9 @@ import {
               <Text>
               Camp: <Text color={'#F57C00'} display={'inline'}> {campname} </Text> 
               </Text> 
+              <Text>
+              Uploaded Date : <Text color={'#F57C00'} display={'inline'}> {uploadeddate} </Text> 
+              </Text>
               <Text>
               Questions : <Text color={'#F57C00'} display={'inline'}> {nofquestions} </Text> 
               </Text>

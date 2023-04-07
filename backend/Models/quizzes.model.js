@@ -25,6 +25,9 @@ const quizSchema = new mongoose.Schema({
     },
     questions: {
         type: Array
+    },
+    uploadeddate:{
+        type: String
     }
 
 })

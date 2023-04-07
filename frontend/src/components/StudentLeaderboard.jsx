@@ -32,17 +32,21 @@ const  StudentLeaderboard = (props)=>
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
     axios.get("http://localhost:5000/student/viewprofile")
       .then(res=> {
-              setUserID(res.data._id);
-              setName(res.data.name);
-              setEmail(res.data.email);
-              setGender(res.data.gender);
-              setPhoneNo(res.data.phoneno);
+              //setUserID(res.data._id);
+              localStorage.setItem('userID',res.data._id)
+              console.log(res.data._id)
+              // setName(res.data.name);
+              // setEmail(res.data.email);
+              // setGender(res.data.gender);
+              // setPhoneNo(res.data.phoneno);
       }).catch (err=> {
           console.log(err) })
   }
 
   const getCurrentCampName = () =>
   {
+    //localStorage.setItem('userID',userID)
+    console.log(`${localStorage.getItem('userID')}`)
     axios.get(`http://localhost:5000/camp/getcampstudent/${localStorage.getItem('userID')}`).then(res =>
     {
       setCampName(res.data);

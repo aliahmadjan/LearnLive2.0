@@ -29,9 +29,10 @@ const TeacherAccountDetails = () => {
           console.log(err) })
   }
 
-  const getCurrentCampName = () =>
+  const getCurrentCampName = (userID) =>
   {
-    axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
+    localStorage.setItem('userTeacherID',userID)
+    axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userTeacherID')}`).then(res =>
     {
       setCampName(res.data);
 
@@ -44,9 +45,9 @@ const TeacherAccountDetails = () => {
   useEffect(()=>
   {
       getCurentUser();
-      getCurrentCampName();
+      getCurrentCampName(userID);
      
-  },[])
+  })
 
  
   return (

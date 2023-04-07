@@ -44,7 +44,6 @@ const ViewAssignmentMarks=()=>
           .catch((err) => {
             console.log(err);
           });
-      
 
           //axios.get(`http://localhost:5000/assignmentscore/getassignmentresults/${stdAssignmentID}`)
       axios.get(`http://localhost:5000/assignmentscore/getassignmentresults/${localStorage.getItem("name")}/${localStorage.getItem("sassignment_viewid")}`)      
@@ -59,16 +58,7 @@ const ViewAssignmentMarks=()=>
 
       })
 
-      // axios.get(`http://localhost:5000/assignmentscore/getassignmentmarks/${localStorage.getItem('name')}`)      
-      // .then((res)=>
-      // {
-      //   //console.log(res.data)
-      //   setAssignmentResults(res.data)
-        
-      // }).catch((err)=>
-      // {
-
-      // })
+     
 
     }
 
