@@ -288,7 +288,7 @@ useEffect(()=>
                 borderBottomColor='orange'
                 type="file"
                 multiple
-                accept="application/pdf , image/png "
+                accept="application/pdf , image/png , .zip"
                 onChange={onSelectFile}
                 name="uplassign"
                 isRequired

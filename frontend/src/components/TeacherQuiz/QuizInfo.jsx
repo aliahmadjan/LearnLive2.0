@@ -11,6 +11,7 @@ const QuizInfo = () => {
     const [quizno , setQuizNo] = useState("");
     const [campname , setCampName] = useState([]);
     const [quizID , setQuizID] = useState("");
+    const [uploadeddate ,setUploadedDate] = useState("")
     const [selectedCamp , setSelectedCamp] = useState("");
     const[details,setDetails] = useState({
         noOfQuestions: 1,
@@ -81,6 +82,7 @@ const QuizInfo = () => {
          teacher_name: name,
          quizno: quizno,
          nofquestions:details.noOfQuestions,
+         uploadeddate: uploadeddate
         }).then(res =>
          {
                  setQuizID(res.data._id);
@@ -181,6 +183,24 @@ const QuizInfo = () => {
                         /> 
 
                     </FormControl>
+                    
+          <FormControl mb={2} display={'flex'} alignItems='center'>
+            <FormLabel htmlFor="dueDate" fontWeight="bold" color="#F57C00" mr={2}>Uploaded Date</FormLabel>
+            <Input
+            id="uploadeddate"
+            name='uploadeddate'
+            label="Date"
+            type="date"
+            textAlign={'center'}
+            focusBorderColor='#F57C00' 
+            variant={'flushed'} 
+            borderBottomColor='#F57C00'
+            onChange = {e=>setUploadedDate(e.target.value)}
+            isRequired
+            width={'60%'} 
+            mr={0} ml='auto'
+            />
+          </FormControl>
 
                 </Box>
 

@@ -21,17 +21,18 @@ const TeacherAccountDetails = () => {
     axios.get("http://localhost:5000/teacher/viewprofile")
       .then(res=> {
               setUserID(res.data._id);
-              // setName(res.data.name);
-              // setEmail(res.data.email);
-              // setGender(res.data.gender);
-              // setPhoneNo(res.data.phoneno);
+              setName(res.data.name);
+              setEmail(res.data.email);
+              setGender(res.data.gender);
+              setPhoneNo(res.data.phoneno);
       }).catch (err=> {
           console.log(err) })
   }
 
-  const getCurrentCampName = () =>
+  const getCurrentCampName = (userID) =>
   {
-    axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
+    localStorage.setItem('userTeacherID',userID)
+    axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userTeacherID')}`).then(res =>
     {
       setCampName(res.data);
 
@@ -44,9 +45,9 @@ const TeacherAccountDetails = () => {
   useEffect(()=>
   {
       getCurentUser();
-      getCurrentCampName();
+      getCurrentCampName(userID);
      
-  },[])
+  })
 
  
   return (

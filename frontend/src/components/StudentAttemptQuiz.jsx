@@ -23,6 +23,7 @@ import {
     const [teacher_name , setTeacherName] =useState('');
     const [nofquestions , setNofQuestions] = useState('');
     const [campname , setCampName] = useState("");
+    const[uploadeddate , setUploadedDate] = useState("")
 
     const [isClicked, setIsClicked] = useState(false);
 
@@ -153,6 +154,7 @@ import {
           setTeacherName(res.data.teacher_name);
           setNofQuestions(res.data.nofquestions);
           setQuestions(res.data.questions);
+          setUploadedDate(res.data.uploadeddate)
           //console.log(questions);
         })
         .catch((err) => {
@@ -178,6 +180,21 @@ import {
       navigate("/student/quizzes");
     }
 
+    const formatUploadedDate = (uploadeddate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+  
+      };
+      const date = new Date(uploadeddate);
+      return date.toLocaleString("en-US", options);
+
+
+    }
+
+    const formattedUploadedDate = formatUploadedDate(uploadeddate);
 
 
     //console.log(questions);
@@ -207,8 +224,12 @@ import {
               Camp: <Text color={'orange.800'} display={'inline'}> {campname} </Text> 
               </Text> 
               <Text>
+              Uploaded Date: <Text color={'orange.800'} display={'inline'}> {formattedUploadedDate} </Text> 
+              </Text> 
+              <Text>
               Questions : <Text color={'orange.800'} display={'inline'}> {nofquestions} </Text> 
               </Text>
+
       </Flex>
 
 

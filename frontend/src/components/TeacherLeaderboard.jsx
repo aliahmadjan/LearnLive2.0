@@ -24,17 +24,20 @@ function TeacherLeaderboard  (props)
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
     axios.get("http://localhost:5000/teacher/viewprofile")
       .then(res=> {
-              setUserID(res.data._id);
-              setName(res.data.name);
-              setEmail(res.data.email);
-              setGender(res.data.gender);
-              setPhoneNo(res.data.phoneno);
+        localStorage.setItem('userID', res.data._id)
+              // setUserID(res.data._id);
+              // setName(res.data.name);
+              // setEmail(res.data.email);
+              // setGender(res.data.gender);
+              // setPhoneNo(res.data.phoneno);
       }).catch (err=> {
           console.log(err) })
   }
 
   const getCurrentCampName = () =>
   {
+    //localStorage.setItem('userID',userID)
+    console.log(`${localStorage.getItem('userID')}`)
     axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
     {
       setCampName(res.data);
