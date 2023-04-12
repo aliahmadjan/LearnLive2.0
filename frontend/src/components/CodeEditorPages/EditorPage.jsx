@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import ACTIONS from '../CodeEditorComponents/Code-Actions';
 import Client from '../CodeEditorComponents/Code-Client';
 import Editor from '../CodeEditorComponents/Code-Editor';
+import { Navigate } from 'react-router-dom';
 import { Box,Button, Heading, Text, Link ,FormControl,FormLabel, Input,RadioGroup,Radio,Stack, InputGroup, Image} from '@chakra-ui/react'
 import axios from "axios"
 import {
@@ -16,7 +17,6 @@ import { initSocket } from '../CodeEditorComponents/Code-Socket';
 import {
     useLocation,
     useNavigate,
-    Navigate,
     useParams,
 } from 'react-router-dom';
 
@@ -27,6 +27,7 @@ const EditorPage = () => {
     const { roomId } = useParams();
     const reactNavigator = useNavigate();
     const [clients, setClients] = useState([]);
+    let navigate = useNavigate(); 
 
     useEffect(() => {
         const init = async () => {
@@ -91,9 +92,11 @@ const EditorPage = () => {
             console.error(err);
         }
     }
+    
 
     function leaveRoom() {
-        reactNavigator('/');
+        let path = `localhost:3000/student/code-editor-home`; 
+        navigate(path);
     }
 
     if (!location.state) {
