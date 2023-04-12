@@ -24,6 +24,9 @@ import TeacherLeaderboard from '../components/TeacherLeaderboard'
 import ViewSingleTeacherLeaderboard from '../components/ViewSingleTeacherLeaderboard'
 import DiscussionForumSidebar from '../components/DiscussionForumSideBar'
 import { DiscussionChat}  from '../components/Discussion.tsx'
+import Landing from '../components/CodeEditorComponents/Landing'
+import Home from '../components/CodeEditorPages/Home-Teacher'
+import EditorPage from '../components/CodeEditorPages/EditorPage'
 // import JoinMeet from '../components/ZoomComponents/mainZoom'
 
 const TeacherDashboard = () => {
@@ -73,6 +76,8 @@ const TeacherDashboard = () => {
                     <Route path="editassignment" element={<TeacherEditAssignment/>}/>
                     <Route path="viewsubmittedassignment" element={<ViewSubmittedAssignments/>}/>
                     <Route path="viewssubmitassignment" element={<TeacherSingleViewSubmitAssignment/>}/>
+                    <Route path="code-editor-home" element={<Home/>}/>
+                    <Route path="editor/:roomId" element={<EditorPage/>}/>
                     <Route path="settings" element={<TeacherSettings />}/>
                     <Route path="calendar" element={<TeacherCalendar />} />
                     {/* <Route path="createclass" element={<JoinMeet payload={payload}/>}/> */}
