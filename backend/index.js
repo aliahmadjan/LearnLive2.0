@@ -8,12 +8,21 @@ const qs = require('qs');
 const bodyParser = require('body-parser')
 const KJUR = require('jsrsasign')
 const axios = require("axios")
+const http = require('http')
+const {Server} = require('socket.io');
+const ACTIONS = require('../backend/actions')
 
 const app = express();
 const port = process.env.PORT || 5000;
+const port1 = 6000;
 
 //const port= process.env.BASE_URL
 //const port = "https://main--reliable-biscuit-f62ccb.netlify.app";
+
+
+
+const server = http.createServer(app)
+const io = new Server(server)
 
 app.use(cors());
 app.use(express.json({limit: '50mb'}));
@@ -83,22 +92,61 @@ app.get('/admin/viewprofile', TokenAdmin, (req,res) =>
   res.send(req.admin);
 });
 
-// app.get('/' , (req,res) =>
-// {
-//   res.setHeader('Cache-Control' , 'no-cache , no-store, must-revalidate');
-//   res.setHeader('Pragma' ,'no-cache')
-//   res.setHeader('Expires' ,'0')
-//   res.render("http://localhost:3000");
-// })
+app.use(express.static('build'));
+app.use((req, res, next) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
+const userSocketMap = {};
+function getAllConnectedClients(roomId) {
+    // Map
+    return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
+        (socketId) => {
+            return {
+                socketId,
+                username: userSocketMap[socketId],
+            };
+        }
+    );
+}
 
-// app.use((req, res, next) => {
-//   const err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
+io.on('connection', (socket) => {
+    console.log('socket connected', socket.id);
 
-app.listen(port, () => {
+    socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
+        userSocketMap[socket.id] = username;
+        socket.join(roomId);
+        const clients = getAllConnectedClients(roomId);
+        clients.forEach(({ socketId }) => {
+            io.to(socketId).emit(ACTIONS.JOINED, {
+                clients,
+                username,
+                socketId: socket.id,
+            });
+        });
+    });
+
+    socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
+        socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
+    });
+
+    socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
+        io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
+    });
+
+    socket.on('disconnecting', () => {
+        const rooms = [...socket.rooms];
+        rooms.forEach((roomId) => {
+            socket.in(roomId).emit(ACTIONS.DISCONNECTED, {
+                socketId: socket.id,
+                username: userSocketMap[socket.id],
+            });
+        });
+        delete userSocketMap[socket.id];
+        socket.leave();
+    });
+});
+
+server.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
   });
-
