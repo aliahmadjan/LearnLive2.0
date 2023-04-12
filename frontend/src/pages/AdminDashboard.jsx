@@ -31,8 +31,9 @@ const AdminDashboard = () => {
             <AdminSidebar navSize={navSize} changeNavSize={ (size) => changeNavSize(size) }></AdminSidebar>
             <Flex 
                 w={ navSize=="small" ? "95%" : "85%"} 
-                mt={4} borderRadius={30}
-                backgroundColor={'#FFF2DE'}
+                mt={4}
+                borderRadius={8}
+                backgroundImage={'linear-gradient(to bottom, #fddb92 0%, #d1fdff 100%);'}
             >
                 <Routes>
                     <Route path="account" element={<AdminAccountDetails />} />

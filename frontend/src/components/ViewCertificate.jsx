@@ -98,8 +98,14 @@ const ViewCertificate = () =>
   const color = useColorModeValue('gray.800', 'white');
 
   return (
-    <Box pt={0} px={5} mx='auto' textAlign={'center'} width='100%' ref={componentRef} backgroundColor='gray.100' 
-    borderRadius={30} flexDirection='row' overflowX='hidden' paddingX={5}>
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+      <Box>
+        <Heading mb={4} >
+          Certificate
+        </Heading>
+      </Box>
+
   {certDetails.map((cert) => (
     <Box mx="auto" fontSize="2xl" mb={10}>
 

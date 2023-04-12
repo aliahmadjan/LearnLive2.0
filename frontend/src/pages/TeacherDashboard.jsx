@@ -58,8 +58,8 @@ const TeacherDashboard = () => {
             <TeacherSidebar navSize={navSize} changeNavSize={ (size) => changeNavSize(size) }></TeacherSidebar>
             <Flex 
                 w={ navSize=="small" ? "95%" : "85%"} 
-                mt={4} borderRadius={8}
-                
+                mt={4}
+                borderRadius={8}
                 backgroundImage={'linear-gradient(to bottom, #fddb92 0%, #d1fdff 100%);'}>
 
                 <Routes>
@@ -84,7 +84,7 @@ const TeacherDashboard = () => {
                     <Route path="viewclass" element={<TeacherViewMeets/>}/>
                     <Route path="leaderboard" element={<TeacherLeaderboard setCampus={(value)=>setCampName(value)}/>}/>
                     <Route path="viewleaderboard" element ={<ViewSingleTeacherLeaderboard campName={campName}/>}/>
-                     <Route path="discussionforum" element={<DiscussionChat channelId='1089483253804703839'/>}/> 
+                    <Route path="discussionforum" element={<DiscussionChat channelId='1089483253804703839'/>}/> 
                     <Route path="oauth-callback" element={<CallBack/>}/>
                                      
                 </Routes>       

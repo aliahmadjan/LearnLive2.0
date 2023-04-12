@@ -72,9 +72,9 @@ import {
         </Heading>
       </Box>
 
-      <Flex maxW='2xl' mx="auto" justifyContent={'center'} gap={4} p={4} >
+      <Flex maxW='4xl' mx="auto" justifyContent={'center'} gap={4} p={4} >
               <Text>
-              Teacher Name: <Text color={'#F57C00'} display={'inline'}> {teacher_name} </Text>
+              Teacher: <Text color={'#F57C00'} display={'inline'}> {teacher_name} </Text>
               </Text> 
               <Text>
               Camp: <Text color={'#F57C00'} display={'inline'}> {campname} </Text> 
@@ -229,6 +229,7 @@ import {
 
         </Flex>
       </Flex>
+
       <Box p={4}>
           <Button mx={4} onClick={()=>handleSubmitView(quizzes._id)} colorScheme='orange' variant='solid'>
               Submissions
@@ -237,7 +238,7 @@ import {
           <Button mx={4} onClick={Back} type='button' colorScheme='orange' variant='outline'>
               Back
           </Button>
-        </Box>
+      </Box>
 
     </Box>
 

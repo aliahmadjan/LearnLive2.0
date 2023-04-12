@@ -5,7 +5,7 @@ import Client from '../CodeEditorComponents/Code-Client';
 import Editor from '../CodeEditorComponents/Code-Editor';
 import { Navigate } from 'react-router-dom';
 import { Textarea } from '@chakra-ui/react'
-import { Box,Button, Heading, Text, Link ,FormControl,FormLabel, Input,RadioGroup,Radio,Stack, InputGroup, Image} from '@chakra-ui/react'
+import { Box,Button, Heading, Text, SimpleGrid ,Card,CardHeader, Avatar,RadioGroup,Radio,Stack, InputGroup, Image, Flex} from '@chakra-ui/react'
 import axios from "axios"
 import {
   Alert,
@@ -172,62 +172,114 @@ const EditorPage = () => {
 
     return (
 
-        <Box p={5} width="60%" mx="auto" textAlign={'start'}>
+        <Box p={5} width="95%" m="auto" textAlign={'start'}>
 
-            <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
-                    <div className="aside">
-                        <div className="asideInner">
-                            <h3>Connected</h3>
-                            <div className="clientsList">
-                                {clients.map((client) => (
-                                    <Client
-                                        key={client.socketId}
-                                        username={client.username}
-                                    />
-                                ))}
-                            </div>
-                        </div>
+
+            <Flex width={'100%'} gap={4}>
+                <Flex width={'20%'} direction={'column'} textAlign={'center'} justifyContent={'space-around'}>
+                    
+                    <Box>
+                        <Heading size='md'>People</Heading>
+                        <SimpleGrid 
+                            width={'90%'} 
+                            overflowY='auto' 
+                            maxHeight={'32vh'} 
+                            mx='auto' 
+                            minChildWidth='120px' 
+                            spacingX='10px' spacingY='10px'
+                            sx={{
+                            '&::-webkit-scrollbar': {
+                                width: '8px',
+                                borderRadius: '2px',
+                                backgroundColor: 'white',
+                            },
+                            '&::-webkit-scrollbar-thumb': {
+                                backgroundColor: `orange.500`,
+                                borderRadius: '2px',
+                            },
+                            }}>
+
+                            {clients.map((client) => (
+                            <Card key={client.socketId} m={2} justifyContent={'center'}>
+                                <CardHeader>
+                                <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+                                    
+                                    <Avatar name={client.username} />
+
+                                    <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                                    <Box>
+                                        <Heading size='sm'>{client.username}</Heading>
+                                    </Box>
+                                    </Flex>                                
+
+                                </Flex>
+
+                                </CardHeader>
+                
+                            </Card>
+                            ))}
+                        </SimpleGrid>
+                    </Box>
+
+                    <Box>
+                        <Heading size='md'>Room Options</Heading>
                         <Button mt={4} type='submit' colorScheme='teal' variant='solid' onClick={copyRoomId}>
                             Copy Room ID
                         </Button>
-                        <br></br>
+                        
                         <Button mt={4} type='submit' colorScheme='orange' variant='solid' onClick={leaveRoom}>
                             Leave
                         </Button>
-                    </div>
-            </Box> 
-            <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
-                    <div className="editorWrap">
-                        <Select
-                            onChange={(e) => setLanguageValue(e.target.value)}
-                            defaultValue={languageValue}
-                        >
-                            {options.map((option, idx) => (
-                            <option key={idx}>{option}</option>
-                            ))}
-                        </Select>
-                        <Editor
-                            socketRef={socketRef}
-                            roomId={roomId}
-                            onCodeChange={(code) => {
-                                codeRef.current = code;
-                                setInputValue(code);
-                            }}
-                        />
-                    </div> 
-                    <Button mt={4} type='submit' colorScheme='orange' variant='solid' onClick={runCode}>
-                            Run
-                    </Button>
-            </Box>
-            <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
-                <Text mb='8px'>Output</Text>
-                    <Textarea 
-                        isDisabled
-                        value={outputValue}
-                        placeholder='Output of code'
-                        size='sm'
-                    />
-            </Box>
+                    </Box>
+
+                </Flex>
+
+
+                        
+                <Flex width={'80%'} flexDir={'column'} gap={4}>
+                    <Box width={'100%'} boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='8px' p={4} backgroundColor="#FFFFFF">
+                        <div className="editorWrap">
+                            <Flex alignItems={'center'} gap={2} py={2}>
+                                <Select
+                                    onChange={(e) => setLanguageValue(e.target.value)}
+                                    defaultValue={languageValue}
+                                >
+                                    {options.map((option, idx) => (
+                                    <option key={idx}>{option}</option>
+                                    ))}
+                                </Select>
+
+                                <Button type='submit' colorScheme='orange' variant='solid' onClick={runCode}>
+                                Run
+                                </Button>
+
+                            </Flex>
+                            <Editor
+                                socketRef={socketRef}
+                                roomId={roomId}
+                                onCodeChange={(code) => {
+                                    codeRef.current = code;
+                                    setInputValue(code);
+                                }}
+                            />
+                        </div> 
+                        
+                    </Box>
+
+                    <Box textAlign={'center'} boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='8px' p={4} backgroundColor="#FFFFFF">
+                        <Text mb='8px'>Output</Text>
+                            <Textarea 
+                                borderColor={'orange'}
+                                resize={'none'}
+                                isReadOnly
+                                value={outputValue}
+                                placeholder='Output of code'
+                                size='sm'
+                            />
+                    </Box>
+                </Flex>
+            </Flex>
+            
         </Box>
     );
 };

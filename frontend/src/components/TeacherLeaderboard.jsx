@@ -79,10 +79,10 @@ function TeacherLeaderboard  (props)
 
         <SimpleGrid 
             width={'70%'} 
-            overflowY='scroll' 
+            overflowY='auto ' 
             maxHeight={'66vh'} 
             mx='auto' 
-            minChildWidth='200px' 
+            minChildWidth='250px' 
             spacingX='10px' spacingY='10px'
             sx={{
               '&::-webkit-scrollbar': {
@@ -97,7 +97,7 @@ function TeacherLeaderboard  (props)
             }}>
 
             {campname.map((cn,index) => (
-              <Card maxWidth={'100%'} m={2}>
+              <Card maxWidth={'100%'} m={2} justifyContent={'center'}>
                 <CardHeader>
                   <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
                     <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
