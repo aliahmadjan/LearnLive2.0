@@ -4,6 +4,7 @@ import ACTIONS from '../CodeEditorComponents/Code-Actions';
 import Client from '../CodeEditorComponents/Code-Client';
 import Editor from '../CodeEditorComponents/Code-Editor';
 import { Navigate } from 'react-router-dom';
+import { Textarea } from '@chakra-ui/react'
 import { Box,Button, Heading, Text, Link ,FormControl,FormLabel, Input,RadioGroup,Radio,Stack, InputGroup, Image} from '@chakra-ui/react'
 import axios from "axios"
 import {
@@ -11,6 +12,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Select
 } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/react'
 import { initSocket } from '../CodeEditorComponents/Code-Socket';
@@ -83,6 +85,16 @@ const EditorPage = () => {
         };
     }, []);
 
+    let [outputValue, setOutputValue] = React.useState('')
+    let [inputValue, setInputValue] = React.useState('')
+    const options = ["Javascript", "Python", "C++", "Java","C","C#","Swift"];
+    const [languageValue, setLanguageValue] = useState(options[0]);
+
+    let handleInputChange = (e) => {
+        let outputValue = e.target.value
+        setOutputValue(outputValue)
+    }
+
     async function copyRoomId() {
         try {
             await navigator.clipboard.writeText(roomId);
@@ -97,6 +109,61 @@ const EditorPage = () => {
     function leaveRoom() {
         let path = `localhost:3000/student/code-editor-home`; 
         navigate(path);
+    }
+
+    function runCode() {
+        const encodedParams = new URLSearchParams();
+        if (languageValue == "Javascript"){
+            encodedParams.append("LanguageChoice", "17");
+        }
+        else if (languageValue == "C++"){
+            console.log("YO")
+            encodedParams.append("LanguageChoice", "7");
+        }
+        else if (languageValue == "Python"){
+            encodedParams.append("LanguageChoice", "5");
+        }
+        else if (languageValue == "Java"){
+            encodedParams.append("LanguageChoice", "4");
+        }
+        else if (languageValue == "C"){
+            encodedParams.append("LanguageChoice", "6");
+        }
+        else if (languageValue == "C#"){
+            encodedParams.append("LanguageChoice", "1");
+        }
+        else if (languageValue == "Swift"){
+            encodedParams.append("LanguageChoice", "37");
+        }
+        else {
+            encodedParams.append("LanguageChoice", "17");
+        }
+        encodedParams.append("Program", inputValue);
+
+        const options = {
+        method: 'POST',
+        url: 'https://code-compiler.p.rapidapi.com/v2',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'X-RapidAPI-Key': '655fb080b5msh340797ca7ef42d0p1c0c46jsn07a9765cd792',
+            'X-RapidAPI-Host': 'code-compiler.p.rapidapi.com'
+        },
+        data: encodedParams
+        };
+
+        axios.request(options).then(function (response) {
+            console.log(response.data)
+            if (response.data.Result == null){
+                setOutputValue("Error in your code.")
+            }
+            else {
+                setOutputValue(response.data.Result)
+            }
+        }).catch(function (error) {
+            console.error(error);
+        });
+
+        
     }
 
     if (!location.state) {
@@ -131,14 +198,35 @@ const EditorPage = () => {
             </Box> 
             <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
                     <div className="editorWrap">
+                        <Select
+                            onChange={(e) => setLanguageValue(e.target.value)}
+                            defaultValue={languageValue}
+                        >
+                            {options.map((option, idx) => (
+                            <option key={idx}>{option}</option>
+                            ))}
+                        </Select>
                         <Editor
                             socketRef={socketRef}
                             roomId={roomId}
                             onCodeChange={(code) => {
                                 codeRef.current = code;
+                                setInputValue(code);
                             }}
                         />
                     </div> 
+                    <Button mt={4} type='submit' colorScheme='orange' variant='solid' onClick={runCode}>
+                            Run
+                    </Button>
+            </Box>
+            <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
+                <Text mb='8px'>Output</Text>
+                    <Textarea 
+                        isDisabled
+                        value={outputValue}
+                        placeholder='Output of code'
+                        size='sm'
+                    />
             </Box>
         </Box>
     );
