@@ -1,6 +1,6 @@
 import React from "react"
 import { useState, useEffect } from "react"
-import { Box,Grid,Button, SimpleGrid, Card,Tooltip, CardHeader, Avatar, Text,FormControl, FormLabel, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
+import { Box,Grid,Button, SimpleGrid, Card, Tooltip, CardHeader, Avatar, Text,FormControl, FormLabel, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
 import axios from "axios"
 import { useNavigate, useParams} from "react-router-dom";
 import {
@@ -27,9 +27,13 @@ import {
     const [assignments , setAssignments] = useState([]);
     const [questions , setQuestions] = useState([]);
     const [ teachers , setTeachers] =useState('')
+    const [ query, setQuery]= useState("");
+    const [results , setResults] = useState([]);
+    
+    const navigate = useNavigate();
+
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
-    const navigate = useNavigate();
 
     const handleSubmitView = (assignment_viewid) =>
     {
@@ -45,35 +49,57 @@ import {
       navigate("/teacher/editassignment")
   }
 
-    const getCurentUser = () =>
-    {
-      let logintoken = localStorage.getItem("logintoken")
-      axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("http://localhost:5000/teacher/viewprofile")
-        .then(res=> {
-               // console.log(res.data)
-                setUserID(res.data._id);
-                localStorage.setItem('userID',res.data._id)
-                setTeachers(res.data.name);
-        }).catch (err=> {
-            console.log(err) })
-    }
+  const handleSubmitDelete = (assignment_delid)=>
+  {
+    localStorage.removeItem('assignment_delid')
+    localStorage.setItem('assignment_delid',assignment_delid)
 
+  }
+
+ 
     
     const getAllAssignments= () =>
     {
-      //console.log(userID)
-     //localStorage.setItem('userID',userID)
+      
     axios.get('http://localhost:5000/tchassignments/getcurrassigns' )
-   // axios.get('http://localhost:5000/tchassignments/gettchassigns')
-        //axios.get(`http://localhost:5000/tchassignments/getcurrtchass/${localStorage.getItem('userID')}`) 
-        .then(res=> {
-          
+   
+        .then(res=> {     
           setAssignments(res.data)
+          setResults(res.data);
           //console.log(quizzes)
     }).catch (err=> {
        console.log(err) })
     
+    }
+
+    const DeleteAssignment = (e) => {
+      e.preventDefault();
+      const assignmentId = localStorage.getItem('assignment_delid');
+      axios.delete(`http://localhost:5000/tchassignments/deletetchassigns/${assignmentId}`)
+        .then(() => {
+          const updatedAssignments = assignments.filter(assignment => assignment._id !== assignmentId);
+          setAssignments(updatedAssignments);
+          setResults(updatedAssignments);
+        })
+        .catch((error) => {
+          console.log(error)
+          
+        });
+    };
+
+    const handleSearch = async(e) =>
+    {
+      const query = e.target.value;
+      setQuery(query);
+      if (query === '') {
+        setResults(assignments);
+      } else {
+        const filteredAssignments = assignments.filter((assignment) =>
+          assignment.title.toLowerCase().includes(query.toLowerCase())
+        );
+        setResults(filteredAssignments);
+      }
+          
     }
  
 
@@ -81,9 +107,15 @@ import {
    useEffect(()=>
    {   
     getAllAssignments();
-    getCurentUser();
+    
+
 
    },[])
+
+   useEffect(()=>
+   {
+  
+   },[results])
 
 
 
@@ -100,9 +132,12 @@ import {
       <Box width={'80%'} mx="auto" >
 
         <Flex p={4}>
-          <Input placeholder="Assigment's Name"
-          // onChange={handleSearch}
+          <Input 
+          type="text"
+          placeholder="Assigment's Title"
+          onChange={handleSearch}
           variant={'outlined'} borderColor='orange'
+          value={query}
           >
           </Input>
           {/* <Button colorScheme={'orange'}>Search</Button> */}
@@ -127,7 +162,7 @@ import {
               },
             }}>
 
-            {assignments.map((assignment) => (
+            {results.map((assignment) => (
               <Card maxWidth={'100%'} maxHeight='160px' m={2}>
                 <CardHeader>
                   <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
@@ -155,7 +190,7 @@ import {
                       </Tooltip>
 
                       <Tooltip label="Delete" hasArrow placement='right'>
-                        <Button size='sm' onClick={onOpen} colorScheme='orange' variant='ghost'>
+                        <Button size='sm' onClick={()=>onOpen(handleSubmitDelete(assignment._id))} colorScheme='orange' variant='ghost'>
                           <i class="fa-solid fa-trash"></i>
                         </Button>
                       </Tooltip>
@@ -168,7 +203,40 @@ import {
   
               </Card>
             ))}
+          <AlertDialog
+              isOpen={isOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                    Delete
+                  </AlertDialogHeader>
 
+                  <AlertDialogBody>
+                    Are you sure? You can't undo this action afterwards.
+                  </AlertDialogBody>
+
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme='red'
+                      onClick={(e) => {
+                        //SetDeleteTeacherId();
+                        DeleteAssignment(e);
+                        onClose();
+                      }}
+                      ml={3}
+                    >
+                      Delete
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>
           </SimpleGrid>
 
       </Box>

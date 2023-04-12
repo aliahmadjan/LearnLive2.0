@@ -14,21 +14,6 @@ const TeacherAccountDetails = () => {
   const [teachers, setTeachers] = useState([]);
   const [camps , setCamps] = useState([]);
   
-
-  const getCurrentCampName = (userID) =>
-  {
-    localStorage.setItem('userID',userID)
-    //axios.get('http://localhost:5000/camp/getcampteacher/:',{params : {id:localStorage.getItem('userID')}}).then(res =>
-    axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
-    {
-      setCampName(res.data);
-
-    }).catch(err =>
-      {
-        console.log(err);
-      })
-  }
-  
   const getCurentUser = () =>
   {
     let logintoken = localStorage.getItem("logintoken")
@@ -44,9 +29,19 @@ const TeacherAccountDetails = () => {
           console.log(err) })
   }
 
+  const getCurrentCampName = (userID) =>
+  {
+    localStorage.setItem('userTeacherID',userID)
+    axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userTeacherID')}`).then(res =>
+    {
+      setCampName(res.data);
+
+    }).catch(err =>
+      {
+        console.log(err);
+      })
+  }
   
-
-
   useEffect(()=>
   {
       getCurentUser();
@@ -90,7 +85,7 @@ const TeacherAccountDetails = () => {
 
         <Box borderRadius='15px' p={4} backgroundColor="#FFFFFF" boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" >
 
-          <Flex mb={2} align='center'>
+          {/* <Flex mb={2} align='center'>
             <Text fontWeight="bold" color="#F57C00" mr={2} >
             User ID:
             </Text>
@@ -101,7 +96,7 @@ const TeacherAccountDetails = () => {
                     borderBottomColor='#F57C00' 
                    width={'60%'} 
                    mr={0} ml='auto' />
-          </Flex>
+          </Flex> */}
 
           <Flex mb={2} align='center'>
             <Text fontWeight="bold" color="#F57C00" mr={2} >

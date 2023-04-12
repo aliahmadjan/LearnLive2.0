@@ -69,38 +69,40 @@ import {
    getAllCamps();
    },[])
 
-   useEffect(()=>
-    {
-        console.log(results)
-    },[results])
+  
    const handleSearch = async(e) =>
    {
-       setQuery(e.target.value);
-       const filteredCamps = camps.filter(camp=>
-         camp.campname.toLowerCase().includes(query.toLowerCase())
-         );
-         setResults(filteredCamps);
-         //setTeachers(filteredTeachers);
+    const query = e.target.value;
+    setQuery(query);
+    if (query === '') {
+      setResults(camps);
+    } else {
+      const filteredCamps = camps.filter((camp) =>
+        camp.campname.toLowerCase().includes(query.toLowerCase())
+      );
+      setResults(filteredCamps);
+    }
    }
 
    const DeleteCamp = (e) => {
     e.preventDefault();
-    const campId = localStorage.getItem('camp_delid');
-    axios.delete(`http://localhost:5000/camp/deletecamp/${campId}`)
-      .then(() => {
-        axios.get('http://localhost:5000/camp/getcamps')
-          .then((res) => {
-            setResults(res.data)
-          })
-          .catch((error) => {
+      const campId = localStorage.getItem('camp_delid');
+      axios.delete(`http://localhost:5000/camp/deletecamp/${campId}`)
+        .then(() => {
+          const updatedCamps = camps.filter(camp => camp._id !== campId);
+          setCamps(updatedCamps);
+          setResults(updatedCamps);
+        })
+        .catch((error) => {
+          console.log(error)
           
-          });
-      })
-      .catch((error) => {
-        
-      });
+        });
   };
   
+  useEffect(()=>
+  {
+      //console.log(results)
+  },[results])
 
 
     return (
@@ -116,8 +118,11 @@ import {
         <Box width={'80%'} mx="auto" >
 
           <Flex p={4} pt={0}>
-            <Input placeholder="Camp's Name" 
+            <Input 
+            type="text"
+            placeholder="Camp's Name" 
             onChange={handleSearch}
+            value={query}
             variant={'outlined'}
             >
             </Input>

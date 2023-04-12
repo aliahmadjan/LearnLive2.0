@@ -10,7 +10,7 @@ const router = express.Router()
 
 const AddQuiz= (req,res,next)=>
 {
-        const { campname, teacher,teacher_name, quizno,nofquestions, questions} = req.body;
+        const { campname, teacher,teacher_name, quizno,nofquestions, questions ,uploadeddate} = req.body;
     
         const quizObj = {
             campname: campname,
@@ -19,6 +19,7 @@ const AddQuiz= (req,res,next)=>
             quizno: quizno,
             nofquestions: nofquestions,
             questions: questions,
+            uploadeddate:uploadeddate,
         }
     
         Quizzes.create(quizObj, (err, quiz) => {

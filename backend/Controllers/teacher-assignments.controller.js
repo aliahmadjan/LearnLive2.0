@@ -53,7 +53,7 @@ const DeleteAssignments = async(req,res,next)=>
             return next(error);
         }
         else {
-            res.send("Post Deleted Successfully!")
+            //res.send("Post Deleted Successfully!")
             res.status(200).json({
                 msg:data
             })

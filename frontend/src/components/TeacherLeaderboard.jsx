@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react'
-import { Box, Button,Heading, Text, Link , Avatar, Flex, IconButton, Input} from '@chakra-ui/react'
+import {SimpleGrid, Card, CardHeader, Tooltip, Box, Button,Heading, Text, Link , Avatar, Flex, IconButton, Input} from '@chakra-ui/react'
 import axios from "axios"
 import { useNavigate, useParams} from "react-router-dom";
 
@@ -24,17 +24,20 @@ function TeacherLeaderboard  (props)
     axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
     axios.get("http://localhost:5000/teacher/viewprofile")
       .then(res=> {
-              setUserID(res.data._id);
-              setName(res.data.name);
-              setEmail(res.data.email);
-              setGender(res.data.gender);
-              setPhoneNo(res.data.phoneno);
+        localStorage.setItem('userID', res.data._id)
+              // setUserID(res.data._id);
+              // setName(res.data.name);
+              // setEmail(res.data.email);
+              // setGender(res.data.gender);
+              // setPhoneNo(res.data.phoneno);
       }).catch (err=> {
           console.log(err) })
   }
 
   const getCurrentCampName = () =>
   {
+    //localStorage.setItem('userID',userID)
+    console.log(`${localStorage.getItem('userID')}`)
     axios.get(`http://localhost:5000/camp/getcampteacher/${localStorage.getItem('userID')}`).then(res =>
     {
       setCampName(res.data);
@@ -66,57 +69,61 @@ function TeacherLeaderboard  (props)
   },[])
 
     return (
-      <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-      <Box pt={4} pb={2} my={4}>
-        <Heading mb={4} >
-          View Leaderboard of current camps
-        </Heading>
-      </Box>
+      <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
 
-      <Flex maxW='2xl' mx="auto" flexDirection={'column'}>
-        <Flex border={'1px solid orange'} 
-              gap={2} 
-              justifyContent='space-around' 
-              height='50vh' borderRadius='20px' 
-              p={4} flexWrap='wrap' 
-              overflowY='scroll'
-              sx={{
-                '&::-webkit-scrollbar': {
-                  width: '16px',
-                  borderRadius: '8px',
-                  backgroundColor: 'white',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  backgroundColor: `orange.500`,
-                  borderRadius: '8px',
-                },
-              }}>
+        <Box pt={4} pb={2} >
+          <Heading mb={4} >
+            Leaderboard
+          </Heading>
+        </Box>
 
-        {campname.map((cn,index) => (  
+        <SimpleGrid 
+            width={'70%'} 
+            overflowY='scroll' 
+            maxHeight={'66vh'} 
+            mx='auto' 
+            minChildWidth='200px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '16px',
+                borderRadius: '8px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '8px',
+              },
+            }}>
 
-            <Flex border={'1px solid orange'} height='40%' width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
+            {campname.map((cn,index) => (
+              <Card maxWidth={'100%'} m={2}>
+                <CardHeader>
+                  <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+                    <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                      <Avatar name={campname[index]} mx={4} />
+                      <Box p={2}>
+                        <Heading size='sm'>{campname[index]}</Heading>
+                      </Box>
+                    </Flex>
 
-            <Box ml={0} >
-              <Text>
-              Camp: {campname[index]}
-              
-              </Text> 
-            </Box>
-            
-            <Flex flexDir={'column'} justifyContent='center'>
-                <Button  onClick={()=>handleSubmitView(cn._id, cn)} colorScheme='orange' variant='ghost'>
-                  <i class="fa-solid fa-eye"></i>
-                </Button>
+                    <Flex flexDir={'column'} justifyContent='center'>
 
-               
+                      <Tooltip label="View" hasArrow placement='right'>
+                        <Button size='sm' onClick={()=>handleSubmitView(cn._id, cn)} colorScheme='orange' variant='ghost'>
+                        <i class="fa-solid fa-eye"></i>
+                        </Button>
+                      </Tooltip>
 
-            </Flex>
-        
-            
-            </Flex>  ))} 
+                    </Flex>
 
-        </Flex>
-      </Flex>
+                  </Flex>
+
+                </CardHeader>
+  
+              </Card>
+            ))}
+        </SimpleGrid>
 
     </Box>
 

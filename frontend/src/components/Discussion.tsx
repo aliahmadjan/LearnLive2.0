@@ -144,8 +144,8 @@ type DiscussionProps = {
 };
 
 export const DiscussionChat = ({channelId, 
-    height ="635" ,
-     width ="1200"
+    height ="100%" ,
+    width ="100%"
 }: DiscussionProps) : JSX.Element =>
 {
     const [isReady , setIsReady] = useState(false);

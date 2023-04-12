@@ -43,6 +43,7 @@ import {
         getSingleUser();
     },[])
 
+    
     const Back = ()=>
     {
       navigate("/admin/viewcamps");
@@ -52,12 +53,12 @@ import {
       <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
 
         <Box pt={4} pb={2}  >
-          <Heading mb={2} >
-            View Camp
+          <Heading mb={2} color={'orange.900'}>
+            Camp Name: {campname}
           </Heading>
         </Box>
 
-        <Heading size='md' color={'orange.900'}>Camp Name: {campname}</Heading>
+        {/* <Heading size='md' color={'orange.900'}>Camp Name: {campname}</Heading> */}
 
         <Flex width={'80%'} mx='auto' mt={4} textAlign={'start'} p={4} gap={4}>
 

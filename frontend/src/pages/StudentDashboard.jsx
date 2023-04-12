@@ -16,6 +16,7 @@ import StudentViewMeets from '../components/ZoomComponents/StudentViewMeets'
 import ViewCertificate from '../components/ViewCertificate'
 import ViewAssignmentMarks from '../components/ViewAssignmentMarks'
 import StudentLeaderboard from '../components/StudentLeaderboard'
+import Notifications from '../components/Notifications'
 import ViewSingleStudentLeaderboard from '../components/ViewSingleStudentLeaderboard'
 import Landing from '../components/CodeEditorComponents/Landing'
 import Home from '../components/CodeEditorPages/Home-Student'
@@ -54,6 +55,7 @@ const StudentDashboard = () => {
                     <Route path="certificate" element={<ViewCertificate/>} />
                     <Route path="leaderboard" element={<StudentLeaderboard setCampus={(value)=>setCampName(value)}/>}/>
                     <Route path="viewleaderboard" element={<ViewSingleStudentLeaderboard campName={campName}/>}/>
+                    <Route path="notifications" element={<Notifications/>} /> 
                     <Route path="code-editor-landing" element={<Landing/>}/>
                     <Route path="code-editor-home" element={<Home/>}/>
                     <Route path="editor/:roomId" element={<EditorPage/>}/>

@@ -3,6 +3,12 @@ import { Box,Button, Avatar,Heading, Text, Link ,FormControl,FormLabel, Input,Ra
 import axios from "axios"
 import { Divider } from '@chakra-ui/react'
 import { useNavigate, useParams} from "react-router-dom";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
 
 
 const EditStudentDetails = () =>
@@ -19,6 +25,8 @@ const EditStudentDetails = () =>
     const [selectedFile, setSelectedFile] =useState(null);
     const [fileInputState, setFileInputState ] = useState("");
     const [previewSource , setPreviewSource] = useState("");
+
+    const [submitStatus, setSubmitStatus] = useState("");
    
       const [msg, setMsg] = useState('');
   const navigate = useNavigate();
@@ -52,11 +60,13 @@ const EditStudentDetails = () =>
     
     }).then((res)=>
     {
-      //console.log(category)
-      window.alert("EditSuccesFUll")
+      // //console.log(category)
+      // window.alert("EditSuccesFUll")
+      setSubmitStatus(1)
     }).catch((err)=>
       {
-        window.alert("EditNOTSuccesFUll")
+        // window.alert("EditNOTSuccesFUll")
+        setSubmitStatus(-1)
       })
            
   }
@@ -65,6 +75,23 @@ const EditStudentDetails = () =>
   {
     navigate("/admin/viewstudents");
   }
+
+  const StatusAlert = () => {
+    if (submitStatus === -1)
+      return (
+        <Alert status='error'>
+        <AlertIcon />
+       Student Not Updated!
+      </Alert>
+      );
+    if (submitStatus === 1)
+      return (
+        <Alert status='success'>
+        <AlertIcon />
+        Student was updated!
+      </Alert>
+      );
+  };
 
   const handleFileInputChange =(e)=>
   {
@@ -213,6 +240,7 @@ const EditStudentDetails = () =>
         </Flex>
 
       </form>
+      <StatusAlert/>
     </Box>
   </Box>
 

@@ -58,6 +58,42 @@ const ViewCertificate = () =>
         getCertificateDetails();
     },[])
 
+    const formatStartDate = (startdate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      };
+      const date = new Date(startdate);
+      return date.toLocaleString("en-US", options);
+
+    }
+
+    const formatEndDate = (enddate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      };
+      const date = new Date(enddate);
+      return date.toLocaleString("en-US", options);
+
+    }
+
+    const formatIssuedDate = (issued_date) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      };
+      const date = new Date(issued_date);
+      return date.toLocaleString("en-US", options);
+
+    }
+
   const bg = useColorModeValue('white', 'gray.800');
   const color = useColorModeValue('gray.800', 'white');
 
@@ -104,16 +140,16 @@ const ViewCertificate = () =>
       {/* Dates */}
       <Flex align="center" justify="center" mb={8}>
         <Text fontWeight="bold" mr={4}>From:</Text>
-        <Text>{cert.startdate[0]}</Text>
+        <Text>{formatStartDate(cert.startdate[0])}</Text>
         <Text fontWeight="bold" mx={4}>To:</Text>
-        <Text>{cert.enddate[cert.enddate.length - 1]}</Text>
+        <Text>{formatEndDate(cert.enddate[cert.enddate.length - 1])}</Text>
       </Flex>
 
       {/* Issued Date and Supervisor Signature */}
       <Flex align="center" justify="space-between" mb={8}>
   
   <Flex direction="column" align="flex-start">
-  <Text fontSize="lg" >{cert.issued_date}</Text>
+  <Text fontSize="lg" >{formatIssuedDate(cert.issued_date)}</Text>
     <Text fontWeight="bold" fontSize="lg">Issued Date</Text>
   </Flex>
 

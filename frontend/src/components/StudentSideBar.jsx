@@ -6,13 +6,17 @@ import {
     IconButton,
     Divider,
     Avatar,
-    Heading
+    Box,
+    Heading,
+    Badge,
+    Tooltip
 } from '@chakra-ui/react'
 import {
     FiMenu,
     FiHome,
     FiCalendar,
     FiUser,
+    FiBell,
     FiDollarSign,
     FiBriefcase,
     FiSettings,
@@ -25,6 +29,9 @@ import { IoPawOutline } from 'react-icons/io5'
 import NavItem from './NavItem'
 import axios from "axios"
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useDisclosure } from "@chakra-ui/react";
+import moment from 'moment';
+
 
 
 export default function StudentSidebar({navSize, changeNavSize}) {
@@ -38,6 +45,16 @@ export default function StudentSidebar({navSize, changeNavSize}) {
     const [ profileimg , setProfileImg] = useState(null);
     const navigate = useNavigate();
 
+    //localStorage.removeItem("unreadCount")
+    let unreadCount = localStorage.getItem("unreadCount");
+  
+    const handleButtonClick = () => {
+        navigate('/student/notifications')
+    
+       
+      };
+
+      
     const getCuurentUser = () =>
     {
       let logintoken = localStorage.getItem("ltoken")
@@ -61,6 +78,7 @@ export default function StudentSidebar({navSize, changeNavSize}) {
     useEffect(()=>
     {
         getCuurentUser();
+        console.log(unreadCount)
     }, [])
 
     return (
@@ -68,23 +86,24 @@ export default function StudentSidebar({navSize, changeNavSize}) {
             pos="sticky"
             w={navSize == "small" ? "4%" : "20%"}
             mx="14px"
-            flexDir="column"     
+            flexDir="column"
             justifyContent="space-evenly"
-            >
+        >
 
             <IconButton
                 background="none"
-                mt={4}        
+                mt={4}
                 alignSelf='center'
                 color='white'
-                _hover={{background: 'gray.100',  color:'orange' }}
+                _hover={{ background: 'gray.100', color: 'orange' }}
                 icon={<FiMenu />}
                 onClick={() => {
                     if (navSize == "small")
                         changeNavSize("large")
+
                     else
                         changeNavSize("small")
-                }} />
+                } } />
 
             <Divider variant='dashed' borderColor={'orange.500'} />
 
@@ -94,15 +113,15 @@ export default function StudentSidebar({navSize, changeNavSize}) {
                 alignItems={navSize == "small" ? "center" : "flex-start"}
                 as="nav"
             >
-               
+
                 <NavItem navSize={navSize} icon={'fa-solid fa-user'} active={route === "account"} title="Account" route="account" />
-                <NavItem navSize={navSize} icon={'fa-solid fa-list-check'} active={route === "quizzes"}  title="Quizzes" route="quizzes" />
-                <NavItem navSize={navSize} icon={'fa-solid fa-folder'} active={route === "assignments"} title="Assignments" route="assignments"/>
-                <NavItem navSize={navSize} icon={'fa-solid fa-folder'} active={route === "viewmeets"} title="Classes" route="viewmeets"/>
+                <NavItem navSize={navSize} icon={'fa-solid fa-list-check'} active={route === "quizzes"} title="Quizzes" route="quizzes" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-folder'} active={route === "assignments"} title="Assignments" route="assignments" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-folder'} active={route === "viewmeets"} title="Classes" route="viewmeets" />
 
                 {/* <NavItem navSize={navSize} icon={FiHome} title="Dashboard" description="This is the description for the dashboard." /> */}
                 <NavItem navSize={navSize} icon={'fa-solid fa-calendar'} active={route === "calendar"} title="Calendar" route="calendar" />
-                
+
                 {/* <NavItem navSize={navSize} icon={FiInfo} title="Reports" /> */}
                 <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Certificate" active={route === "certificate"} route="certificate" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Leaderboard" active={route === "leaderboard"} route="leaderboard" />
@@ -111,46 +130,91 @@ export default function StudentSidebar({navSize, changeNavSize}) {
                 
 
             </Flex>
+                {/* <IconButton
+icon={<FiBell />}
+variant="ghost"
+aria-label="Notifications"
+//  unreadCount={unreadCount}
+onClick={handleButtonClick}
+>
 
-            <Divider variant='dashed' borderColor={'orange.500'} />
+{(unreadCount) > 0 && (
+<Badge colorScheme="" ml="2">
+  {unreadCount}
+</Badge>
+)}
+</IconButton> */}
 
-            <Flex flexDir={'column'}>
-            <Flex
-                mx="auto"
-                p={2}
-                border='1px solid' 
-                borderColor={'white'} 
-                width={'90%'} 
-                alignItems='center' justifyContent={'center'}
-                borderRadius={30}
+          
+        <Tooltip label="Notifications">
+          <IconButton
+            aria-label="Notifications"
+            icon={<i class="fa-solid fa-bell-concierge"></i>}
+            variant="ghost"
+            onClick={handleButtonClick}
+            position="absolute"
+            top="-10px"
+            right="-10px"
+          />
+        </Tooltip>
+         {unreadCount > 0 && ( 
+          <Box
+            position="absolute"
+            top="-5px"
+            right="-5px"
+            borderRadius="full"
+            bg="red.500"
+            color="orange"
+            w="20px"
+            h="20px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            fontSize="lg"
+          >
+            {unreadCount}
+          </Box>
+         )} 
+
+     
+            {/* <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Notifications" active={route === "notifications"} route="notifications"/> */}
+            <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Settings" active={route === "settings"} route="settings" />
+
+        </Flex><Divider variant='dashed' borderColor={'orange.500'} /><Flex flexDir={'column'}>
+                <Flex
+                    mx="auto"
+                    p={2}
+                    border='1px solid'
+                    borderColor={'white'}
+                    width={'90%'}
+                    alignItems='center' justifyContent={'center'}
+                    borderRadius={30}
                 >
-                
-                <Avatar
-                    size="sm"
-                    src={`https://avatars.dicebear.com/v2/bottts/${name}.svg?`}
-                    />
-                    
-                <Flex flexDir="column" ml={4} display={navSize == "small" ? "none" : "flex"}>
+
+                    <Avatar
+                        size="sm"
+                        src={`https://avatars.dicebear.com/v2/bottts/${name}.svg?`} />
+
+                    <Flex flexDir="column" ml={4} display={navSize == "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm" color={'white'}>{name}</Heading>
+                    </Flex>
+
                 </Flex>
 
-            </Flex>
+                <Flex width="100%">
+                    <Button
+                        my={2}
+                        borderRadius={navSize == "small" ? "50%" : "4px"}
+                        onClick={handleLogout}
+                        width={navSize == "small" ? "2px" : "60%"}
+                        mx="auto" type='submit' colorScheme='orange' variant='solid' _hover={{ bg: '#a85e32' }} position={'relative'}
+                    >
+                        {navSize == "small" ? <i class="fa-solid fa-power-off"></i> : "Log Out"}
+                    </Button>
 
-            <Flex width = "100%">
-                <Button
-                my={2}
-                borderRadius={navSize == "small" ? "50%" : "4px"}
-                onClick={handleLogout}
-                width={navSize == "small" ? "2px" : "60%"}
-                mx="auto" type='submit' colorScheme='orange' variant='solid' _hover={{ bg: '#a85e32' }} position={'relative'} 
-                >
-                    {navSize == "small" ? <i class="fa-solid fa-power-off"></i> : "Log Out" }
-                </Button>    
-
-            </Flex>
+                </Flex>
             </Flex>
             
-
         </Flex>
     )
 }

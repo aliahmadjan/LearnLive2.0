@@ -1,6 +1,6 @@
 import React from "react"
 import { useState, useEffect } from "react"
-import { Box,Grid,Button, Text,FormControl, FormLabel, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
+import { Box,Grid,Button, Text,FormControl, FormLabel, Input, Select, Textarea, Heading, Flex, VStack, Divider, SimpleGrid, Card, CardHeader, Avatar, Tooltip, TableContainer, Table, TableCaption, Thead, Tr, Th, Tbody, Td} from "@chakra-ui/react";
 import axios from "axios"
 import { useNavigate, useParams} from "react-router-dom";
 import {
@@ -82,73 +82,78 @@ import {
 
     return (
 
-      <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-      <Box pt={4} pb={2} my={4}>
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+      <Box pt={4} pb={2}  >
         <Heading mb={4} >
-          Students Submitted Assignments
+          Submitted Assignments
         </Heading>
       </Box>
 
-      <Flex maxW='2xl' mx="auto" flexDirection={'column'}>
-        <Flex p={4} pt={0}>
-          <Input placeholder="Assigment's Name" variant={'outlined'} borderColor='orange'></Input>
+      <Flex maxW='100%' mx="auto" flexDirection={'column'}>
+        <Flex p={4} pt={0} width='80%' m='auto'>
+          <Input placeholder="Student's Name" variant={'outlined'} borderColor='orange'></Input>
           <Button colorScheme={'orange'}>Search</Button>
         </Flex>
 
-        <Flex border={'1px solid orange'} 
-              gap={2} 
-              justifyContent='space-around' 
-              height='50vh' borderRadius='20px' 
-              p={4} flexWrap='wrap' 
-              overflowY='scroll'
-              sx={{
-                '&::-webkit-scrollbar': {
-                  width: '16px',
-                  borderRadius: '8px',
-                  backgroundColor: 'white',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  backgroundColor: `orange.500`,
-                  borderRadius: '8px',
-                },
-              }}>
+        <Flex width={'100%'} justifyContent='space-around'>
+          <Box width={'85%'} p={4}>
+              
+              <TableContainer
+                px={4} 
+                maxHeight='60vh'
+                overflowY='scroll'
+                sx={{
+                  '&::-webkit-scrollbar': {
+                    width: '16px',
+                    borderRadius: '8px',
+                    backgroundColor: 'white',
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: `orange.500`,
+                    borderRadius: '8px',
+                  },
+                }}>
 
-        {assignments.map((assignment,index) => (  
+                <Table variant={'simple'} >
+                  
+                  <TableCaption>Student Assignments Scores</TableCaption>
+                  
+                  <Thead>
+                    <Tr>
+                      <Th></Th>
+                      <Th>Student Name</Th>
+                      <Th>Assignment Score</Th>
+                      <Th>Status</Th>
+                      <Th>View</Th>
+                    </Tr>
+                  </Thead>
 
-            <Flex border={'1px solid orange'} height='40%' width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
+                  <Tbody>
+                    {assignments.map((assignment,index) => (
+                      <Tr key={index}>
+                        <Td><Avatar name={assignment.student_name} mx={4} /></Td>
+                        <Td>{assignment.student_name}</Td>
+                        <Td><Box width={'60px'}><Input variant={'filled'} mx={2} type='number'></Input>/100<Button mx={2}>Grade</Button></Box></Td>
+                        <Td>{assignment.submit_status}</Td>
+                        <Td>
+                          <Tooltip label="View" hasArrow placement='right'>
+                            <Button size='sm' onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
+                            <i class="fa-solid fa-eye"></i>
+                            </Button>
+                          </Tooltip>
+                        </Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
 
-            <Box ml={0} >
-              {/* Jaan Implement this ( displays teacher Id instead of name)*/}
-              {/* <Text>
-              Teacher Name: {assignment.teacher}
-              </Text>  */}
-              <Text>
-              Student Name: {assignment.student_name}
-              </Text> 
-              <Text>
-              Title: {assignment.title}
-              </Text>
-              <Text>
-              Status: {assignment.submit_status}
-              </Text>
-            </Box>
-            
-            <Flex flexDir={'column'} justifyContent='center'>
-                <Button  onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
-                  <i class="fa-solid fa-eye"></i>
-                </Button>
-
-                <Button  onClick={onOpen} colorScheme='orange' variant='ghost'>
-                  <i class="fa-solid fa-trash"></i>
-                </Button>
-
-            </Flex>
-        
-            
-            </Flex>  ))} 
+                </Table>
+              </TableContainer>
+          </Box>
 
         </Flex>
       </Flex>
+
 
     </Box>
 
