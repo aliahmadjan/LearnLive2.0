@@ -9,23 +9,15 @@ const StudentQuizResult = () => {
 
   return (
 
-    <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-      <Box pt={4} pb={2} mt={4}  >
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+      <Box pt={4} pb={2}  >
         <Heading mb={4} >
-          Quiz Result 
+          Quiz Result
         </Heading>
-        <Text mb={6}>
-          This page displays your quiz results. 
-        </Text>
       </Box>
 
       <Flex maxW='2xl' mx="auto" justifyContent={'center'} gap={4} p={4} >
-              <Text>
-              Teacher Name: <Text color={'orange.800'} display={'inline'}> {teacher_name} </Text>
-              </Text> 
-              <Text>
-              Camp: <Text color={'orange.800'} display={'inline'}> {campname} </Text> 
-              </Text> 
               <Text>
               Questions : <Text color={'orange.800'} display={'inline'}> {nofquestions} </Text> 
               </Text>
@@ -39,10 +31,12 @@ const StudentQuizResult = () => {
       <Flex maxW='4xl' mx="auto" flexDirection={'column'}>
 
 
-        <Flex border={'1px solid orange'} 
+      <Flex boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)"
+              borderRadius='15px'
+              backgroundColor="#FFFFFF"
               gap={2} 
               justifyContent='space-around' 
-              height='50vh' borderRadius='10px' 
+              maxHeight='54vh'
               p={4} flexWrap='wrap' 
               overflowY='scroll'
               sx={{

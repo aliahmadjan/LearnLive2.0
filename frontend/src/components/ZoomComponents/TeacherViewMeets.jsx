@@ -47,8 +47,8 @@ return(
 
         <SimpleGrid 
             width={'90%'} 
-            overflowY='scroll' 
-            maxHeight={'66vh'} 
+            overflowY='auto' 
+            maxHeight={'44vh'} 
             mx='auto' 
             minChildWidth='260px' 
             spacingX='10px' spacingY='10px'
@@ -72,9 +72,9 @@ return(
                       <Avatar name={meet.campname} src={meet.campname} mx={4} />
                       <Box>
                         <Heading size='sm'>Camp: {meet.campname}</Heading>
-                        <Text>Agenda: {meet.agenda}</Text>
-                        <Text>Duration: {meet.duration} Mins</Text>
-                        <Text>Password: {meet.password}</Text>
+                        <Text>Agenda: <b>{meet.agenda}</b></Text>
+                        <Text>Duration: <b>{meet.duration} mins</b></Text>
+                        <Text>Password: <b>{meet.password}</b></Text>
                       </Box>
                     </Flex>
 

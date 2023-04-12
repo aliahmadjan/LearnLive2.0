@@ -115,63 +115,66 @@ function StudentSettings() {
 
   return (
 
-    <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'}>
 
       <Box pt={4} pb={2}  >
         <Heading mb={4} >
           Change Password
         </Heading>
-        <Text mb={6}>
-          Here you can Change Your Password.
-        </Text>
       </Box>
 
       <form onSubmit={UpdatePassword}>
-        <Box p={5} maxW="lg" mx="auto" textAlign={'start'} position={'relative'}>
-            <Box border={'1px solid orange'} borderRadius='20px' p={4} >
+        <Box p={5} width={{ base: '90%', md: '66%', lg: '50%' }} mx="auto" textAlign={'start'} position={'relative'}>
 
-            {error && <Text color="red.500">{error}</Text>}
-            {success && <Text color="green.500">{success}</Text>}
+          <Box borderRadius='8px' p={4} backgroundColor="#FFFFFF" boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" >
 
-            <FormControl mb={2} display={'flex'} alignItems='center'>
-                <FormLabel htmlFor="campname" fontWeight="bold" color="orange.500" mr={2}>New Password</FormLabel>
-                <Input
-                textAlign={'center'}
-                focusBorderColor='orange.700' 
-                variant={'flushed'} 
-                borderBottomColor='orange'
-                id="password"
-                name="password"
-                onChange={(e) => setPassword(e.target.value)}
-                isRequired
-                type={showPassword ? "text" : "password"}
-                width={'60%'} 
-                mr={0} ml='auto'/>
-                <Button  onClick={toggleShowPassword} colorScheme='orange' variant='ghost'>
-            {showPassword} <i class="fa-sharp fa-solid fa-eye"></i>
+          {error && <Text color="red.500">{error}</Text>}
+          {success && <Text color="green.500">{success}</Text>}
+
+          <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel htmlFor="password" fontWeight="bold" color="#F57C00" mr={2}>New Password</FormLabel>
+              <Input
+              textAlign={'center'}
+              focusBorderColor='#F57C00' 
+              variant={'flushed'} 
+              borderBottomColor='#F57C00'
+              id="password"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              isRequired
+              type={showPassword ? "text" : "password"}
+              width={'50%'} 
+              mr={0} ml='auto'/>
+
+              <Button  onClick={toggleShowPassword} colorScheme='orange' variant='ghost' borderBottomRadius={0} borderBottom={'1px solid #F57C00'}>
+              {showPassword} <i class="fa-sharp fa-solid fa-eye"></i>
+              </Button>
+
+          </FormControl>
+
+          <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel htmlFor="cpassword" fontWeight="bold" color="#F57C00" mr={2}>Confirm Password</FormLabel>
+              <Input
+              textAlign={'center'}
+              focusBorderColor='#F57C00'
+              variant={'flushed'} 
+              borderBottomColor='#F57C00'
+              id="cpassword"
+              name="cpassword"
+              onChange={(e) => setCPassword(e.target.value)}
+              type={showCPassword ? "text" : "password"}
+              isRequired
+              width={'50%'} 
+              mr={0} ml='auto'/>
+
+              <Box>
+                <Button  onClick={toggleShowCPassword} colorScheme='orange' variant='ghost' borderBottomRadius={0} borderBottom={'1px solid #F57C00'}>
+                  {showCPassword} <i class="fa-sharp fa-solid fa-eye"></i>
                 </Button>
-            </FormControl>
+              </Box>
+          </FormControl>
 
-            <FormControl mb={2} display={'flex'} alignItems='center'>
-                <FormLabel htmlFor="campname" fontWeight="bold" color="orange.500" mr={2}>Confirm Password</FormLabel>
-                <Input
-                textAlign={'center'}
-                focusBorderColor='orange.700' 
-                variant={'flushed'} 
-                borderBottomColor='orange'
-                id="cpassword"
-                name="cpassword"
-                onChange={(e) => setCPassword(e.target.value)}
-                type={showCPassword ? "text" : "password"}
-                isRequired
-                width={'60%'} 
-                mr={0} ml='auto'/>
-                <Button  onClick={toggleShowCPassword} colorScheme='orange' variant='ghost'>
-            {showCPassword} <i class="fa-sharp fa-solid fa-eye"></i>
-                </Button>
-            </FormControl>
-
-            </Box>
+          </Box>
         </Box>
 
         <Button type='submit' colorScheme='orange' variant='solid'>

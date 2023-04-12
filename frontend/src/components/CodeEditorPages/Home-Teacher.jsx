@@ -44,20 +44,22 @@ const Home = () => {
         }
     };
     return (
-        <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+      <Box p={2} m='auto' textAlign={'center'} width={'100%'}>
 
       <Box pt={4} pb={2}  >
         <Heading mb={4} >
           Join Room
         </Heading>
+
+        <Text>Paste Invitation Room ID</Text>
       </Box>
 
       <form onSubmit={joinRoom}>
       <Box p={5} width="60%" mx="auto" textAlign={'start'}>
         
-        <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
+        <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='8px' p={4} backgroundColor="#FFFFFF">
             <div>
-                Paste Invitation Room ID
+                
             </div>
             <FormControl mb={2} display={'flex'} alignItems='center'>
               <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Room ID</FormLabel>
@@ -94,21 +96,19 @@ const Home = () => {
                 
           </Box>
         </Box>
+
               
-        <Button mt={4} type='submit' colorScheme='orange' variant='solid' onClick={joinRoom}>
+        <Button my={2} type='submit' colorScheme='orange' variant='solid' onClick={joinRoom}>
               Join
         </Button>
 
-        <div className="createInfo">
-                        If you don't have an invite then create &nbsp;
-                        <a
-                            onClick={createNewRoom}
-                            href=""
-                            className="createNewBtn"
-                        >
-                            new room
-                        </a>
-        </div>
+        <Text>
+          If you don't have an invite then{' '}
+
+          <Link color='orange.500' href='' onClick={createNewRoom}>
+            click here to create new room
+          </Link>
+        </Text>
 
         </form>
 
