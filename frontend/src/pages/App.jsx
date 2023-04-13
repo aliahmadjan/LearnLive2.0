@@ -9,6 +9,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import AdminDashboard from './AdminDashboard'
 import CallBack from '../components/ZoomComponents/CallBack'
 import DiscussionForumDashboard from './DiscussionForumDashboard'
+import EditorPage from '../components/CodeEditorPages/EditorPage'
 
 
 function App() {

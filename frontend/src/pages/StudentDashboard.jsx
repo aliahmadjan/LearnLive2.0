@@ -18,6 +18,8 @@ import ViewAssignmentMarks from '../components/ViewAssignmentMarks'
 import StudentLeaderboard from '../components/StudentLeaderboard'
 import Notifications from '../components/Notifications'
 import ViewSingleStudentLeaderboard from '../components/ViewSingleStudentLeaderboard'
+import Home from '../components/CodeEditorPages/Home-Student'
+import EditorPage from '../components/CodeEditorPages/EditorPage'
 
 const StudentDashboard = () => {
     
@@ -35,8 +37,9 @@ const StudentDashboard = () => {
         <StudentSidebar navSize={navSize} changeNavSize={ (size) => changeNavSize(size) }></StudentSidebar>
             <Flex 
                 w={ navSize=="small" ? "95%" : "85%"} 
-                mt={4} borderRadius={30}
-                backgroundColor={'#FFFFFF'}>
+                mt={4}
+                borderRadius={8}
+                backgroundImage={'linear-gradient(to bottom, #fddb92 0%, #d1fdff 100%);'}>
 
                 <Routes>
 
@@ -53,6 +56,8 @@ const StudentDashboard = () => {
                     <Route path="leaderboard" element={<StudentLeaderboard setCampus={(value)=>setCampName(value)}/>}/>
                     <Route path="viewleaderboard" element={<ViewSingleStudentLeaderboard campName={campName}/>}/>
                     <Route path="notifications" element={<Notifications/>} /> 
+                    <Route path="code-editor-home" element={<Home/>}/>
+                    <Route path="editor/:roomId" element={<EditorPage/>}/>
                     <Route path="settings" element={<StudentSettings />} />
 
                 </Routes> 

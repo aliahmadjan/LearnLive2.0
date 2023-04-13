@@ -6,7 +6,7 @@ LearnLive is an online platform, with all the operations of having an online cod
 
 # How to run this project
 
-Ask the author of this repository for .env files which cannot be downloaded directly from the repo for security. Afterwards,
+Ask the author of this repository for .env files which cannot be downloaded directly from the repo due to security reasons. Afterwards,
 
 Open main folder in 2 terminals
 
@@ -35,11 +35,19 @@ Terminal 2:
 
 4. Admin Panel
 
-5. Zoom Integration
+5. Make video calls using Zoom
 
 6. Control Panel
 
 7. Calendar
+
+8. Upload and take quizzes
+
+10. Collaborative Coding
+
+11. Certificate Generation
+
+12. Chat and forums using Discord 
 
 # Github Commands
 git pull origin main

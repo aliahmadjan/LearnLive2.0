@@ -1,4 +1,4 @@
-import { Grid, Box,Button, Input, Text, Heading, Flex, FormControl, FormLabel} from "@chakra-ui/react";
+import { Textarea, SimpleGrid, Card , Box,Button, Input, Text, Heading, Flex, FormControl, FormLabel} from "@chakra-ui/react";
 import React,{ useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams} from "react-router-dom";
@@ -18,7 +18,32 @@ import {
 } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/react'
 
+function getIconByFileType(fileType) {
+  switch (fileType.toLowerCase()) {
+    case 'pdf':
+      return <i class="fa-solid fa-file-pdf fa-4x"></i>;
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+    case 'gif':
+      return <i class="fa-solid fa-image fa-4x"></i>;
+    case 'doc':
+    case 'docx':
+      return <i class="fa-solid fa-file-doc fa-4x"></i>;
+    case 'xls':
+    case 'xlsx':
+      return <i class="fa-solid fa-file-spreadsheet fa-4x"></i>;
+    default:
+      return <i class="fa-solid fa-square-question fa-4x"></i>;
+  }
+}
 
+function getFileName(fileUrl) {
+  const url = new URL(fileUrl);
+  const path = url.pathname;
+  const fileName = path.split('/').pop();
+  return fileName;
+}
 
 
 const StudentSingleViewAssignment=()=>
@@ -207,108 +232,176 @@ useEffect(()=>
       navigate("/student/assignments");
     }
 
-    const formatUploadDate = (uploadeddate) =>
-    {
-      const options = {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      };
-      const date = new Date(uploadeddate);
-      return date.toLocaleString("en-US", options);
-
-    }
-
-    const formatDueDate = (duedate) =>
-    {
-      const options = {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-      };
-      const date = new Date(duedate);
-      return date.toLocaleString("en-US", options);
-
-
-    }
-    const formattedUploadDate = formatUploadDate(uploadeddate)
-    const formattedDueDate = formatDueDate(duedate)
-
-
   return (
 
-        <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-        <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-        <Box pt={4} pb={2} mt={4} >
-            <Heading mb={2} >
-              Assignment Details
-            </Heading>
-          </Box> 
-       
-        <Flex maxW='2xl' mx="auto" justifyContent={'center'} gap={4} p={1} > 
-                  <Text>
-                    Camp: <Text color={'orange.800'} display={'inline'}> {campname} </Text> 
-                  </Text> 
-                  <Text>
-                    Marks : <Text color={'orange.800'} display={'inline'}> {tmarks} </Text> 
-                  </Text>
-                  <Text>
-                    Uploaded Date : <Text color={'orange.800'} display={'inline'}> {formattedUploadDate} </Text> 
-                  </Text>
-                  <Text>
-                    Due Date : <Text color={'orange.800'} display={'inline'}> {formattedDueDate} </Text> 
-                  </Text>
-                  
-          </Flex> 
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
 
-           <Flex maxW='2xl' mx="auto" justifyContent={'center'} pb={2} > 
-                  <Text>
-                    Description: <Text color={'orange.800'} display={'inline'}> {description} </Text> 
-                  </Text> 
-          </Flex> 
-   <Flex wrap="wrap" 
-                overflowY="scroll"
-                width='80%'
-                mx='auto' 
-                height="sm" 
-                border='1px solid orange'
-                borderRadius='10px'
-                gap={4} 
+      <Box>
+        <Heading mb={4} >
+          Assignment Details
+        </Heading>
+      </Box>
+
+      <Flex mx="auto" justifyContent={'space-around'} gap={2} p={2} >
+
+        <Text>
+          Title: <Text color={'orange.800'} display={'inline'}> {title} </Text> 
+        </Text>
+        <Text>
+          Camp: <Text color={'orange.800'} display={'inline'}> {campname} </Text> 
+        </Text>
+        <Text>
+          Marks: <Text color={'orange.800'} display={'inline'}> {tmarks} </Text> 
+        </Text>
+        <Text>
+          Upload Date: <Text color={'orange.800'} display={'inline'}> {uploadeddate} </Text> 
+        </Text>
+        <Text>
+          Due Date: <Text color={'orange.800'} display={'inline'}> {duedate} </Text> 
+        </Text>
+
+      </Flex>
+
+      <Flex p={4} justifyContent='space-around' alignItems={'center'}>
+
+        <Box width={'40%'} textAlign='center'>
+          
+          <Heading mb={2} size='sm' >
+            Description
+          </Heading>
+
+          <Textarea
+            boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.1)"
+            textAlign={'center'}                   
+            id="description"
+            name="description"
+            focusBorderColor='#F57C00'
+            backgroundColor={'#FFFFFF'}
+            resize={'none'}
+            value={description}
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '8px',
+                borderRadius: '2px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `#F57C00`,
+                borderRadius: '2px',
+              },
+            }}
+            /> 
+
+          <Heading pt={4} pb={2} size='sm' >
+            Files
+          </Heading>
+
+          <SimpleGrid
+            alignItems={'center'}
+            p={2} 
+            overflowY='auto' 
+            maxHeight={'13vh'} 
+            m='auto' 
+            minChildWidth='160px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '8px',
+                borderRadius: '2px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '2px',
+              },
+            }}>
+              
+            {uplassign.map((assign, index) => {
+              const fileType = assign.split('.').pop();
+              const fileName = getFileName(assign);
+
+              return (
+                <a href={assign} target='_blank' rel='noopener noreferrer'>
+                  <Card direction='row' textAlign={'center'} p={1}>
+
+                    <Box>
+                      {getIconByFileType(fileType)}
+                    </Box>
+                    
+                    <Text
+                      textAlign={'center'}
+                      m='auto' 
+                      sx={{
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 2,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'normal',
+                      }}>
+                        {fileName}
+                    </Text>
+                    
+              
+                  </Card>
+                </a>
+              );
+            })}
+
+          </SimpleGrid>
+
+        </Box>
+
+        <Box width={'50%'} textAlign='center'>
+          <Heading mb={2} size='sm' >
+            Files Preview
+          </Heading>
+        
+          <Flex wrap="wrap" 
+                maxHeight={'52vh'}
+                overflowY="auto"
+                borderRadius='15px'
+                gap={2} 
                 justifyContent={'space-around'} 
-                p={4}
+                p={2}
                 sx={{
                   '&::-webkit-scrollbar': {
-                    width: '16px',
-                    borderRadius: '8px',
+                    width: '8px',
+                    borderRadius: '2px',
                     backgroundColor: 'white',
                   },
                   '&::-webkit-scrollbar-thumb': {
-                    backgroundColor: `orange.500`,
-                    borderRadius: '8px',
+                    backgroundColor: `#F57C00`,
+                    borderRadius: '2px',
                   },
                 }}>
+                {
+                uplassign.map((file, index) => {
+                  return (
+                    //iframe
+                    <iframe
+                      //filePath={file}
+                      src={file}
+                      style={{
+                        padding: "8px",
+                        backgroundColor: "#FFFFFF",
+                        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                        height: '48vh',
+                        width: "100%",
+                        class: "center",
+                        mx: 'auto',
+                        borderRadius: "8px",
+                      }}
+                      
+                    />
+                  );
+                })}
+              
+            </Flex>
+        </Box>
 
-                
-    {uplassign.map((assign,index) => (
-    
-                      <iframe
-                          src={uplassign[index]}
-                          style={{
-                            height: "90%",
-                            padding: '10px',
-                            width: "100%",
-                            border: '1px dashed orange',
-                            class: "center",
-                            mx: 'auto',
-                            borderRadius: "10px",
-                          }}
-                        /> 
+      </Flex>
 
-                  ))}  
-        </Flex> 
           <form>
 
             <FormControl display='flex' maxW='2xl' mx="auto"  alignItems='center' my={4}>
@@ -392,7 +485,6 @@ useEffect(()=>
 
     </Box>
 
-      </Box>
   );
 }
 

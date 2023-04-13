@@ -1,6 +1,6 @@
 import React from "react"
 import { useState, useEffect } from "react"
-import { Box,Grid,Button, Text,FormControl, FormLabel, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
+import { SimpleGrid, Card, CardHeader, Tooltip, Box, Avatar ,Button, Text, Input, Select, Textarea, Heading, Flex} from "@chakra-ui/react";
 import axios from "axios"
 import { useNavigate, useParams} from "react-router-dom";
 import {
@@ -58,66 +58,88 @@ import {
 
     return (
     
-      <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
-      <Box pt={4} pb={2} my={4}>
+    <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
+
+      <Box pt={4} pb={2}  >
         <Heading mb={4} >
           View Quizzes
         </Heading>
       </Box>
 
-      <Flex maxW='2xl' mx="auto" flexDirection={'column'}>
-        <Flex p={4} pt={0} gap={2}>
-          <Input placeholder="Quiz Name" variant={'outlined'} borderColor='orange'></Input>
-          <Button colorScheme={'orange'}>Search</Button>
-        </Flex>
-
-        <Flex border={'1px solid orange'} 
-              gap={2} 
-              justifyContent='space-around' 
-              height='50vh' borderRadius= '9px' 
-              p={4} flexWrap='wrap' 
-              overflowY='scroll'
-              sx={{
-                '&::-webkit-scrollbar': {
-                  width: '16px',
-                  borderRadius: '8px',
-                  backgroundColor: 'white',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  backgroundColor: `orange.500`,
-                  borderRadius: '8px',
-                },
-              }}>
-
-            {quizzes.map((quiz) => ( 
-
-            <Flex border={'1px solid orange'} width={'250px'} borderRadius={30} p={2} alignItems='center' justifyContent={'space-around'}>
-
-            <Box ml={0} >
-              {/* Jaan Implement this ( displays teacher Id instead of name)*/}
-              {/* <Text>
-              Teacher Name: {assignment.teacher}
-              </Text>  */}
-              <Text>
-              Camp: {quiz.campname}
-              </Text> 
-              <Text>
-              Name: {quiz.quizno}
-              </Text>
-            </Box>
-            
-            <Flex flexDir={'column'} justifyContent='center'>
-                <Button  onClick={()=>handleSubmitView(quiz._id)} colorScheme='orange' variant='ghost'>
-                  <i class="fa-solid fa-arrow-right-long"></i>
-                </Button>
-
-            </Flex>
+      <Box width={'80%'} mx="auto" >
         
-            
-            </Flex>  ))} 
-
+        <Flex p={4}>
+          <Input 
+            type="text"
+            placeholder="Quiz No"
+          //  onChange={handleSearch}
+            variant={'outlined'} borderColor='orange'
+          //  value={query}
+          >
+          </Input>
+          {/* <Button colorScheme={'orange'}>Search</Button> */}
         </Flex>
-      </Flex>
+
+        <SimpleGrid 
+            width={'90%'} 
+            overflowY='auto' 
+            maxHeight={'48vh'} 
+            mx='auto' 
+            minChildWidth='220px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '8px',
+                borderRadius: '2px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '2px',
+              },
+            }}>
+
+            {quizzes.map((quiz) => (
+              <Card m={2} justifyContent={'center'}>
+                <CardHeader>
+                  <Flex spacing='4' alignItems='center' justifyContent={'space-between'}>
+                    <Avatar name={quiz.campname} />
+
+                    <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                      
+                      <Box>
+                        <Heading size='sm'>Quiz No: {quiz.quizno}</Heading>
+                        <Text>Camp: {quiz.campname}</Text>
+                      </Box>
+                    </Flex>
+
+                    
+
+                    <Tooltip label="Attempt" hasArrow placement='right'>
+                      <Button size='sm' onClick={()=>handleSubmitView(quiz._id)} colorScheme='orange' variant='ghost'>
+                      <i class="fa-solid fa-arrow-right-long"></i>
+                      </Button>
+                    </Tooltip>
+
+
+                      {/* <Tooltip label="Edit" hasArrow placement='right'>
+                        <Button size='sm' onClick={()=>handleSubmitEdit(assignment._id)} colorScheme='orange' variant='ghost'>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        </Button>
+                      </Tooltip> */}
+
+
+                    
+
+                  </Flex>
+
+                </CardHeader>
+  
+              </Card>
+            ))}
+        </SimpleGrid>
+
+      </Box>
 
     </Box>
        

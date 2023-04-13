@@ -1,4 +1,4 @@
-import { Grid, Box,Flex,Heading,Button, Input, Text, List,FormControl, FormLabel, TableContainer, Table, TableCaption, Thead, Tr, Th, Td, Tbody } from "@chakra-ui/react";
+import { Box,Heading, TableContainer, Table, TableCaption, Thead, Tr, Th, Td, Tbody } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams} from "react-router-dom";
@@ -56,7 +56,7 @@ const ViewSingleTeacherLeaderboard = (props) =>
           <TableContainer
             px={4} 
             maxHeight='60vh'
-            overflowY='scroll'
+            overflowY='auto'
             sx={{
               '&::-webkit-scrollbar': {
                 width: '16px',

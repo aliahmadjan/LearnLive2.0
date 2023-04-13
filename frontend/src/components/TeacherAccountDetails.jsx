@@ -106,7 +106,7 @@ const TeacherAccountDetails = () => {
                    textAlign={'center'} 
                    focusBorderColor='#F57C00' 
                    variant={'flushed'} 
-                    borderBottomColor='#F57C00' 
+                   borderBottomColor='#F57C00' 
                    width={'60%'} 
                    mr={0} ml='auto' />
           </Flex>

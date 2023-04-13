@@ -24,6 +24,8 @@ import TeacherLeaderboard from '../components/TeacherLeaderboard'
 import ViewSingleTeacherLeaderboard from '../components/ViewSingleTeacherLeaderboard'
 import DiscussionForumSidebar from '../components/DiscussionForumSideBar'
 import { DiscussionChat}  from '../components/Discussion.tsx'
+import Home from '../components/CodeEditorPages/Home-Teacher'
+import EditorPage from '../components/CodeEditorPages/EditorPage'
 // import JoinMeet from '../components/ZoomComponents/mainZoom'
 
 const TeacherDashboard = () => {
@@ -56,8 +58,8 @@ const TeacherDashboard = () => {
             <TeacherSidebar navSize={navSize} changeNavSize={ (size) => changeNavSize(size) }></TeacherSidebar>
             <Flex 
                 w={ navSize=="small" ? "95%" : "85%"} 
-                mt={4} borderRadius={8}
-                
+                mt={4}
+                borderRadius={8}
                 backgroundImage={'linear-gradient(to bottom, #fddb92 0%, #d1fdff 100%);'}>
 
                 <Routes>
@@ -73,6 +75,8 @@ const TeacherDashboard = () => {
                     <Route path="editassignment" element={<TeacherEditAssignment/>}/>
                     <Route path="viewsubmittedassignment" element={<ViewSubmittedAssignments/>}/>
                     <Route path="viewssubmitassignment" element={<TeacherSingleViewSubmitAssignment/>}/>
+                    <Route path="code-editor-home" element={<Home/>}/>
+                    <Route path="editor/:roomId" element={<EditorPage/>}/>
                     <Route path="settings" element={<TeacherSettings />}/>
                     <Route path="calendar" element={<TeacherCalendar />} />
                     {/* <Route path="createclass" element={<JoinMeet payload={payload}/>}/> */}
@@ -80,7 +84,7 @@ const TeacherDashboard = () => {
                     <Route path="viewclass" element={<TeacherViewMeets/>}/>
                     <Route path="leaderboard" element={<TeacherLeaderboard setCampus={(value)=>setCampName(value)}/>}/>
                     <Route path="viewleaderboard" element ={<ViewSingleTeacherLeaderboard campName={campName}/>}/>
-                     <Route path="discussionforum" element={<DiscussionChat channelId='1089483253804703839'/>}/> 
+                    <Route path="discussionforum" element={<DiscussionChat channelId='1089483253804703839'/>}/> 
                     <Route path="oauth-callback" element={<CallBack/>}/>
                                      
                 </Routes>       
