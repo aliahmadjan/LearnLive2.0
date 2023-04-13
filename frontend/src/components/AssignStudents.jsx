@@ -49,26 +49,18 @@ const AssignStudents =() =>
     await axios.post(`http://localhost:5000/camp/addcampstudents/${localStorage.getItem('student_assignid')}`,{
       campname:selectedCampus,
        students:`${localStorage.getItem('student_assignid')}`
-    }).then((res)=>
-    {
-      setSubmitStatus(1);
-    }).catch((err)=>
-    {
-      setSubmitStatus(-1)
+    }).then((response) => {
+      if (response.status === 200) {
+        setSubmitStatus(response.data.message);
+      } else {
+        setSubmitStatus("Error");
+      }
     })
-
-    // axios.post(`http://localhost:5000/student/addcampname/${localStorage.getItem('student_assignid')}`,
-    // {
-    //   campname:selectedCampus,
-    // }).then ((res)=>
-    // {
-    //   setSubmitStatus(1);
-    //   //console.log(res.data)
-    // }).catch((err)=>
-    // {
-    //   setSubmitStatus(-1)
-    // })
-
+    .catch((error) => {
+      if (error.response && error.response.status === 500) {
+        setSubmitStatus("Error");
+      }
+    })
     }
 
      useEffect(() => {
@@ -77,21 +69,30 @@ const AssignStudents =() =>
     }, [])
 
     const StatusAlert = () => {
-      if (submitStatus === -1)
+      if (submitStatus === "Already Assigned")
         return (
-          <Alert status='error'>
+          <Alert status='warning'>
           <AlertIcon />
-         Student was not assigned!
+         Student was already assigned!
         </Alert>
         );
-      if (submitStatus === 1)
+      if (submitStatus === "Assigned")
         return (
           <Alert status='success'>
           <AlertIcon />
          Student was assigned!
         </Alert>
         );
+
+        if (submitStatus === "Error")
+        return (
+          <Alert status="error">
+            <AlertIcon />
+            Student was not added!
+          </Alert>
+        );
     };
+
 
     const Back = ()=>
     {

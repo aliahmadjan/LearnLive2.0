@@ -28,36 +28,45 @@ function AddCamp() {
         startdate: startdate,
         enddate: enddate,
 
-    }).then(res =>
-        {
-          setSubmitStatus(1);
-        }).catch (err =>
-            {
-              setSubmitStatus(-1)
-                console.log(err);
-            })
+    }).then((response) => {
+      if (response.status === 200) {
+        setSubmitStatus(response.data.message);
+      } else {
+        setSubmitStatus("Error");
+      }
+    })
+    .catch((error) => {
+      if (error.response && error.response.status === 422) {
+        setSubmitStatus("Error");
+      }
+    })
           };
 
-          const StatusAlert = () =>
-          {
-            if (submitStatus === -1)
-            return(
-              <Alert status='error'>
+          const StatusAlert = () => {
+            if (submitStatus === "Already Exists")
+              return (
+                <Alert status='warning'>
                 <AlertIcon />
-                  Camp Name has already been taken!
-                
+              Campname already exists!
               </Alert>
-            );
-            if (submitStatus === 1 )
-            return(
-              <Alert status='success'>
+              );
+            if (submitStatus === "Added")
+              return (
+                <Alert status='success'>
                 <AlertIcon />
-                  Camp has been added!
-               
+              Camp has been added!
               </Alert>
-            )
-          }
-
+              );
+      
+              if (submitStatus === "Error")
+              return (
+                <Alert status="error">
+                  <AlertIcon />
+                 Camp was not added!
+                </Alert>
+              );
+          };
+      
 
 
 

@@ -13,6 +13,7 @@ import {
 const ViewSingleTeacherLeaderboard = (props) => 
 {
     const [details , setDetails] = useState([])
+    const navigate = useNavigate();
     // console.log(props.campName)
     const getCampDetails = () => 
     {
@@ -34,6 +35,10 @@ const ViewSingleTeacherLeaderboard = (props) =>
       //console.log(props.campName) 
       getCampDetails();
     },[])
+
+    const handleBack = () =>{
+      navigate('/teacher/leaderboard')
+    }
         
     return (
 
@@ -109,7 +114,11 @@ const ViewSingleTeacherLeaderboard = (props) =>
           </TableContainer>
         </Box>
 
+        <Button colorScheme='orange' onClick={handleBack}>
+      Back
+    </Button>
       </Box>
+      
   
 );
 }

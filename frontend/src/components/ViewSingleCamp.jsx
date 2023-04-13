@@ -44,7 +44,7 @@ import {
     },[])
 
     
-    const Back = ()=>
+    const handleBack = ()=>
     {
       navigate("/admin/viewcamps");
     }
@@ -154,6 +154,9 @@ import {
 
         </Flex>
 
+          <Button onClick={handleBack} colorScheme='orange' variant='solid'>
+            Back
+          </Button>
       </Box>
        
     )

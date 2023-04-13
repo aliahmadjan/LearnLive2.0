@@ -74,15 +74,17 @@ const GetSingleQuizScore = (req,res,next)=>
 //   };
 
 const GetQuizResults = async (req, res, next) => {
-  const studentName = req.params.studentName;
+  //const studentName = req.params.studentName;
   const assignmentID = req.params.assignmentID;
 
-  const assignment = await AssingmentScore.findOne({ student_name: studentName, tchassignment_id: assignmentID });
-
+  let arr = []
+  const assignment = await AssingmentScore.find({ tchassignment_id: assignmentID });
+  
   if (!assignment) {
     res.status(404).send('Assignment not found for this student');
   } else {
-    res.send(assignment);
+    arr.push(...assignment)
+    res.send(arr);
   }
 };
 
@@ -110,7 +112,55 @@ const GetQuizResults = async (req, res, next) => {
             }
           })
     }
+
+// const UpdateAssignmentScore = async(req,res,next) =>
+// {
+//   const { assignment_score } = req.body;
+
+//   AssingmentScore.findOneAndUpdate(
+//     { $set: { assignment_score: assignment_score } },
+//     { new: true },
+//     (error, data) => {
+//       if (error) {
+//         console.log(error);
+//         res.status(500).json({ error: 'Unable to update the assignment score.' });
+//       } else if (!data) {
+//         res.status(404).json({ error: `Assignment score not found for student name: ${student_name}.` });
+//       } else {
+//         res.status(200).json({ message: 'Assignment score updated successfully.' });
+//       }
+//     }
+//   );
+// }
   
+// const UpdateAssignmentScore = async (req, res, next) => {
+//   const { assignment_score } = req.body;
+
+//   // Loop through each score and update the corresponding document in the database
+//   for (let i = 0; i < assignment_score.length; i++) {
+//     const { id, score } = assignment_score[i];
+//     try {
+//       const updatedScore = await AssingmentScore.findByIdAndUpdate(
+//         id,
+//         { score },
+//         { new: true }
+//       );
+//       if (!updatedScore) {
+//         return res
+//           .status(404)
+//           .json({ error: `Score not found for id: ${id}.` });
+//       }
+//     } catch (error) {
+//       console.log(error);
+//       return res
+//         .status(500)
+//         .json({ error: 'Unable to update the assignment score.' });
+//     }
+//   }
+
+//   // If all scores were updated successfully, return success message
+//   return res.status(200).json({ message: 'Assignment scores updated successfully.' });
+// };
 
   exports.GetQuizResults = GetQuizResults;
 exports.AddAssingmentScore = AddAssingmentScore;

@@ -26,11 +26,34 @@ import {
     const [userID , setUserID] = useState("")
     const [stdAssignmentID , setStdAssignmentID] = useState("");
     const [assignments , setAssignments] = useState([]);
+    const [assignmentMarks , setAssignmentMarks] = useState([])
+    const [results , setResults] = useState([])
+    const [query, setQuery] = useState("")
+    
+    
+
+    const [currentScore , setCurrentScore] = useState()
+    const [assignment_score , setAssignmentScore] = useState()
+
     const [questions , setQuestions] = useState([]);
     const [ teachers , setTeachers] =useState('')
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
     const navigate = useNavigate();
+
+    const [assignmentScores, setAssignmentScores] = useState([]);
+
+function handleScoreChange(index, newScore) {
+  setAssignmentMarks(prevScores => {
+    //console.log('Previous Assignment Marks', prevScores)
+    const newScores = [...prevScores];
+    newScores[index] = { ...newScores[index], assignment_score: newScore };
+    //console.log('New assignment marks:', newScores);
+     return newScores;
+   });
+ }
+
+
 
     const handleSubmitView = (ssubmitassignment_viewid) =>
     {
@@ -39,45 +62,85 @@ import {
             navigate("/teacher/viewssubmitassignment");
     }
 
-    const getCurentUser = () =>
-    {
-      let logintoken = localStorage.getItem("logintoken")
-      axios.defaults.headers.common["Authorization"] = `Bearer ${logintoken}`;
-      axios.get("http://localhost:5000/teacher/viewprofile")
-        .then(res=> {
-               // console.log(res.data)
-                setUserID(res.data._id);
-                localStorage.setItem('userID',res.data._id)
-                setTeachers(res.data.name);
-        }).catch (err=> {
-            console.log(err) })
-    }
-
-    
-    const getAllAssignments= () =>
-    {
-      //console.log(`${localStorage.getItem('assignment_viewid')}`)
-    axios.get(`http://localhost:5000/stdassignments/getsameass/${localStorage.getItem('assignment_viewid')}`)
-        .then(res=> {
-          //console.log(`${localStorage.getItem('assignment_viewid')}`)
-          // setStdAssignmentID(res.data._id)
-          //console.log(res.data)
-          setAssignments(res.data)
-          //console.log(quizzes)
-    }).catch (err=> {
-       console.log(err) })
-    
-    }
- 
+   const handleBack = () =>
+   {
+    navigate('/teacher/viewassignments')
+   }
 
     
    useEffect(()=>
    {   
-    getAllAssignments();
-    getCurentUser();
+    
+      axios.get(`http://localhost:5000/stdassignments/getsameass/${localStorage.getItem('assignment_viewid')}`)
+      .then(res=> {
+        
+        setAssignments(res.data)
+        setResults(res.data)
+       
+  }).catch (err=> {
+     console.log(err) })
 
-   },[assignments])
 
+     axios.get(`http://localhost:5000/assignmentscore/getassignmentresults/${localStorage.getItem("assignment_viewid")}`)      
+    .then((res)=>
+    {
+      
+      setAssignmentMarks(res.data)
+      setAssignmentScore(res.data.assignment_score)
+
+     
+    }).catch((err)=>
+    {
+
+    })
+
+   },[])
+
+   useEffect(()=>
+   {
+    console.log(assignment_score)
+   },[results])
+
+   const handleSearch = async (e) => {
+    const query = e.target.value;
+    setQuery(query);
+    if (query === '') {
+      // setTeachers(teachers)
+      setResults(assignments);
+    } else {
+      const filteredStudents = assignments.filter((assign) =>
+        assign.student_name.toLowerCase().includes(query.toLowerCase())
+      );
+      setResults(filteredStudents);
+    }
+  };
+
+
+    const EditGrade = () =>
+    { 
+      
+      console.log(assignmentMarks)
+    axios.post('http://localhost:5000/assignmentscore/updateassignscore',
+    {
+     
+      
+
+    
+    }).then((res)=>
+    {
+     
+       window.alert("EditSuccesFUll")
+      //setSubmitStatus(1)
+    }).catch((err)=>
+      {
+         window.alert("EditNOTSuccesFUll")
+        //setSubmitStatus(-1)
+      })
+    
+
+    }
+
+    
 
 
     return (
@@ -92,8 +155,16 @@ import {
 
       <Flex maxW='100%' mx="auto" flexDirection={'column'}>
         <Flex p={4} pt={0} width='80%' m='auto'>
-          <Input placeholder="Student's Name" variant={'outlined'} borderColor='orange'></Input>
-          <Button colorScheme={'orange'}>Search</Button>
+          <Input placeholder="Student's Name" 
+          
+          type="text"
+          value={query}
+          onChange={handleSearch}
+          variant={'outlined'} borderColor='orange'></Input>
+          
+          
+
+          
         </Flex>
 
         <Flex width={'100%'} justifyContent='space-around'>
@@ -130,21 +201,88 @@ import {
                   </Thead>
 
                   <Tbody>
-                    {assignments.map((assignment,index) => (
-                      <Tr key={index}>
-                        <Td><Avatar name={assignment.student_name} mx={4} /></Td>
-                        <Td>{assignment.student_name}</Td>
-                        <Td><Box width={'60px'}><Input variant={'filled'} mx={2} type='number'></Input>/100<Button mx={2}>Grade</Button></Box></Td>
-                        <Td>{assignment.submit_status}</Td>
-                        <Td>
-                          <Tooltip label="View" hasArrow placement='right'>
-                            <Button size='sm' onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
-                            <i class="fa-solid fa-eye"></i>
-                            </Button>
-                          </Tooltip>
-                        </Td>
-                      </Tr>
-                    ))}
+                  {results.map((assignment, index) => {
+  const currentScore = assignmentMarks.find(score => score.student_name === assignment.student_name);
+  const scoreValue = assignmentScores[index]?.assignment_score || currentScore?.assignment_score || '';
+  return (
+    <Tr key={index}>
+      <Td><Avatar name={assignment.student_name} mx={4} /></Td>
+      <Td>{assignment.student_name}</Td>
+      <Td>
+        <Box width={'60px'}>
+          <Input
+            variant={'filled'}
+            mx={2}
+            type='number'
+            value={scoreValue}
+            onChange={(e) => handleScoreChange(index, e.target.value)}
+          />
+          <Button mx={2}
+          onClick={EditGrade}
+          >Edit</Button>
+        </Box>
+      </Td>
+      <Td>{assignment.submit_status}</Td>
+      <Td>
+        <Tooltip label="View" hasArrow placement='right'>
+          <Button size='sm' onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
+            <i class="fa-solid fa-eye"></i>
+          </Button>
+        </Tooltip>
+      </Td>
+    </Tr>
+  
+       
+  );
+})}
+
+                      {/* {results.map((assignment,index) => {
+  
+  const currentScore = assignmentMarks.find(score => score.student_name === assignment.student_name);
+ 
+
+  return (
+    <Tr key={index}>
+      <Td><Avatar name={assignment.student_name} mx={4} /></Td>
+      <Td>{assignment.student_name}</Td>
+      <Td>
+        <Box width={'60px'}>
+          <Input variant={'filled'}
+         
+         onChange={(e) => {
+          const newScore = e.target.value;
+          setAssignmentScore(newScore);
+          setCurrentScore((prevScore) => ({
+            ...prevScore,
+            assignment_score: newScore,
+            
+          }));
+          console.log(newScore)
+        }}
+          mx={2} type='number'
+          
+          value={currentScore?.assignment_score || ''}
+          >
+
+
+          </Input>
+          <Button mx={2}
+          onClick={EditGrade}
+          >Grade</Button>
+        </Box>
+      </Td>
+      <Td>{assignment.submit_status}</Td>
+      <Td>
+        <Tooltip label="View" hasArrow placement='right'>
+          <Button size='sm' onClick={()=>handleSubmitView(assignment._id)} colorScheme='orange' variant='ghost'>
+            <i class="fa-solid fa-eye"></i>
+          </Button>
+        </Tooltip>
+      </Td>
+    </Tr>
+  );
+})} */}
+                    
                   </Tbody>
 
                 </Table>
@@ -153,6 +291,10 @@ import {
 
         </Flex>
       </Flex>
+
+      <Button colorScheme='orange' onClick={handleBack}>
+        Back
+      </Button>
 
 
     </Box>

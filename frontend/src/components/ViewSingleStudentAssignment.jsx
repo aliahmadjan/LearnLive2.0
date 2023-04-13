@@ -207,6 +207,37 @@ useEffect(()=>
       navigate("/student/assignments");
     }
 
+    const formatUploadDate = (uploadeddate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      };
+      const date = new Date(uploadeddate);
+      return date.toLocaleString("en-US", options);
+
+    }
+
+    const formatDueDate = (duedate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      };
+      const date = new Date(duedate);
+      return date.toLocaleString("en-US", options);
+
+
+    }
+    const formattedUploadDate = formatUploadDate(uploadeddate)
+    const formattedDueDate = formatDueDate(duedate)
+
+
   return (
 
         <Box pt={0} px={0} mx='auto' textAlign={'center'} width={'100%'} backgroundColor='gray.100' borderRadius={30}>
@@ -225,10 +256,10 @@ useEffect(()=>
                     Marks : <Text color={'orange.800'} display={'inline'}> {tmarks} </Text> 
                   </Text>
                   <Text>
-                    Uploaded Date : <Text color={'orange.800'} display={'inline'}> {uploadeddate} </Text> 
+                    Uploaded Date : <Text color={'orange.800'} display={'inline'}> {formattedUploadDate} </Text> 
                   </Text>
                   <Text>
-                    Due Date : <Text color={'orange.800'} display={'inline'}> {duedate} </Text> 
+                    Due Date : <Text color={'orange.800'} display={'inline'}> {formattedDueDate} </Text> 
                   </Text>
                   
           </Flex> 

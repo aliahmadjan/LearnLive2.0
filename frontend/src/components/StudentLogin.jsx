@@ -1,15 +1,24 @@
-import { Heading, Text, VStack, Flex, Container, SimpleGrid, GridItem, FormControl, FormLabel, Input, Button, Image, color } from '@chakra-ui/react'
+import { Heading, Text, VStack, Flex, Container, SimpleGrid, GridItem,InputGroup, InputRightElement, FormControl, FormLabel, Input, Button, Image, color } from '@chakra-ui/react'
 import React, {useContext,useEffect, useState} from 'react'
 import LogInNavBar from '../components/LogInNavBar'
 import useStore from '../store'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
 
 const StudentLogin = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
+const [showPassword , setShowPassword] = useState(false)
+const [submitStatus , setSubmitStatus] = useState()
+
 
      const navigate = useNavigate();
     // const handleSubmit1 = () =>
@@ -29,11 +38,32 @@ const StudentLogin = () => {
             localStorage.setItem("ltoken",res.data);
             navigate("/student");
         } catch (error) {
-            if (error.response) {
-                setMsg(error.response.data.msg);
-            }
-        }
+          if (error.response && error.response.status === 401) {
+              setSubmitStatus("Invalid Credentials");
+            } else {
+              // Handle other errors here
+              console.error(error);
+          }
+      }
     }
+
+    const StatusAlert = () => {
+        
+  
+      if (submitStatus === "Invalid Credentials")
+      return (
+        <Alert status="error" variant="solid" h="7vh" >
+          <AlertIcon />
+          <AlertTitle  mr={6} statusBar="red">
+      Invalid Credentials! 
+    </AlertTitle>
+        </Alert>
+      );
+  };
+    const toggleShowPassword = () =>
+        {
+          setShowPassword(!showPassword)
+        }
 
     
 
@@ -68,25 +98,34 @@ const StudentLogin = () => {
                     </GridItem>
 
                     <GridItem colSpan={2} minW={40}>
-                        <FormControl>
-                            <Input 
-                            id='password'
-                            name='password'
-                            label='password'
-                            placeholder='Password'
-                            onChange={e=>setPassword(e.target.value)}
-                            required
-                            type='password'
-                            variant={'filled'} />  
-                        </FormControl>
-                    </GridItem>
+  <FormControl mb={2}>
+    <InputGroup>
+      <Input
+        onChange={e => setPassword(e.target.value)}
+        id='password'
+        name='password'
+        label='Password'
+        variant='filled'
+        placeholder='Password'
+        type={showPassword ? 'text' : 'password'}
+        isRequired
+      />
+      <InputRightElement>
+        <Button onClick={toggleShowPassword} colorScheme='orange' variant='ghost'>
+          <i class='fa-sharp fa-solid fa-eye'></i>
+        </Button>
+      </InputRightElement>
+    </InputGroup>
+  </FormControl>
+</GridItem>
 
                     <GridItem colSpan={2}>
                         <Button variant='solid' width="100%" colorScheme='brand1' onClick={LoginStudent}>Log In</Button>
                     </GridItem>
 
                     <GridItem colSpan={2} textAlign="center">
-                        <Text fontSize={'xs'} color="black">Forgotten Password?</Text>
+                         <Text h="5vh" fontSize={'xs'} color="black">Forgotten Password?</Text> 
+                        <StatusAlert/>
                     </GridItem>
 
                 </SimpleGrid>

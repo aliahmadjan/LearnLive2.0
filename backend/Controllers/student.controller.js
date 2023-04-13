@@ -70,7 +70,7 @@ const VerifyLogin = async(req,res,next) =>
       }
       else
       {
-        res.status(401).json("Username or Password not found!")
+        res.status(401).json({message: "Invalid Credentials"})
       }
    }
    catch (err){

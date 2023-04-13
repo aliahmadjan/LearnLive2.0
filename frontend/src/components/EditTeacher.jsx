@@ -218,7 +218,7 @@ const EditTeacherDetails = (props) =>
             </RadioGroup>
 
           </FormControl>
-          <FormControl mb={2} display={'flex'} alignItems='center'>
+          {/* <FormControl mb={2} display={'flex'} alignItems='center'>
             <FormLabel fontWeight="bold" color="#F57C00" mr={2}>
             Camps:
             </FormLabel>
@@ -235,10 +235,10 @@ const EditTeacherDetails = (props) =>
                   
                   isRequired
             />
-          </FormControl>
+          </FormControl> */}
         </Box>
 
-        <Flex mb={2} mt={8} justifyContent={'center'} gap={4}>
+        <Flex mb={2} mt={4} justifyContent={'center'} gap={4}>
           <Button type='submit' colorScheme='orange' variant='solid' >
             Update Teacher
           </Button>

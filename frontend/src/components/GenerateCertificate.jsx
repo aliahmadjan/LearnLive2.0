@@ -19,6 +19,8 @@ const GenerateCertificate = () =>
     const [startdate , setStartDate] = useState([])
     const [camp_details , setCampDetails] = useState([])
     const [issued_date , setIssuedDate] = useState("")
+    const [submitStatus, setSubmitStatus] = useState(0);
+    const navigate = useNavigate();
 
     const getSingleUser = ()=>
     {
@@ -69,15 +71,46 @@ const GenerateCertificate = () =>
         }),
         issued_date : issued_date
     })
-        .then((res)=>
-        {       res.json()
-                console.log("Clicked")
-        }).catch((err)=>
-        {
-
-        })
+    .then((response) => {
+        if (response.status === 200) {
+          setSubmitStatus(response.data.message);
+        } else {
+          setSubmitStatus("Error");
+        }
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 500) {
+          setSubmitStatus("Error");
+        }
+      })
+    
 
     }
+
+    const StatusAlert = () => {
+        if (submitStatus === "Already Exists")
+          return (
+            <Alert status='warning'>
+            <AlertIcon />
+           Certificate for this student already exists!
+          </Alert>
+          );
+        if (submitStatus === "Added")
+          return (
+            <Alert status='success'>
+            <AlertIcon />
+           Certificate has been generated!
+          </Alert>
+          );
+  
+          if (submitStatus === "Error")
+          return (
+            <Alert status="error">
+              <AlertIcon />
+              Certificate was not generated!
+            </Alert>
+          );
+      };
 
     const formatStartDate = (startdate) =>
     {
@@ -107,7 +140,10 @@ const GenerateCertificate = () =>
 
     }
 
-
+    const handleBack = () =>
+    {
+        navigate('/admin/viewstudents')
+    }
 
     return(
         <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
@@ -174,7 +210,7 @@ const GenerateCertificate = () =>
                                     id='startdate' name='startdate' label='Start Date'
                                     value={formatStartDate(campData.startdate)}
                         
-                                    defaultValue={formatStartDate(campData.startdate) }
+                                    defaultValue={formatStartDate(campData.startdate)}
                                     isRequired />
 
                     <FormLabel fontWeight="bold" color="orange.500" mr={2}>
@@ -225,6 +261,15 @@ const GenerateCertificate = () =>
                 onClick ={GenerateCert}>
                     Generate Certificate
             </Button>
+
+            <Button 
+                colorScheme='orange' variant='solid'
+                onClick ={handleBack}
+                style ={{ 'marginLeft': '20px'}}
+                >
+                    Back
+            </Button>
+            <StatusAlert/>
 
         </Box>
     

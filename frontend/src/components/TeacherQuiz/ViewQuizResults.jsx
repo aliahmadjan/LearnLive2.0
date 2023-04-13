@@ -19,6 +19,9 @@ const ViewQuizResults=()=>
     const [quizscore , setQuizScore] = useState("")
     const [ totalquestions , setTotalQuestions] = useState("")
     const [ quizzesScore , setQuizzesScore ] = useState([])
+
+    const [results , setResults ] = useState([])
+    const [ query ,setQuery] = useState("") 
     const navigate = useNavigate();
 
     const getSingleUser = () =>
@@ -29,6 +32,7 @@ const ViewQuizResults=()=>
         .get(`http://localhost:5000/quizscore/getquizresults/${localStorage.getItem("quiz_viewid")}`)
         .then((res) => {
            setQuizzesScore(res.data)
+           setResults(res.data)
         //   setQuizID(res.data.quiz_id)
            //setStudentID(res.data.student_id)
         //   setCampname(res.data.campname)
@@ -41,6 +45,10 @@ const ViewQuizResults=()=>
           console.log(err);
         });
     }
+    const handleBack = () =>
+    {
+      navigate('/teacher/viewquizzes')
+    }
 
 
     useEffect(()=>
@@ -48,10 +56,28 @@ const ViewQuizResults=()=>
         getSingleUser();
     },[])
 
-    const Back = ()=>
+
+
+    const handleSearch = async(e) =>
     {
-      navigate("/teacher/viewquizzes");
+      const query = e.target.value;
+      setQuery(query);
+      if (query === '') {
+        setResults(quizzesScore);
+      } else {
+        const filteredQuizzesResults = quizzesScore.filter((quiz) =>
+          quiz.student_name.toLowerCase().includes(query.toLowerCase())
+        );
+        setResults(filteredQuizzesResults);
+      }
+          
     }
+ 
+ 
+    useEffect(()=>
+    {
+    
+    },[results])
 
   return (
 
@@ -70,13 +96,13 @@ const ViewQuizResults=()=>
         <Flex p={4}>
           <Input 
           type="text"
-          placeholder="Students's Name"
-          // onChange={handleSearch}
+          placeholder="Student's Name"
+          onChange={handleSearch}
           variant={'outlined'} borderColor='orange'
-          // value={query}
+          value={query}
           >
           </Input>
-          <Button colorScheme={'orange'}>Search</Button>
+          
         </Flex>
       </Box>
 
@@ -111,7 +137,7 @@ const ViewQuizResults=()=>
             </Thead>
 
             <Tbody>
-              {quizzesScore.map((score, index) => (
+              {results.map((score, index) => (
                 <Tr key={index}>
                   <Td>{score.student_name}</Td>
                   <Td>{score.quiz_score}/{score.total_questions}</Td>
@@ -123,6 +149,9 @@ const ViewQuizResults=()=>
         </TableContainer>
       </Box>
 
+      <Button colorScheme='orange' onClick={handleBack}>
+          Back
+        </Button>
    
   </Box>
 

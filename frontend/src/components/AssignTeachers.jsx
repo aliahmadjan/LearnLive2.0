@@ -64,20 +64,17 @@ const AssignTeachers =() =>
      teachers:`${localStorage.getItem('teacher_assignid')}`
   }).then((response) => {
     if (response.status === 200) {
-      if (response.data.nModified === 0) {
-        setSubmitStatus("Already Assigned");
-      } else {
-        setSubmitStatus("Assigned");
-      }
+      setSubmitStatus(response.data.message);
+    } else {
+      setSubmitStatus("Error");
     }
   })
   .catch((error) => {
     if (error.response && error.response.status === 400) {
-      setSubmitStatus("Already Assigned");
-    } else {
       setSubmitStatus("Error");
     }
-  });
+  })
+
 } 
 
      useEffect(() => {

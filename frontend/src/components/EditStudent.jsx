@@ -228,7 +228,7 @@ const EditStudentDetails = () =>
           </FormControl>
         </Box>
 
-        <Flex mb={2} mt={8} justifyContent={'center'} gap={4}>
+        <Flex mb={2} mt={4} justifyContent={'center'} gap={4}>
           <Button type='submit' colorScheme='orange' variant='solid' >
             Update Student
           </Button>
@@ -242,6 +242,7 @@ const EditStudentDetails = () =>
       </form>
       <StatusAlert/>
     </Box>
+   
   </Box>
 
 //           <div>

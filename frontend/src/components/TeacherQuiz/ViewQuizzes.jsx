@@ -51,8 +51,14 @@ import {
 
   }
 
+  const handleQuizSubmissions = (qsubmissions_viewid) =>
+  {
+    localStorage.removeItem('qsubmissions_viewid')
+    localStorage.setItem('qsubmissions_viewid' , qsubmissions_viewid)
+    navigate("/teacher/viewquizresults")
+  }
 
-
+   
 
     const getAllQuizzes = () =>
     {
@@ -110,6 +116,8 @@ import {
    {
    
    },[results])
+
+   
   
 
 
@@ -174,7 +182,12 @@ import {
                         <i class="fa-solid fa-eye"></i>
                         </Button>
                       </Tooltip>
-
+{/* 
+                      <Tooltip label="Results" hasArrow placement='right'>
+                        <Button size='sm' onClick={()=>handleQuizSubmissions(quiz._id)} colorScheme='orange' variant='ghost'>
+                        <i class="fa-solid fa-expand"></i>
+                        </Button>
+                      </Tooltip> */}
 
                       {/* <Tooltip label="Edit" hasArrow placement='right'>
                         <Button size='sm' onClick={()=>handleSubmitEdit(assignment._id)} colorScheme='orange' variant='ghost'>
@@ -235,6 +248,7 @@ import {
           </SimpleGrid>
       </Box>
 
+        
     </Box>
        
     )

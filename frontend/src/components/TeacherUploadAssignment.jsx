@@ -12,36 +12,7 @@ import {
   AlertDescription,
 } from '@chakra-ui/react'
 
-function getIconByFileType(fileType) {
-  switch (fileType.toLowerCase()) {
-    case 'pdf':
-      return <i class="fa-solid fa-file-pdf fa-4x"></i>;
-    case 'jpg':
-    case 'jpeg':
-    case 'png':
-    case 'gif':
-      return <i class="fa-solid fa-image fa-4x"></i>;
-    case 'doc':
-    case 'docx':
-      return <i class="fa-solid fa-file-doc fa-4x"></i>;
-    case 'xls':
-    case 'xlsx':
-      return <i class="fa-solid fa-file-spreadsheet fa-4x"></i>;
-    default:
-      return <i class="fa-solid fa-square-question fa-4x"></i>;
-  }
-}
 
-function getFileName(fileUrl) {
-  const url = new URL(fileUrl);
-  const path = url.pathname;
-  const fileName = path.split('/').pop();
-  return fileName;
-}
-
-//import DatePicker from "react-datepicker"
-//import 'react-datepicker/dist/react-datepicker.css';
-//import  DatePicker  from '@chakra-ui/react';
 
 function TeacherUploadAssignment() {
   const [submitStatus, setSubmitStatus] = useState(0);
@@ -64,13 +35,73 @@ function TeacherUploadAssignment() {
   const [selected , setSelected] = useState([])
   var imgURLsArray = []
 
+ 
   const onSelectFile = (e) => {
+    e.preventDefault();
     const selectedImages = [...e.target.files];
-    selectedImages.map(img=> imgURLsArray.push(URL.createObjectURL(img)))
-     setSelected(imgURLsArray)
-     setSelectedFiles(e.target.files)
-  
+    const filenames = selectedImages.map(img => img.name);
+    setSelectedFiles(selectedImages);
+    setSelected(filenames);
+    const imgURLsArray = [];
+    selectedImages.forEach((img) => {
+      //const file_name = getFileName(URL.createObjectURL(img))
+      //console.log(file_name)
+       const url = URL.createObjectURL(img);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+       // console.log(url)
+        imgURLsArray.push(url)
+        //const file_name = getFileName(im)
+        //console.log(imgURLsArray)
+        //imgURLsArray.push(e.target.result);
+        setSelected(imgURLsArray);
+      };
+      reader.readAsDataURL(img);
+    });
   };
+
+  function getFileName(index) {
+    try {
+      return selectedFiles[index].name;
+    } catch (err) {
+      return 'Unknown File';
+    }
+  }
+
+  function getFileExtension(index) {
+    try {
+      const fileName = selectedFiles[index].name;
+      return fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+    } catch (err) {
+    
+      return 'Unknown File';
+    }
+  }
+
+  function getIconByFileType(fileType) {
+    switch (fileType.toLowerCase()) {
+      case 'pdf':
+        return <i class="fa-solid fa-file-pdf fa-4x"></i>;
+      case 'jpg':
+      case 'jpeg':
+      case 'png':
+      case 'gif':
+        return <i class="fa-solid fa-image fa-4x"></i>;
+      case 'doc':
+      case 'docx':
+        return <i class="fa-solid fa-file-doc fa-4x"></i>;
+      case 'xls':
+      case 'xlsx':
+        return <i class="fa-solid fa-file-spreadsheet fa-4x"></i>;
+      case 'zip':
+        return <i class="fa-solid fa-file-zip"></i>
+      default:
+        return <i class="fa-solid fa-square-question fa-4x"></i>;
+    }
+  }  
+  
+
+  
   const getCurentUser = () =>
   {
     let logintoken = localStorage.getItem("logintoken")
@@ -162,13 +193,7 @@ function TeacherUploadAssignment() {
     getCurrentCampName(userID);
   })
 
-// const getFileExtension = (filename) => {
-//   return filename.split('.').pop();
-// }
-// const getFileName = (url) => {
-//   const parts = url.split('/');
-//   return parts[parts.length - 1];
-// }
+
 
 
   return (
@@ -308,8 +333,9 @@ function TeacherUploadAssignment() {
           </FormControl>
 
           <FormControl mb={2} display={'flex'} alignItems='center'>
-            <FormLabel htmlFor="pdf" fontWeight="bold" color="#F57C00" width='40%' >PDF</FormLabel>
-            <Input
+            <FormLabel htmlFor="pdf" fontWeight="bold" color="#F57C00" width='40%' >Files</FormLabel>
+ 
+             <Input
             id='pdf'
             type="file"
             mx='auto'
@@ -318,75 +344,64 @@ function TeacherUploadAssignment() {
             focusBorderColor='#F57C00' 
             variant={'flushed'} 
             borderBottomColor='#F57C00'
-            accept="application/pdf , image/png , .zip"
+            accept="application/pdf , image/png , .zip , application/msword
+            , application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             onChange={onSelectFile}
             name="uplassign"
             isRequired
             width={'40%'}
-            />
+            /> 
+            
+            
           </FormControl>
         
         </Box>
 
         <Box width={'50%'} textAlign='center' display={selectedFiles.length ? '' : 'none'}>
 
-          <Heading size='sm' >
-            Files
-          </Heading>
-
-          <SimpleGrid
-            p={2} 
-            overflowY='scroll' 
-            maxHeight={'12.5vh'} 
+        <SimpleGrid
+  p={2} 
+  overflowY='scroll' 
+  maxHeight={'12.5vh'} 
+  m='auto' 
+  minChildWidth='160px' 
+  spacingX='10px' spacingY='10px'
+  sx={{
+    '&::-webkit-scrollbar': {
+      width: '16px',
+      borderRadius: '8px',
+      backgroundColor: 'white',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: `orange.500`,
+      borderRadius: '8px',
+    },
+  }}>
+  {selected.map((file, index) => {
+    
+    return (
+      <a href={file} target='_blank' rel='noopener noreferrer'>
+        <Card direction='row' textAlign={'center'} p={1}>
+          <Box>{getIconByFileType(getFileExtension(index))}</Box> 
+          <Text
+            textAlign={'center'}
             m='auto' 
-            minChildWidth='160px' 
-            spacingX='10px' spacingY='10px'
             sx={{
-              '&::-webkit-scrollbar': {
-                width: '16px',
-                borderRadius: '8px',
-                backgroundColor: 'white',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                backgroundColor: `orange.500`,
-                borderRadius: '8px',
-              },
-            }}>
-              
-            {selected.map((file, index) => {
-              const fileType = file.split('.').pop();
-              const fileName = getFileName(file);
-
-              return (
-                <a href={file} target='_blank' rel='noopener noreferrer'>
-                  <Card direction='row' textAlign={'center'} p={1}>
-
-                    <Box>
-                      {getIconByFileType(fileType)}
-                    </Box>
-                    
-                    <Text
-                      textAlign={'center'}
-                      m='auto' 
-                      sx={{
-                        display: '-webkit-box',
-                        WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 2,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'normal',
-                      }}>
-                        {fileName}
-                    </Text>
-                    
-              
-                  </Card>
-                </a>
-              );
-            })}
-
-          </SimpleGrid>
-
+              display: '-webkit-box',
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: 2,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'normal',
+            }}
+          >
+            {getFileName(index)}
+          </Text>
+        </Card>
+      </a>
+    );
+  })}
+</SimpleGrid>
           <Heading size='sm' >
             Files Preview
           </Heading>
@@ -444,7 +459,7 @@ function TeacherUploadAssignment() {
       </form>
       <StatusAlert/>
     
-       <StatusAlert/>
+      
 
        {/* <form onSubmit={createChannel}>
         <label>Enter Message</label>

@@ -30,6 +30,7 @@ function getFileName(fileUrl) {
   return fileName;
 }
 
+
 const TeacherSingleViewAssignment=()=>
  {
     const [campname , setCampName] = useState("");
@@ -80,6 +81,36 @@ const TeacherSingleViewAssignment=()=>
       navigate("/teacher/viewassignments");
     }
 
+    const formatUploadDate = (uploadeddate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      };
+      const date = new Date(uploadeddate);
+      return date.toLocaleString("en-US", options);
+
+    }
+
+    const formatDueDate = (duedate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      };
+      const date = new Date(duedate);
+      return date.toLocaleString("en-US", options);
+
+
+    }
+    const formattedUploadDate = formatUploadDate(uploadeddate)
+    const formattedDueDate = formatDueDate(duedate)
+
   return (
 
     <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
@@ -102,10 +133,10 @@ const TeacherSingleViewAssignment=()=>
           Marks: <Text color={'orange.800'} display={'inline'}> {tmarks} </Text> 
         </Text>
         <Text>
-          Upload Date: <Text color={'orange.800'} display={'inline'}> {uploadeddate} </Text> 
+          Upload Date: <Text color={'orange.800'} display={'inline'}> {formattedUploadDate} </Text> 
         </Text>
         <Text>
-          Due Date: <Text color={'orange.800'} display={'inline'}> {duedate} </Text> 
+          Due Date: <Text color={'orange.800'} display={'inline'}> {formattedDueDate} </Text> 
         </Text>
  
       </Flex>

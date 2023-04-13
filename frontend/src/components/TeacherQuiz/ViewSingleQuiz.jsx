@@ -62,6 +62,21 @@ import {
       navigate("/teacher/viewquizzes");
     }
 
+    const formatUploadDate = (uploadeddate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      };
+      const date = new Date(uploadeddate);
+      return date.toLocaleString("en-US", options);
+
+    }
+
+    
+    const formattedUploadDate = formatUploadDate(uploadeddate)
+
     return (
 
     <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
@@ -80,7 +95,7 @@ import {
               Camp: <Text color={'#F57C00'} display={'inline'}> {campname} </Text> 
               </Text> 
               <Text>
-              Uploaded Date : <Text color={'#F57C00'} display={'inline'}> {uploadeddate} </Text> 
+              Uploaded Date : <Text color={'#F57C00'} display={'inline'}> {formattedUploadDate} </Text> 
               </Text>
               <Text>
               Questions : <Text color={'#F57C00'} display={'inline'}> {nofquestions} </Text> 

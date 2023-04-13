@@ -56,6 +56,13 @@ import {
 
   }
 
+  const handleViewSubmissions = (submissions_viewid) =>
+  {
+    localStorage.removeItem('submissions_viewid')
+    localStorage.setItem('submissions_viewid' , submissions_viewid)
+    navigate("/teacher/viewsubmittedassignment")
+  }
+
  
     
     const getAllAssignments= () =>
@@ -182,6 +189,11 @@ import {
                         </Button>
                       </Tooltip>
 
+                       {/* <Tooltip label="Submissions" hasArrow placement='right'>
+                        <Button size='sm' onClick={()=>handleViewSubmissions(assignment._id)} colorScheme='orange' variant='ghost'>
+                        <i class="fa-solid fa-expand"></i>
+                        </Button>
+                      </Tooltip>  */}
 
                       <Tooltip label="Edit" hasArrow placement='right'>
                         <Button size='sm' onClick={()=>handleSubmitEdit(assignment._id)} colorScheme='orange' variant='ghost'>

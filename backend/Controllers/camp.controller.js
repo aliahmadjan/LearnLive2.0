@@ -12,10 +12,11 @@ const VerifyAndAddCampTeachers =  async(req,res,next) =>
   const { campname, teachers, students } = req.body;
   const teacherID = req.params.id;
   try {
-    const student = await Teacher.findOne({ _id: teacherID, campname: campname });
-    if (student) {
-      // The student is already added to the camp.
-      res.status(200).json(student);
+    const teacher = await Teacher.findOne({ _id: teacherID, campname: campname });
+    if (teacher) {
+      // The teacher is already added to the camp.
+     // res.status(200).json(student);
+      res.status(200).json({ message: "Already Assigned" });
     } else {
       // The student is not added to the camp, so add them along with the teacher.
       const result = await Camp.updateOne(
@@ -27,11 +28,12 @@ const VerifyAndAddCampTeachers =  async(req,res,next) =>
         { _id: teacherID },
         { $push: { campname: campname } }
       );
-      res.status(200).json(result);
+      res.status(200).json({ message: "Assigned" });
+      //res.status(200).json(result);
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json("Internal server error");
+    res.status(500).json({message: "Error"});
   }
     
 }
@@ -42,7 +44,7 @@ const VerifyAndAddCampStudents = async (req, res, next) => {
     const student = await Student.findOne({ _id: studentID, campname: campname });
     if (student) {
       // The student is already added to the camp.
-      res.status(200).json(student);
+      res.status(200).json({message: "Already Assigned"});
     } else {
       // The student is not added to the camp, so add them along with the teacher.
       const result = await Camp.updateOne(
@@ -54,11 +56,11 @@ const VerifyAndAddCampStudents = async (req, res, next) => {
         { _id: studentID },
         { $push: { campname: campname } }
       );
-      res.status(200).json(result);
+      res.status(200).json({message: "Assigned"});
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json("Internal server error");
+    res.status(500).json("Error");
   }
 };
 
@@ -71,7 +73,7 @@ const AddCamp = async (req, res, next) => {
     const camp = await Camp.findOne({ campname});
     if (camp) {
       // Camp already exists
-      res.status(200).json(camp);
+      res.status(200).json({message: "Already Exists"});
     } else {
       // The camp does not exist, so add a new camp.
       const newCamp = new Camp({
@@ -81,11 +83,11 @@ const AddCamp = async (req, res, next) => {
       });
 
       await newCamp.save();
-      res.status(201).send(newCamp);
+      res.status(200).send({message: "Added"});
     }
   } catch (err) {
-    console.log(err);
-    return res.status(422).send({ error: err.message });
+    //console.log(err);
+    return res.status(422).send({ message: "Error" });
   }
 };
 

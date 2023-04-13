@@ -12,7 +12,8 @@ const GenerateCertificate = async (req,res,next) => {
     // Check if a certificate already exists for the given student, camp and dates
     const existingCertificate = await Certificate.findOne({ student_id });
     if (existingCertificate) {
-      return res.status(400).send({ error: 'A certificate already exists for this student, camp and dates.' });
+
+      return res.status(200).send({message: 'Already Exists' });
     }
 
     const certificate = new Certificate({
@@ -27,10 +28,10 @@ const GenerateCertificate = async (req,res,next) => {
     await certificate.save();
     console.log('Certificate added successfully!');
     // Return the newly generated certificate
-    return res.status(200).send({ message: 'Certificate generated successfully', certificate });
+    return res.status(200).send({ message: 'Added', certificate });
   } catch (err) {
     console.error('Error while adding certificate:', err.message);
-    return res.status(500).send({ error: 'Error while generating certificate.' });
+    return res.status(500).send({ error: 'Error' });
   }
 };
 

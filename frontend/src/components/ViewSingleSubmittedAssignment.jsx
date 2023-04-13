@@ -65,6 +65,7 @@ const TeacherSingleViewSubmitAssignment=()=>
           setStudentName(res.data.student_name);
           setDescription(res.data.description);
           setTMarks(res.data.tmarks);
+          
           setDate(res.data.duedate);
           setUplAssign(res.data.uplassign);
           
@@ -163,6 +164,21 @@ const TeacherSingleViewSubmitAssignment=()=>
       navigate("/teacher/viewsubmittedassignment");
     }
 
+    const formatUploadDate = (duedate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      };
+      const date = new Date(duedate);
+      return date.toLocaleString("en-US", options);
+
+    }
+
+    
+    const formattedUploadDate = formatUploadDate(duedate)
+    
   return (
 
     <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
@@ -185,11 +201,9 @@ const TeacherSingleViewSubmitAssignment=()=>
           Marks: <Text color={'orange.800'} display={'inline'}> {tmarks} </Text> 
         </Text>
         <Text>
-          Upload Date: <Text color={'orange.800'} display={'inline'}> Fix this </Text> 
+          Submitted Date: <Text color={'orange.800'} display={'inline'}> {formattedUploadDate} </Text> 
         </Text>
-        <Text>
-          Due Date: <Text color={'orange.800'} display={'inline'}> {duedate} </Text> 
-        </Text>
+        
  
       </Flex>
 

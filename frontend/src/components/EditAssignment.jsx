@@ -11,6 +11,7 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@chakra-ui/react'
+import { useNavigate } from "react-router-dom";
 
 function getIconByFileType(fileType) {
   switch (fileType.toLowerCase()) {
@@ -60,6 +61,8 @@ function TeacherEditAssignment ()
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [teacher , setTeacher] = useState("");
+
+  const navigate= useNavigate()
   
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [selected , setSelected] = useState([])
@@ -196,6 +199,13 @@ const fileInputRef = useRef(null);
       );
   };
 
+  const handleBack = () =>
+  {
+    navigate('/teacher/viewassignments')
+  }
+
+ 
+
   return (
 
     <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
@@ -326,7 +336,7 @@ const fileInputRef = useRef(null);
             id="dueDate"
             name='dueDate'
             label="Date"
-            type="date"
+            type="datetime-local"
             textAlign={'center'}
             focusBorderColor='orange.700' 
             variant={'flushed'} 
@@ -474,6 +484,12 @@ const fileInputRef = useRef(null);
       <Button type='submit' colorScheme='orange' variant='solid'>
             Edit
       </Button>
+
+      <Button onClick={handleBack} colorScheme='orange' variant='solid' style={{ marginLeft: '20px' }}
+      >
+            Back
+      </Button>
+
 
       </form>
 
