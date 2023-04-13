@@ -12,14 +12,11 @@ router.get('/getassignmentscore/:id',AssignmentsScoreController.GetSingleQuizSco
 
 router.get('/getassignmentresults/:assignmentID',AssignmentsScoreController.GetQuizResults);
 
-router.get('/getassignmentmarks/:studentName',AssignmentsScoreController.GetQuizResultsByName)
+router.get('/getassignmentmarks/:studentName',AssignmentsScoreController.GetQuizResultsByName);
 
-//router.put('/updateassignscore/:id',AssignmentsScoreController.UpdateAssignmentScore)
+router.post('/updateassignscore',AssignmentsScoreController.UpdateAssignmentScore)
 
-router.post("/updateassignscore", StudentToken, async (req, res) => {
-    const { new_assignscore, old_assignscore } = req.body;
-    console.log(new_assignscore);
-    console.log(old_assignscore);
+
     //if field is empty
     // if (!oldhobby || !newhobby) {
     //   return res.status(422).json({ error: "Please enter your Hobby" });
@@ -41,6 +38,6 @@ router.post("/updateassignscore", StudentToken, async (req, res) => {
     // //savedUser.hobbies.push(hobby);
     // await savedUser.save();
     // res.send(savedUser);
-  });
+
 
 module.exports = router;

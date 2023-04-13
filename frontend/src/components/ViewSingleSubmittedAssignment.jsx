@@ -44,7 +44,7 @@ const TeacherSingleViewSubmitAssignment=()=>
     const [title , setTitle] = useState("");
     const [description , setDescription]= useState("");
     const [tmarks , setTMarks] = useState("");
-    const [duedate , setDate] = useState("");
+    const [submitted_date , setDate] = useState("");
     const[uplassign, setUplAssign] = useState([]);
     const [assignment_score , setAssignmentScore] = useState()
     const [assignments, setAssignments] = useState([]);
@@ -66,7 +66,7 @@ const TeacherSingleViewSubmitAssignment=()=>
           setDescription(res.data.description);
           setTMarks(res.data.tmarks);
           
-          setDate(res.data.duedate);
+          setDate(res.data.submitted_date);
           setUplAssign(res.data.uplassign);
           
 
@@ -164,20 +164,20 @@ const TeacherSingleViewSubmitAssignment=()=>
       navigate("/teacher/viewsubmittedassignment");
     }
 
-    const formatUploadDate = (duedate) =>
+    const formatSubmitDate = (submitted_date) =>
     {
       const options = {
         day: "numeric",
         month: "long",
         year: "numeric",
       };
-      const date = new Date(duedate);
+      const date = new Date(submitted_date);
       return date.toLocaleString("en-US", options);
 
     }
 
     
-    const formattedUploadDate = formatUploadDate(duedate)
+    const formattedSubmitDate = formatSubmitDate(submitted_date)
     
   return (
 
@@ -201,7 +201,7 @@ const TeacherSingleViewSubmitAssignment=()=>
           Marks: <Text color={'orange.800'} display={'inline'}> {tmarks} </Text> 
         </Text>
         <Text>
-          Submitted Date: <Text color={'orange.800'} display={'inline'}> {formattedUploadDate} </Text> 
+          Submitted Date: <Text color={'orange.800'} display={'inline'}> {formattedSubmitDate} </Text> 
         </Text>
         
  

@@ -86,7 +86,7 @@ function handleScoreChange(index, newScore) {
     {
       
       setAssignmentMarks(res.data)
-      setAssignmentScore(res.data.assignment_score)
+      //setAssignmentScore(res.data.assignment_score)
 
      
     }).catch((err)=>
@@ -98,7 +98,7 @@ function handleScoreChange(index, newScore) {
 
    useEffect(()=>
    {
-    console.log(assignment_score)
+    //console.log(assignment_score)
    },[results])
 
    const handleSearch = async (e) => {
@@ -116,24 +116,25 @@ function handleScoreChange(index, newScore) {
   };
 
 
-    const EditGrade = () =>
+    const EditGrade = (newScore, assignmentID , studentID) =>
     { 
-      
-      console.log(assignmentMarks)
+      //console.log("H")
+      //console.log(e ,x ,s)
     axios.post('http://localhost:5000/assignmentscore/updateassignscore',
-    {
-     
-      
 
-    
+    {
+      assignment_score : newScore,
+      stdassignment_id : assignmentID,
+      student_id : studentID
+
     }).then((res)=>
     {
      
-       window.alert("EditSuccesFUll")
+       //window.alert("EditSuccesFUll")
       //setSubmitStatus(1)
     }).catch((err)=>
       {
-         window.alert("EditNOTSuccesFUll")
+         //window.alert("EditNOTSuccesFUll")
         //setSubmitStatus(-1)
       })
     
@@ -218,7 +219,7 @@ function handleScoreChange(index, newScore) {
             onChange={(e) => handleScoreChange(index, e.target.value)}
           />
           <Button mx={2}
-          onClick={EditGrade}
+          onClick={() => EditGrade(scoreValue, assignment._id , assignment.student)}
           >Edit</Button>
         </Box>
       </Td>
@@ -240,7 +241,6 @@ function handleScoreChange(index, newScore) {
   
   const currentScore = assignmentMarks.find(score => score.student_name === assignment.student_name);
  
-
   return (
     <Tr key={index}>
       <Td><Avatar name={assignment.student_name} mx={4} /></Td>
@@ -263,8 +263,6 @@ function handleScoreChange(index, newScore) {
           
           value={currentScore?.assignment_score || ''}
           >
-
-
           </Input>
           <Button mx={2}
           onClick={EditGrade}

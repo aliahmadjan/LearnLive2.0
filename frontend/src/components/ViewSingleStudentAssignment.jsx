@@ -48,7 +48,7 @@ function getFileName(fileUrl) {
 
 const StudentSingleViewAssignment=()=>
  {
-  const [ submitStatus , setSubmitStatus] = useState(0);
+  const [ submitStatus , setSubmitStatus] = useState("");
   const [campname , setCampName] = useState("");
   const [title , setTitle] = useState("");
   const [studentID , setStudentID] = useState("");
@@ -161,12 +161,11 @@ const SubmitAssignment = (event) =>
           body: formData,
          
         })
-    
-        .then((res) => 
-          setSubmitStatus(1),
-          setSubmitted(true),
-        )
-        .catch((err) => setSubmitStatus(-1));
+        .then(response => response.json())
+.then(data => setSubmitStatus(data.message))
+.catch(error => setSubmitStatus("Error"));
+        
+       
     }
 
    else
@@ -189,34 +188,42 @@ const SubmitAssignment = (event) =>
           method: 'POST',
           body: formData,
    })
-   .then((res) => 
-   setSubmitStatus(1),
-   setSubmitted(true),
- )
- .catch((err) => setSubmitStatus(-1));
+   .then(response => response.json())
+.then(data => setSubmitStatus(data.message))
+.catch(error => setSubmitStatus("Error"));
+   
    }
     
   
   
 }
 
-const StatusAlert = () =>
-  {
-    if ( submitStatus === -1)
+const StatusAlert = () => {
+  if (submitStatus === "Already Submitted")
     return (
-      <Alert status='error'>
+      <Alert status='warning'>
       <AlertIcon />
-     Assignment was not submitted!
+    Assignment has already been submitted!
     </Alert>
     );
-    if (submitStatus === 1)
-        return (
-          <Alert status='success'>
-          <AlertIcon />
-          Assignment was submitted!
-        </Alert>
-        );
-  };
+  if (submitStatus === "Submitted")
+    return (
+      <Alert status='success'>
+      <AlertIcon />
+     Assignment has been submitted!
+    </Alert>
+    );
+
+    if (submitStatus === "Error")
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        Assignment was not submitted!
+      </Alert>
+    );
+};
+
+
 
 useEffect(()=>
 {
@@ -226,6 +233,34 @@ useEffect(()=>
   getTeacherAssignments();
 },[uplassign])
 
+const formatUploadDate = (uploadeddate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      };
+      const date = new Date(uploadeddate);
+      return date.toLocaleString("en-US", options);
+
+    }
+
+    const formatDueDate = (duedate) =>
+    {
+      const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      };
+      const date = new Date(duedate);
+      return date.toLocaleString("en-US", options);
+
+    }
+    const formattedUploadDate = formatUploadDate(uploadeddate)
+    const formattedDueDate = formatDueDate(duedate)
 
     const Back = ()=>
     {
@@ -254,10 +289,10 @@ useEffect(()=>
           Marks: <Text color={'orange.800'} display={'inline'}> {tmarks} </Text> 
         </Text>
         <Text>
-          Upload Date: <Text color={'orange.800'} display={'inline'}> {uploadeddate} </Text> 
+          Upload Date: <Text color={'orange.800'} display={'inline'}> {formattedUploadDate} </Text> 
         </Text>
         <Text>
-          Due Date: <Text color={'orange.800'} display={'inline'}> {duedate} </Text> 
+          Due Date: <Text color={'orange.800'} display={'inline'}> {formattedDueDate} </Text> 
         </Text>
 
       </Flex>
@@ -434,6 +469,7 @@ useEffect(()=>
             colorScheme='orange' variant='solid'>
                 Submit
             </Button>
+            
 
             
 
@@ -478,12 +514,14 @@ useEffect(()=>
   </AlertDialogOverlay>
 </AlertDialog>
 
-          
-          </form>
-          
-          <StatusAlert/>
 
+          </form>
+          <StatusAlert/>
+          
+          
+          
     </Box>
+    
 
   );
 }

@@ -24,9 +24,11 @@ const ViewCertificate = () =>
     const componentRef = useRef(null);
 
     const handleDownload = () => {
-
+           
             // hide the download button before generating the image
+            
             const downloadButton = document.getElementById("download-button");
+           
             downloadButton.style.display = "none";
         
             html2canvas(componentRef.current).then((canvas) => {
@@ -38,6 +40,7 @@ const ViewCertificate = () =>
               // show the download button again
               downloadButton.style.display = "block";
             });
+            
     };
 
     const getCertificateDetails = () =>
@@ -155,27 +158,22 @@ const ViewCertificate = () =>
       <Flex align="center" justify="space-between" mb={8}>
   
   <Flex direction="column" align="flex-start">
-  <Text fontSize="lg" >{formatIssuedDate(cert.issued_date)}</Text>
+  <Text fontSize="lg" marginTop="-100px">{formatIssuedDate(cert.issued_date)}</Text>
     <Text fontWeight="bold" fontSize="lg">Issued Date</Text>
   </Flex>
 
   <Flex align='center'>
-  <Button id="download-button" onClick={handleDownload} colorScheme="orange" style={{ display: "block", margin: "0 auto" }}>
+  <Button id="download-button" onClick={handleDownload} colorScheme="orange" style={{ display: "block", margin: "0 auto" , marginTop :"-100px" }}>
         Download Certificate
       </Button>
   </Flex>
   <Flex direction="column" align="flex-start">
-  <Image src="/AppLogo.png" alt="Supervisor Signature" width="20px" />
+  <Image src="/AppLogo.png" alt="Supervisor Signature" width="20px" marginTop="-100px"/>
     <Text fontWeight="bold" fontSize="lg">Signature</Text>
           {/* Download Button */}
       
         </Flex>
       </Flex>
-
-
-      
-
-    
 
     </Box>
   ))}

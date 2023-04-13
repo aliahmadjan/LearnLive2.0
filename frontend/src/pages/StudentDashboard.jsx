@@ -20,6 +20,7 @@ import Notifications from '../components/Notifications'
 import ViewSingleStudentLeaderboard from '../components/ViewSingleStudentLeaderboard'
 import Home from '../components/CodeEditorPages/Home-Student'
 import EditorPage from '../components/CodeEditorPages/EditorPage'
+import {DiscussionChat} from '../components/Discussion.tsx'
 
 const StudentDashboard = () => {
     
@@ -58,6 +59,7 @@ const StudentDashboard = () => {
                     <Route path="notifications" element={<Notifications/>} /> 
                     <Route path="code-editor-home" element={<Home/>}/>
                     <Route path="editor/:roomId" element={<EditorPage/>}/>
+                    <Route path="discussionforum" element={<DiscussionChat channelId='1089483253804703839'/>}/> 
                     <Route path="settings" element={<StudentSettings />} />
 
                 </Routes> 
