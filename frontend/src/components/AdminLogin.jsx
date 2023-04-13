@@ -126,7 +126,6 @@ const [submitStatus , setSubmitStatus] = useState()
                     </GridItem>
 
                     <GridItem colSpan={2} textAlign="center">
-                         <Text h="5vh" fontSize={'xs'} color="black">Forgotten Password?</Text> 
                         <StatusAlert/>
                     </GridItem>
 

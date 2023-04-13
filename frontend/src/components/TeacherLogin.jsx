@@ -126,10 +126,10 @@ const TeacherLogin = () => {
                     <GridItem colSpan={2}>
                         <Button variant='solid' width="100%" colorScheme='brand1' onClick={LoginTeacher}>Log In</Button>
                     </GridItem>
+                    
 
                     <GridItem colSpan={2} textAlign="center">
-                         <Text h="5vh" fontSize={'xs'} color="black">Forgotten Password?</Text> 
-                        <StatusAlert/>
+                         <StatusAlert/>
                     </GridItem>
 
 
