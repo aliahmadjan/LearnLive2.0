@@ -160,7 +160,7 @@ import { useDisclosure } from '@chakra-ui/react'
               },
             }}>
 
-            {results.map((student) => (
+            {results.sort((a, b) => a.name.localeCompare(b.name)).map((student) => (
               <Card maxWidth={'100%'} maxHeight='160px' m={2}>
                 <CardHeader>
                   <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>

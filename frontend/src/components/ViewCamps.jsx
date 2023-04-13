@@ -149,7 +149,7 @@ import {
               },
             }}>
 
-            {results.map((camp) => (
+            {results.sort((a, b) => a.campname.localeCompare(b.campname)).map((camp) => (
 
               <Card maxWidth={'100%'} maxHeight='160px' m={2}>
                 <CardHeader>

@@ -240,6 +240,7 @@ const Notifications = () => {
         <Box
           key={notification._id}
           bg={notificationColor}
+          
           py={2}
           px={4}
           borderRadius={4}
@@ -272,7 +273,7 @@ const Notifications = () => {
   return (
     <>
       
-  <Box p={4} bg="white" boxShadow="lg">
+  <Box p={4} bg="white" boxShadow="lg" height="100%">
     <Heading size="md" mb={2}>
       Notifications
     </Heading>

@@ -6,25 +6,42 @@ import axios from "axios"
 export default function StudentViewMeets() {
     const [zoommeets , setZoomMeets] = useState([]);
     const [userID , setUserID] = useState("")
-    const [ students , setStudents] =useState('')
+    const [ students , setStudents] =useState('');
+    const [results , setResults] = useState([]);
+    const [ query , setQuery] = useState("")
 
-    const getAllMeets= () =>
-    {
-    axios.get('http://localhost:5000/zoomMeet/getcurrcampclasses')
-        .then(res=> {
-           setZoomMeets(res.data)
-    }).catch (err=> {
-       console.log(err) })
-    
-    }
+   
  
-
+    
     
    useEffect(()=>
    {   
-    getAllMeets();
-   },[zoommeets])
-    
+    axios.get('http://localhost:5000/zoomMeet/getcurrcampclasses')
+        .then(res=> {
+           setZoomMeets(res.data)
+           setResults(res.data)
+    }).catch (err=> {
+       console.log(err) })
+   },[])
+
+   const handleSearch = async(e) =>
+   {
+    const query = e.target.value;
+    setQuery(query);
+    if (query === '') {
+      // setTeachers(teachers)
+      setResults(zoommeets);
+    } else {
+      const filteredMeets = zoommeets.filter((meet) =>
+        meet.agenda.toLowerCase().includes(query.toLowerCase())
+      );
+      setResults(filteredMeets);
+    }
+   }
+   useEffect(()=>
+   {
+
+   },[results])
   return (
 
     <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
@@ -40,10 +57,10 @@ export default function StudentViewMeets() {
         <Flex p={4}>
           <Input 
           type="text"
-          placeholder="Class's Title"
-          // onChange={handleSearch}
+          placeholder="Class's Agenda"
+           onChange={handleSearch}
           variant={'outlined'} borderColor='orange'
-          // value={query}
+           value={query}
           >
           </Input>
           {/* <Button colorScheme={'orange'}>Search</Button> */}
@@ -68,7 +85,7 @@ export default function StudentViewMeets() {
               },
             }}>
 
-            {zoommeets.map((meet) => (
+            {results.map((meet) => (
               <Card m={2} justifyContent={'center'}>
                 <CardHeader>
                   <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>

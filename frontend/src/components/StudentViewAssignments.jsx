@@ -80,27 +80,27 @@ import notificationSound from '../notification.mp3';
       getAllAssignments();
     }, []);
 
-    useEffect(() => {
-      if (latestAssignment.length > 0) {
-        latestAssignment.forEach((assignments) => {
-          toast.success(`New Assignment: ${assignments.title} for ${assignments.campname}
-          camp`, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            onRender: playNotification(),
-            onClick: () => {
-              setNotificationData(assignments);
-              onOpen();
-            },
-          });
-        });
-      }
-    }, [latestAssignment]);
+    // useEffect(() => {
+    //   if (latestAssignment.length > 0) {
+    //     latestAssignment.forEach((assignments) => {
+    //       toast.success(`New Assignment: ${assignments.title} for ${assignments.campname}
+    //       camp`, {
+    //         position: "top-right",
+    //         autoClose: 5000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //         onRender: playNotification(),
+    //         onClick: () => {
+    //           setNotificationData(assignments);
+    //           onOpen();
+    //         },
+    //       });
+    //     });
+    //   }
+    // }, [latestAssignment]);
     
     return (
     

@@ -33,12 +33,6 @@ function getIconByFileType(fileType) {
   }
 }
 
-function getFileName(fileUrl) {
-  const url = new URL(fileUrl);
-  const path = url.pathname;
-  const fileName = path.split('/').pop();
-  return fileName;
-}
 
 
 function TeacherEditAssignment () 
@@ -80,14 +74,47 @@ const fileInputRef = useRef(null);
   
   // };
   const onSelectFile = (e) => {
+    e.preventDefault();
     const selectedImages = [...e.target.files];
-    const imgURLsArray = selectedImages.map(img=> URL.createObjectURL(img))
-    setSelected(imgURLsArray)
-    setUplAssign(imgURLsArray) // <-- update the uplassign array
-    setSelectedFiles(e.target.files)
-
+    const filenames = selectedImages.map(img => img.name);
+    setSelectedFiles(selectedImages);
+    setSelected(filenames);
+    const imgURLsArray = [];
+    selectedImages.forEach((img) => {
+      //const file_name = getFileName(URL.createObjectURL(img))
+      //console.log(file_name)
+       const url = URL.createObjectURL(img);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+       // console.log(url)
+        imgURLsArray.push(url)
+        //const file_name = getFileName(im)
+        //console.log(imgURLsArray)
+        //imgURLsArray.push(e.target.result);
+        setSelected(imgURLsArray);
+      };
+      reader.readAsDataURL(img);
+    });
   };
-  
+
+  function getFileName(index) {
+    try {
+      return selectedFiles[index].name;
+    } catch (err) {
+      return 'Unknown File';
+    }
+  }
+
+  function getFileExtension(index) {
+    try {
+      const fileName = selectedFiles[index].name;
+      return fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+    } catch (err) {
+    
+      return 'Unknown File';
+    }
+  }
+
   
 
   const getCurentUser = () =>

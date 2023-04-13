@@ -30,6 +30,7 @@ import {
     const [results , setResults] = useState([])
     const [query, setQuery] = useState("")
     
+    const [submitStatus , setSubmitStatus] = useState()
     
 
     const [currentScore , setCurrentScore] = useState()
@@ -86,7 +87,7 @@ function handleScoreChange(index, newScore) {
     {
       
       setAssignmentMarks(res.data)
-      //setAssignmentScore(res.data.assignment_score)
+      setAssignmentScore(res.data.tmarks)
 
      
     }).catch((err)=>
@@ -120,6 +121,9 @@ function handleScoreChange(index, newScore) {
     { 
       //console.log("H")
       //console.log(e ,x ,s)
+      // if (newScore <= assignmentMarks.tmarks)
+      // {
+        console.log(assignment_score)
     axios.post('http://localhost:5000/assignmentscore/updateassignscore',
 
     {
@@ -137,9 +141,15 @@ function handleScoreChange(index, newScore) {
          //window.alert("EditNOTSuccesFUll")
         //setSubmitStatus(-1)
       })
-    
+      // }
+      // else
+      // {
+      //   console.log('hello')
+      // }
 
     }
+
+
 
     
 
@@ -218,6 +228,7 @@ function handleScoreChange(index, newScore) {
             value={scoreValue}
             onChange={(e) => handleScoreChange(index, e.target.value)}
           />
+         /{assignment.tmarks}
           <Button mx={2}
           onClick={() => EditGrade(scoreValue, assignment._id , assignment.student)}
           >Edit</Button>

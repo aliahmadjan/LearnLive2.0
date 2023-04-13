@@ -151,8 +151,9 @@ import { useDisclosure } from '@chakra-ui/react'
                 borderRadius: '8px',
               },
             }}>
+              
 
-            {results.map((teacher,i) => (
+            {results.sort((a, b) => a.name.localeCompare(b.name)).map((teacher,i) => (
               <Card maxWidth={'100%'} maxHeight='160px' m={2}>
               <CardHeader>
                 <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>

@@ -77,18 +77,18 @@ const TeacherSingleViewSubmitAssignment=()=>
         });
     }
 
-    const GetAssignmentScore = () =>
-    {
-      axios.get(`http://localhost:5000/assignmentscore/getassignmentscore/${localStorage.getItem('ssubmitassignment_viewid')}`)
-      .then((res) =>
-      {
-        console.log(res.data)
-        //setAssignmentScore(res.data.assignment_score)
-      }).catch((err)=>
-      {
-        //console.log(err)
-      })
-    }
+    // const GetAssignmentScore = () =>
+    // {
+    //   axios.get(`http://localhost:5000/assignmentscore/getassignmentscore/${localStorage.getItem('ssubmitassignment_viewid')}`)
+    //   .then((res) =>
+    //   {
+    //     console.log(res.data)
+    //     //setAssignmentScore(res.data.assignment_score)
+    //   }).catch((err)=>
+    //   {
+    //     //console.log(err)
+    //   })
+    // }
 
     const GradeAssignment = () =>
     {
