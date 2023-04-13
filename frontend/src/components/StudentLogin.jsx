@@ -85,9 +85,6 @@ const StudentLogin = () => {
                         <Button variant='solid' width="100%" colorScheme='brand1' onClick={LoginStudent}>Log In</Button>
                     </GridItem>
 
-                    <GridItem colSpan={2} textAlign="center">
-                        <Text fontSize={'xs'} color="black">Forgotten Password?</Text>
-                    </GridItem>
 
                 </SimpleGrid>
         </Flex>

@@ -106,10 +106,10 @@ const EditorPage = () => {
     }
     
 
-    function leaveRoom() {
-        let path = `localhost:3000/student/code-editor-home`; 
-        navigate(path);
-    }
+    // function leaveRoom() {
+    //     let path = `localhost:3000/student/code-editor-home`; 
+    //     navigate(path);
+    // }
 
     function runCode() {
         const encodedParams = new URLSearchParams();
@@ -227,9 +227,9 @@ const EditorPage = () => {
                             Copy Room ID
                         </Button>
                         
-                        <Button mt={4} type='submit' colorScheme='orange' variant='solid' onClick={leaveRoom}>
+                        {/* <Button mt={4} type='submit' colorScheme='orange' variant='solid' onClick={leaveRoom}>
                             Leave
-                        </Button>
+                        </Button> */}
                     </Box>
 
                 </Flex>

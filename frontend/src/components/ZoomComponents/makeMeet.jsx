@@ -80,6 +80,8 @@ export default function MakeMeet() {
             },
             data: data
         };
+        console.log("Zoom Main Res")
+        console.log(zoomMainRes)
     
         var zoomRes = axios(config)
             .then(function (response) {
@@ -93,6 +95,9 @@ export default function MakeMeet() {
               method: 'get',
               url: 'http://localhost:5000/zoomMeet/getData'
           };
+
+        console.log("Zoom Res")
+        console.log(zoomRes)
       
           var zoomRes1 = axios(config1)
               .then(function (response) {
@@ -113,6 +118,9 @@ export default function MakeMeet() {
               });
           //console.log(zoomRes1)
           //mydata = zoomRes1.data
+
+        console.log("Zoom Res 1")
+        console.log(zoomRes1)
   }
   const StatusAlert = () => {
     if (submitStatus === -1)
