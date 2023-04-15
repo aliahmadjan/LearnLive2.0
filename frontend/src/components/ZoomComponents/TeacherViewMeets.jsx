@@ -45,27 +45,27 @@ return(
           <Button colorScheme={'orange'}>Search</Button>
         </Flex> */}
 
-        <SimpleGrid 
+          <SimpleGrid 
             width={'90%'} 
             overflowY='auto' 
-            maxHeight={'44vh'} 
+            maxHeight={'58vh'} 
             mx='auto' 
-            minChildWidth='260px' 
+            minChildWidth='220px' 
             spacingX='10px' spacingY='10px'
             sx={{
               '&::-webkit-scrollbar': {
-                width: '16px',
-                borderRadius: '8px',
+                width: '8px',
+                borderRadius: '2px',
                 backgroundColor: 'white',
               },
               '&::-webkit-scrollbar-thumb': {
                 backgroundColor: `orange.500`,
-                borderRadius: '8px',
+                borderRadius: '2px',
               },
             }}>
 
             {zoommeets.map((meet) => (
-              <Card maxWidth={'100%'}  maxHeight='160px' m={2}>
+              <Card m={2} justifyContent={'center'}>
                 <CardHeader>
                   <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
                     <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>

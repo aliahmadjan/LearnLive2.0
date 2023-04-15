@@ -152,25 +152,25 @@ import {
 
         <SimpleGrid 
             width={'90%'} 
-            overflowY='scroll' 
-            maxHeight={'66vh'} 
+            overflowY='auto' 
+            maxHeight={'48vh'} 
             mx='auto' 
-            minChildWidth='260px' 
+            minChildWidth='220px' 
             spacingX='10px' spacingY='10px'
             sx={{
               '&::-webkit-scrollbar': {
-                width: '16px',
-                borderRadius: '8px',
+                width: '8px',
+                borderRadius: '2px',
                 backgroundColor: 'white',
               },
               '&::-webkit-scrollbar-thumb': {
                 backgroundColor: `orange.500`,
-                borderRadius: '8px',
+                borderRadius: '2px',
               },
             }}>
 
             {results.map((assignment) => (
-              <Card maxWidth={'100%'} maxHeight='160px' m={2}>
+              <Card m={2} justifyContent={'center'}>
                 <CardHeader>
                   <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
                     <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>

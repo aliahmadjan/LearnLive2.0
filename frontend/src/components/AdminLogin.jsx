@@ -36,7 +36,7 @@ const [submitStatus , setSubmitStatus] = useState()
             });
             localStorage.setItem("logtoken",res.data);
             //console.log("verified")
-            navigate("/admin");
+            navigate("/admin/account");
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 setSubmitStatus("Invalid Credentials");

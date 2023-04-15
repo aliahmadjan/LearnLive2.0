@@ -115,6 +115,25 @@ const fileInputRef = useRef(null);
     }
   }
 
+  function getFileName1(fileUrl) {
+    try {
+      const url = new URL(fileUrl);
+      return url.pathname.split('/').pop();
+    } catch (err) {
+      return 'Unknown File';
+    }
+  }
+  
+  function getFileExtension1(fileUrl) {
+    try {
+      const url = new URL(fileUrl);
+      const fileName = url.pathname.split('/').pop();
+      return fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+    } catch (err) {
+      return 'Unknown File';
+    }
+  }
+
   
 
   const getCurentUser = () =>
@@ -423,17 +442,14 @@ const fileInputRef = useRef(null);
                 borderRadius: '8px',
               },
             }}>
-              
-            {uplassign.map((file, index) => {
-              const fileType = file.split('.').pop();
-              const fileName = getFileName(file);
-
-              return (
-                <a href={file} target='_blank' rel='noopener noreferrer'>
+              {selected.length > 0 ? (
+  selected.map((file, index) => {
+    return (
+    <a href={file} target='_blank' rel='noopener noreferrer'>
                   <Card direction='row' textAlign={'center'} p={1}>
 
                     <Box>
-                      {getIconByFileType(fileType)}
+                      {getIconByFileType(getFileExtension(index))}
                     </Box>
                     
                     <Text
@@ -447,14 +463,80 @@ const fileInputRef = useRef(null);
                         textOverflow: 'ellipsis',
                         whiteSpace: 'normal',
                       }}>
-                        {fileName}
+                        {getFileName(index)}
                     </Text>
                     
               
                   </Card>
                 </a>
               );
-            })}
+  })
+) : (
+  uplassign.map((file, index) => {
+    const fileName1  = getFileName1(file);
+  const fileExtension1 = getFileExtension1(file)
+    return (
+      <a href={file} target='_blank' rel='noopener noreferrer'>
+                    <Card direction='row' textAlign={'center'} p={1}>
+  
+                      <Box>
+                      <Box>{getIconByFileType(fileExtension1)}</Box>
+                      </Box>
+                      
+                      <Text
+                        textAlign={'center'}
+                        m='auto' 
+                        sx={{
+                          display: '-webkit-box',
+                          WebkitBoxOrient: 'vertical',
+                          WebkitLineClamp: 2,
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'normal',
+                        }}>
+                          {fileName1}
+                      </Text>
+                      
+                
+                    </Card>
+                  </a>
+                );
+  })
+)}
+
+
+              
+            {/* {uplassign.map((file, index) => {
+              const fileType = file.split('.').pop();
+              const fileName = getFileName(file);
+
+              return (
+                <a href={file} target='_blank' rel='noopener noreferrer'>
+                  <Card direction='row' textAlign={'center'} p={1}>
+
+                    <Box>
+                      {getIconByFileType(getFileExtension(index))}
+                    </Box>
+                    
+                    <Text
+                      textAlign={'center'}
+                      m='auto' 
+                      sx={{
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 2,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'normal',
+                      }}>
+                        {getFileName(index)}
+                    </Text>
+                    
+              
+                  </Card>
+                </a>
+              );
+            })} */}
 
           </SimpleGrid> 
 
@@ -480,7 +562,65 @@ const fileInputRef = useRef(null);
                     borderRadius: '16px',
                   },
                 }}>
-                {
+
+                  {/* {uplassign.map((file, index) => {
+  return (
+    <iframe
+      key={index}
+      src={file}
+      style={{
+        padding: "8px",
+        backgroundColor: "#FFFFFF",
+        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+        height: '36vh',
+        width: "100%",
+        class: "center",
+        mx: 'auto',
+        borderRadius: "10px",
+      }}
+    />
+  )
+})} */}
+{selected.length > 0 ? (
+  selected.map((file, index) => {
+    return (
+      <iframe
+        key={index}
+        src={file}
+        style={{
+          padding: "8px",
+          backgroundColor: "#FFFFFF",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          height: '36vh',
+          width: "100%",
+          class: "center",
+          mx: 'auto',
+          borderRadius: "10px",
+        }}
+      />
+    )
+  })
+) : (
+  uplassign.map((file, index) => {
+    return (
+      <iframe
+        key={index}
+        src={file}
+        style={{
+          padding: "8px",
+          backgroundColor: "#FFFFFF",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          height: '36vh',
+          width: "100%",
+          class: "center",
+          mx: 'auto',
+          borderRadius: "10px",
+        }}
+      />
+    )
+  })
+)}
+                {/* {
                 uplassign.map((file, index) => {
                   return (
                     //iframe
@@ -496,11 +636,11 @@ const fileInputRef = useRef(null);
                         class: "center",
                         mx: 'auto',
                         borderRadius: "10px",
-                      }}
+                      }} 
                       
                     />
                   );
-                })}
+                })} */}
               
           </Flex>
 

@@ -1,4 +1,4 @@
-import { Grid, Image,Box,Button, Heading,Input, Text, FormControl, FormLabel, Center } from "@chakra-ui/react";
+import { Grid, Image,Box,Button, Heading,Input, Text, FormControl, FormLabel, Flex } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams} from "react-router-dom";
@@ -154,9 +154,10 @@ const GenerateCertificate = () =>
                 </Heading>
             </Box>
        
-            <Box p={4} width="60%" mx="auto" textAlign={'start'}>
+            <form action={GenerateCert}>
+            <Box p={4} width="80%" mx="auto" textAlign={'start'}>
                 <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF" >
-
+                
                     <FormControl mb={2} display={'flex'} alignItems='center'>
                         <FormLabel fontWeight="bold" color="orange.500" mr={2}>
                         Name:
@@ -173,64 +174,62 @@ const GenerateCertificate = () =>
                             isRequired
                         />
                     </FormControl>
-  
-
-          
-
-                    
+     
                     {campData.map((campData) => (
-
-                        
+                      
+                      <Flex>
                         <FormControl mb={2} display={'flex'} alignItems='center'>
-                                <FormLabel fontWeight="bold" color="orange.500" mr={2}>
-                                    Campname  :
-                                </FormLabel>
+                          <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+                            Campname
+                          </FormLabel>
+                          <Input textAlign={'center'} 
+                              focusBorderColor='orange.700' 
+                              variant={'flushed'} 
+                              borderBottomColor='orange' 
+                              width={'60%'} 
+                              mr={0} ml='auto' 
+                              id='startdate' name='startdate' label='Start Date'
+                              value={campData.campname}
+                              defaultValue={campData.campname}
+                              isRequired
+                          />
+                        </FormControl>
 
-                                <Input textAlign={'center'}
-                                    focusBorderColor='orange.700'
-                                    variant={'flushed'}
-                                    borderBottomColor='orange'
-                                    width={'60%'}
-                                    mr={0} ml='auto'
-                                    id='startdate' name='startdate' label='Start Date'
-                                    value={campData.campname}
-                                    defaultValue={campData.campname}
-                                    isRequired />
+                        <FormControl mb={2} display={'flex'} alignItems='center'>
+                          <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+                              Start Date
+                          </FormLabel>
 
-                            <FormLabel fontWeight="bold" color="orange.500" mr={2}>
-                                    Start Date :
-                                </FormLabel>
+                          <Input textAlign={'center'}
+                              focusBorderColor='orange.700'
+                              variant={'flushed'}
+                              borderBottomColor='orange'
+                              width={'60%'}
+                              mr={0} ml='auto'
+                              id='startdate' name='startdate' label='Start Date'
+                              value={formatStartDate(campData.startdate)}
+                              defaultValue={formatStartDate(campData.startdate)}
+                              isRequired />
+                        </FormControl>
 
-                                <Input textAlign={'center'}
-                                    focusBorderColor='orange.700'
-                                    variant={'flushed'}
-                                    borderBottomColor='orange'
-                                    width={'60%'}
-                                    mr={0} ml='auto'
-                                    id='startdate' name='startdate' label='Start Date'
-                                    value={formatStartDate(campData.startdate)}
-                        
-                                    defaultValue={formatStartDate(campData.startdate)}
-                                    isRequired />
+                        <FormControl mb={2} display={'flex'} alignItems='center'>
+                          <FormLabel fontWeight="bold" color="orange.500" mr={2}>
+                              End Date
+                          </FormLabel>
 
-                    <FormLabel fontWeight="bold" color="orange.500" mr={2}>
-                                    End Date :
-                                </FormLabel>
+                          <Input textAlign={'center'}
+                              focusBorderColor='orange.700'
+                              variant={'flushed'}
+                              borderBottomColor='orange'
+                              width={'60%'}
+                              mr={0} ml='auto'
+                              id='startdate' name='startdate' label='Start Date'
+                              value={formatEndDate(campData.enddate)}
+                              defaultValue={formatEndDate(campData.enddate)}
+                              isRequired />
+                        </FormControl>
 
-                                <Input textAlign={'center'}
-                                    focusBorderColor='orange.700'
-                                    variant={'flushed'}
-                                    borderBottomColor='orange'
-                                    width={'60%'}
-                                    mr={0} ml='auto'
-                                    id='startdate' name='startdate' label='Start Date'
-                                    value={formatEndDate(campData.enddate)}
-                                    defaultValue={formatEndDate(campData.enddate)}
-                                    isRequired />
-                          
-
-                            </FormControl>
-
+                      </Flex>
                             
                             ))}
                            
@@ -258,9 +257,10 @@ const GenerateCertificate = () =>
 
             <Button 
                 colorScheme='orange' variant='solid'
-                onClick ={GenerateCert}>
+                type='submit'>
                     Generate Certificate
             </Button>
+            
 
             <Button 
                 colorScheme='orange' variant='solid'
@@ -269,6 +269,8 @@ const GenerateCertificate = () =>
                 >
                     Back
             </Button>
+
+            </form>
             <StatusAlert/>
 
         </Box>

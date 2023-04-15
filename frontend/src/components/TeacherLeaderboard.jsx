@@ -78,21 +78,21 @@ function TeacherLeaderboard  (props)
         </Box>
 
         <SimpleGrid 
-            width={'70%'} 
-            overflowY='auto ' 
+            width={'90%'} 
+            overflowY='auto' 
             maxHeight={'66vh'} 
             mx='auto' 
-            minChildWidth='250px' 
+            minChildWidth='220px' 
             spacingX='10px' spacingY='10px'
             sx={{
               '&::-webkit-scrollbar': {
-                width: '16px',
-                borderRadius: '8px',
+                width: '8px',
+                borderRadius: '2px',
                 backgroundColor: 'white',
               },
               '&::-webkit-scrollbar-thumb': {
                 backgroundColor: `orange.500`,
-                borderRadius: '8px',
+                borderRadius: '2px',
               },
             }}>
 

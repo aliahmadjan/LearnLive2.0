@@ -99,7 +99,7 @@ const ViewCertificate = () =>
 
   return (
     <Box pt={0} px={5} mx='auto' textAlign={'center'} width='100%' ref={componentRef} backgroundColor='gray.100' 
-    borderRadius={30} flexDirection='row' overflowX='hidden' paddingX={5}>
+    borderRadius={8} flexDirection='row' overflowX='hidden' paddingX={5}>
   {certDetails.map((cert) => (
     <Box mx="auto" fontSize="2xl" mb={10}>
 

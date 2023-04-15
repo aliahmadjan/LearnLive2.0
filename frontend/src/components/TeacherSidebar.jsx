@@ -109,11 +109,11 @@ export default function TeacherSidebar({navSize, changeNavSize}) {
                 <NavItem navSize={navSize} icon={'fa-solid fa-list-check'} title="Upload Quiz" active={route === "uploadquiz"} route="uploadquiz"/>
                 <NavItem navSize={navSize} icon={'fa-solid fa-solid fa-boxes-stacked'} title="View Quizzes" active={route === "viewquizzes"} route="viewquizzes"/>
                 <NavItem navSize={navSize} icon={'fa-solid fa-calendar'} title="Calendar" active={route === "calendar"} route="calendar" />
-                <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Schedule Class" active={route === "createclass"} route="createclass" />
-                <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="View Classes" active={route === "viewclass"} route="viewclass" />
-                <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Leaderboard" active={route === "leaderboard"} route="leaderboard" />
-                <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Discussion Forum" active={route === "discussionforum"} route="discussionforum" />
-                <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Code Editor" active={route === "code-editor-home"} route="code-editor-home" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-play'} title="Schedule Class" active={route === "createclass"} route="createclass" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-video'} title="View Classes" active={route === "viewclass"} route="viewclass" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-code'} title="Code Editor" active={route === "code-editor-home"} route="code-editor-home" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-ranking-star'} title="Leaderboard" active={route === "leaderboard"} route="leaderboard" />
+                <NavItem navSize={navSize} icon={'fa-brands fa-discord'} title="Discussion Forum" active={route === "discussionforum"} route="discussionforum" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Settings" active={route === "settings"} route="settings" />
                 
 

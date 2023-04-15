@@ -36,7 +36,7 @@ const [submitStatus , setSubmitStatus] = useState()
             });
 
             localStorage.setItem("ltoken",res.data);
-            navigate("/student");
+            navigate("/student/account");
         } catch (error) {
           if (error.response && error.response.status === 401) {
               setSubmitStatus("Invalid Credentials");

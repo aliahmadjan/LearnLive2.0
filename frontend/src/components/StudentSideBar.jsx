@@ -43,15 +43,21 @@ export default function StudentSidebar({navSize, changeNavSize}) {
     const [ userID , setUserID] = useState("");
     const [name, setName] = useState("");
     const [ profileimg , setProfileImg] = useState(null);
+
+    const [showButton , setShowButton] = useState(false)
     const navigate = useNavigate();
 
     //localStorage.removeItem("unreadCount")
     let unreadCount = localStorage.getItem("unreadCount");
   
     const handleButtonClick = () => {
-        navigate('/student/notifications')
-    
-       
+        const currentPath = location.pathname;
+        const targetPath = '/student/notifications';
+        if (currentPath === targetPath) {
+          navigate(-1);
+        } else {
+          navigate(targetPath);
+        }
       };
 
       
@@ -66,6 +72,11 @@ export default function StudentSidebar({navSize, changeNavSize}) {
                 setProfileImg(res.data.profileimg);
         }).catch (err=> {
             console.log(err) })
+    }
+
+    const handleShowNotifications = () =>
+    {
+        setShowButton(!showButton)
     }
 
     const handleLogout = () =>
@@ -117,57 +128,48 @@ export default function StudentSidebar({navSize, changeNavSize}) {
                 <NavItem navSize={navSize} icon={'fa-solid fa-user'} active={route === "account"} title="Account" route="account" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-list-check'} active={route === "quizzes"} title="Quizzes" route="quizzes" />
                 <NavItem navSize={navSize} icon={'fa-solid fa-folder'} active={route === "assignments"} title="Assignments" route="assignments" />
-                <NavItem navSize={navSize} icon={'fa-solid fa-folder'} active={route === "viewmeets"} title="Classes" route="viewmeets" />
-
+                <NavItem navSize={navSize} icon={'fa-solid fa-users'} active={route === "viewmeets"} title="Classes" route="viewmeets" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-code'} title="Code Editor" active={route === "code-editor-home"} route="code-editor-home" />
                 {/* <NavItem navSize={navSize} icon={FiHome} title="Dashboard" description="This is the description for the dashboard." /> */}
-                <NavItem navSize={navSize} icon={'fa-solid fa-calendar'} active={route === "calendar"} title="Calendar" route="calendar" />
-                <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Discussion Forum" active={route === "discussionforum"} route="discussionforum" />
+                <NavItem navSize={navSize} icon={'fa-brands fa-discord'} title="Discussion Forum" active={route === "discussionforum"} route="discussionforum" />
                 {/* <NavItem navSize={navSize} icon={FiInfo} title="Reports" /> */}
-                <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Certificate" active={route === "certificate"} route="certificate" />
-                <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Leaderboard" active={route === "leaderboard"} route="leaderboard" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-certificate'} title="Certificate" active={route === "certificate"} route="certificate" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-ranking-star'} title="Leaderboard" active={route === "leaderboard"} route="leaderboard" />
                 
-                <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Code Editor" active={route === "code-editor-home"} route="code-editor-home" />
-                {/* <IconButton
-icon={<FiBell />}
-variant="ghost"
-aria-label="Notifications"
-//  unreadCount={unreadCount}
-onClick={handleButtonClick}
->
+                
+                <NavItem navSize={navSize} icon={'fa-solid fa-calendar'} active={route === "calendar"} title="Calendar" route="calendar" />
+                <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Settings" active={route === "settings"} route="settings" />
 
-{(unreadCount) > 0 && (
-<Badge colorScheme="" ml="2">
-  {unreadCount}
-</Badge>
-)}
-</IconButton> */}
-
+        
           
         <Tooltip label="Notifications">
           <IconButton
+            display={navSize == "small" ? "none" : ''}
             aria-label="Notifications"
+            color='#FFFFFF'
             icon={<i class="fa-solid fa-bell-concierge"></i>}
             variant="ghost"
+           
             onClick={handleButtonClick}
             position="absolute"
-            top="-10px"
+            top="30px"
             right="-10px"
           />
         </Tooltip>
          {unreadCount > 0 && ( 
           <Box
+            display={navSize == "small" ? "none" : 'flex'}
             position="absolute"
-            top="-5px"
-            right="-5px"
+            top="28px"
+            right="-10px"
             borderRadius="full"
             bg="red.500"
             color="orange"
-            w="20px"
-            h="20px"
-            display="flex"
+            w="15px"
+            h="15px"
             alignItems="center"
             justifyContent="center"
-            fontSize="lg"
+            fontSize="sm"
           >
             {unreadCount}
           </Box>
@@ -175,7 +177,8 @@ onClick={handleButtonClick}
 
      
             {/* <NavItem navSize={navSize} icon={'fa-solid fa-users'} title="Notifications" active={route === "notifications"} route="notifications"/> */}
-            <NavItem navSize={navSize} icon={'fa-solid fa-gear'} title="Settings" active={route === "settings"} route="settings" />
+            
+            
 
         </Flex><Divider variant='dashed' borderColor={'orange.500'} /><Flex flexDir={'column'}>
                 <Flex

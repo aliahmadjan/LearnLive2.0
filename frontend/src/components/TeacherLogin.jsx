@@ -38,7 +38,7 @@ const TeacherLogin = () => {
 
             localStorage.setItem("logintoken",res.data);
             setIsLoggedIn(true);
-            navigate("/teacher");
+            navigate("/teacher/account");
         } catch (error) {
           if (error.response && error.response.status === 401) {
               setSubmitStatus("Invalid Credentials");

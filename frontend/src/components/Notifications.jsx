@@ -273,7 +273,23 @@ const Notifications = () => {
   return (
     <>
       
-  <Box p={4} bg="white" boxShadow="lg" height="100%">
+  <Box 
+    p={4} 
+    borderRadius='10px'
+    bg="white" 
+    boxShadow="lg" 
+    overflowY='auto'
+    sx={{
+      '&::-webkit-scrollbar': {
+        width: '8px',
+        borderRadius: '3px',
+        backgroundColor: 'white',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: `orange.500`,
+        borderRadius: '3px',
+      },
+    }}>
     <Heading size="md" mb={2}>
       Notifications
     </Heading>

@@ -359,24 +359,28 @@ function TeacherUploadAssignment() {
 
         <Box width={'50%'} textAlign='center' display={selectedFiles.length ? '' : 'none'}>
 
-        <SimpleGrid
-  p={2} 
-  overflowY='scroll' 
-  maxHeight={'12.5vh'} 
-  m='auto' 
-  minChildWidth='160px' 
-  spacingX='10px' spacingY='10px'
-  sx={{
-    '&::-webkit-scrollbar': {
-      width: '16px',
-      borderRadius: '8px',
-      backgroundColor: 'white',
-    },
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: `orange.500`,
-      borderRadius: '8px',
-    },
-  }}>
+          <Heading size='sm' my={1}>
+            Files
+          </Heading>
+
+          <SimpleGrid 
+            width={'90%'} 
+            overflowY='auto' 
+            maxHeight={'58vh'} 
+            mx='auto' 
+            minChildWidth='220px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '8px',
+                borderRadius: '2px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '2px',
+              },
+            }}>
   {selected.map((file, index) => {
     
     return (
@@ -402,26 +406,27 @@ function TeacherUploadAssignment() {
     );
   })}
 </SimpleGrid>
-          <Heading size='sm' >
+          
+          <Heading size='sm' my={1} >
             Files Preview
           </Heading>
         
           <Flex wrap="wrap" 
                 maxHeight={'52vh'}
-                overflowY="scroll"
+                overflowY="auto"
                 borderRadius='15px'
                 gap={2} 
                 justifyContent={'space-around'} 
                 p={2}
                 sx={{
                   '&::-webkit-scrollbar': {
-                    width: '16px',
-                    borderRadius: '16px',
+                    width: '8px',
+                    borderRadius: '2px',
                     backgroundColor: 'white',
                   },
                   '&::-webkit-scrollbar-thumb': {
                     backgroundColor: `#F57C00`,
-                    borderRadius: '16px',
+                    borderRadius: '2px',
                   },
                 }}>
                 {

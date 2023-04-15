@@ -59,7 +59,7 @@ const StudentDashboard = () => {
                     <Route path="notifications" element={<Notifications/>} /> 
                     <Route path="code-editor-home" element={<Home/>}/>
                     <Route path="editor/:roomId" element={<EditorPage/>}/>
-                    <Route path="discussionforum" element={<DiscussionChat channelId='1089483253804703839'/>}/> 
+                    <Route path="discussionforum" element={<DiscussionChat channelId='1096311024661037066'/>}/> 
                     <Route path="settings" element={<StudentSettings />} />
 
                 </Routes> 

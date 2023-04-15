@@ -84,7 +84,7 @@ const TeacherDashboard = () => {
                     <Route path="viewclass" element={<TeacherViewMeets/>}/>
                     <Route path="leaderboard" element={<TeacherLeaderboard setCampus={(value)=>setCampName(value)}/>}/>
                     <Route path="viewleaderboard" element ={<ViewSingleTeacherLeaderboard campName={campName}/>}/>
-                    <Route path="discussionforum" element={<DiscussionChat channelId='1089483253804703839'/>}/> 
+                    <Route path="discussionforum" element={<DiscussionChat channelId='1096311024661037066'/>}/> 
                     <Route path="oauth-callback" element={<CallBack/>}/>
                                      
                 </Routes>       
