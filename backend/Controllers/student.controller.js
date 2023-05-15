@@ -32,10 +32,7 @@ const AddStudent = (req,res,next) =>
         })
         try{
           await student.save();
-          //res.send({message: "User Saved Successfully"})
-          //const token = jwt.sign({_id: user.id}, process.env.SECRET_KEY_USER);
-        //console.log(token);
-        //res.send({token});
+          
         }
         catch (err)
         {

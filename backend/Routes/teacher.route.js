@@ -109,6 +109,8 @@ router.put('/updateteacher/:id',TeacherController.UpdateTeacher)
 
 router.delete('/deleteteacher/:id',TeacherController.DeleteTeacher)
 
+//router.delete('/deletecamp/:id', TeacherController.DeleteCampname)
+
 //router.get('/setdeleteteacherid/:teacher_delid',TeacherController.SetDeleteTeacherId);
 
 module.exports = router;

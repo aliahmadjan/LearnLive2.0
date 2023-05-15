@@ -1,5 +1,6 @@
+import React from "react"
 import { useState, useEffect } from "react"
-import {Avatar, Box,Button,SimpleGrid,Center,Divider, Text,Card, FormControl, FormLabel, Input, Select, Textarea, Heading, Flex, CardHeader} from "@chakra-ui/react";
+import {Avatar, Box,Button,Tooltip ,SimpleGrid,Center,Divider, Text,Card, FormControl, FormLabel, Input, Select, Textarea, Heading, Flex, CardHeader} from "@chakra-ui/react";
 import axios from "axios"
 import { useNavigate, useParams} from "react-router-dom";
 import {
@@ -9,15 +10,27 @@ import {
     AlertDescription,
   } from '@chakra-ui/react'
   import { useDisclosure } from '@chakra-ui/react'
+  import {
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+  } from '@chakra-ui/react'
 
 
-  const ViewSingleCamp = ()=>
+  const ViewSingleCamp = (props)=>
   {
     const navigate = useNavigate();
     const [campname , setCampName] = useState("");
     const [ teachers , setTeachers] =useState([]);
     const [students , setStudents] = useState([]);
     const [ camps , setCamps] = useState([])
+
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = React.useRef()
  
     const getSingleUser = () =>
     {
@@ -30,6 +43,7 @@ import {
           setTeachers(res.data.teachers);
           //console.log(teachers)
           setStudents(res.data.students);
+          
 
          
         })
@@ -49,6 +63,60 @@ import {
       navigate("/admin/viewcamps");
     }
   
+    // const handleRemoveTeacher = (teacherc_delid) =>
+    // {
+    //   //localStorage.removeItem('teacherc_delid')
+    //   localStorage.setItem('teacherc_delid' , teacherc_delid)
+    //   console.log(teacherc_delid)
+     
+    // }
+
+    // const handleRemoveStudent = (studentc_delid ) =>
+    // {
+    //   //localStorage.removeItem('studentc_delid')
+    //   localStorage.setItem('studentc_delid',studentc_delid)
+    //   //localStorage.setItem('campname2', campname2)
+    // }
+
+    const DeleteTeacherCamp = (teacherc_delid) => {
+      //e.preventDefault();
+      localStorage.setItem('teacherc_delid' , teacherc_delid)
+      const teacherID = localStorage.getItem('teacherc_delid');  
+     
+      axios.delete(`http://localhost:5000/camp/deleteteachercamp/${teacherID}/${props.campName.campname}`)
+        .then((res) => {
+          console.log(res)
+          const updatedTeachers = teachers.filter((teacher) => teacher._id !== teacherID);
+          setTeachers(updatedTeachers)          
+          
+        })
+        .catch((error) => {
+          console.log(error)
+          
+        });
+    };
+
+    const DeleteStudentCamp = (studentc_delid) => {
+      //e.preventDefault();
+      localStorage.setItem('studentc_delid',studentc_delid)
+      const studentID = localStorage.getItem('studentc_delid');     
+      axios.delete(`http://localhost:5000/camp/deletestudentcamp/${studentID}/${props.campName.campname}`)
+        .then((res) => {
+          console.log(res)
+          const updatedStudents = students.filter((student) => student._id !== studentID);
+          setStudents(updatedStudents)   
+          
+        })
+        .catch((error) => {
+          console.log(error)
+          
+        });
+    };
+
+  
+
+   
+
     return (
       <Box p={2} m='auto' textAlign={'center'} width={'100%'} borderRadius={30}>
 
@@ -83,24 +151,38 @@ import {
                   borderRadius: '8px',
                 },
               }}>
-                  
-                {teachers.map((teacher,index) => (  
-                  <Card maxWidth={'100%'} maxHeight='160px' m={2}>
-                  <CardHeader>
-                    <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
-                      <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
-                        <Avatar name={teachers[index].name} src={teachers[index].profileimg} mx={4} />
-                        <Box>
-                          <Heading size='sm'>{teachers[index].name}</Heading>
-                          {/* <Text>{student.email}</Text>
-                          <Text>{student.gender}</Text> */}
-                        </Box>
-                      </Flex>
-                    </Flex>
-                  </CardHeader>      
-                  </Card> 
-                  
-                ))}
+
+
+
+  
+    {teachers.map((teacher, index) => (
+ 
+            <Card maxWidth={'100%'} maxHeight='160px' m={2}>
+        <CardHeader>
+          <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+            <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+              <Avatar name={teacher.name} src={teacher.profileimg} mx={4} />
+              <Box>
+                <Heading size='sm'>{teacher.name}</Heading>
+                <Tooltip label="Remove" hasArrow placement='right'>
+
+                  <Button size='sm' onClick={() => DeleteTeacherCamp(teacher._id)}
+                    colorScheme='orange' variant='ghost'>
+                    <i class="fa-solid fa-trash"></i>
+                  </Button>
+
+                </Tooltip>
+              </Box>
+            </Flex>
+          </Flex>
+        </CardHeader>
+      </Card>
+    ))}
+
+
+  
+
+ 
 
             </SimpleGrid>
 
@@ -131,25 +213,37 @@ import {
                   borderRadius: '8px',
                 },
             }}>
+              
+            
                 
                 {students.map((student,index) => (         
                   <Card maxWidth={'100%'} maxHeight='160px' m={2}>
-                  <CardHeader>
-                    <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
-                      <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
-                        <Avatar name={students[index].name} src={students[index].profileimg} mx={4} />
-                        <Box>
-                          <Heading size='sm'>{students[index].name}</Heading>
-                          {/* <Text>{student.email}</Text>
-                          <Text>{student.gender}</Text> */}
-                        </Box>
+                    <CardHeader>
+                      <Flex spacing='4' alignItems='center' justifyContent={'space-evenly'}>
+                        <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
+                          <Avatar name={students[index].name} src={students[index].profileimg} mx={4} />
+                          <Box>
+                            <Heading size='sm'>{students[index].name}</Heading>
+                            <Tooltip label="Remove" hasArrow placement='right'>
+                              <Button size='sm' onClick={() => DeleteStudentCamp(student._id)} colorScheme='orange' variant='ghost'>
+                                <i class="fa-solid fa-trash"></i>
+                              </Button>
+                            </Tooltip>
+                          </Box>
+                        </Flex>
                       </Flex>
-                    </Flex>
-                  </CardHeader>      
-                  </Card> 
-                ))} 
+                    </CardHeader>
+                  </Card>
+                     ))} 
+                
+             
 
             </SimpleGrid>
+
+
+
+
+
           </Flex>
 
         </Flex>
@@ -159,7 +253,7 @@ import {
           </Button>
       </Box>
        
-    )
+    );
   }
 
   export default ViewSingleCamp;

@@ -171,7 +171,10 @@ const QuizQuesionsInfo =(props) =>
             correctOption={question.correctOption}
             onChange={(e) => handleChange1(question.id,e)}/>)
 
-
+        const handleBack  =() =>
+        {
+            navigate('/teacher/uploadquiz')
+        }
     
     return (
 
@@ -220,6 +223,10 @@ const QuizQuesionsInfo =(props) =>
                     <Button mt={4} mx={2} type='submit' colorScheme='orange' variant='solid'> 
                         Create
                     </Button>
+
+                    {/* <Button mt={4} mx={2} onCLick={handleBack} colorScheme='orange' variant='solid'> 
+                        Back
+                    </Button> */}
 
                     {/* <Button mt={4} mx={2} onClick={Back} type='button'  colorScheme='orange' variant='solid' display={'inline'}> 
                         Back

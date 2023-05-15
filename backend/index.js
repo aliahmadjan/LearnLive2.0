@@ -12,6 +12,8 @@ const http = require('http')
 const {Server} = require('socket.io');
 const ACTIONS = require('../backend/actions')
 const path = require('path');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
 
 
 const app = express();
@@ -33,6 +35,11 @@ app.use(express.json({limit: '50mb'}));
  connection.once('open', () => { 
    console.log("MongoDB connection established successfully");
  })
+
+ connection.once('open', () => {
+    gfs = Grid(connection.db, mongoose.mongo);
+    gfs.collection('teacher-assignments'); // specify the GridFS collection name
+  });
 
 
 const TeacherRouter = require('./Routes/teacher.route');

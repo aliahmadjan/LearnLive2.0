@@ -20,6 +20,7 @@ import AssignStudents from '../components/AssignStudents'
 const AdminDashboard = () => {
     
     const [navSize, setNavSize] = useState("large")
+    const [campName, setCampName] = useState("")
 
     function changeNavSize(size) {
         setNavSize(size)
@@ -48,8 +49,8 @@ const AdminDashboard = () => {
                     <Route path="assignteacher" element={<AssignTeachers/>}/>
                     <Route path="assignstudent" element={<AssignStudents/>}/>
                     <Route path="addcamp" element={<AddCamp/>}/>
-                    <Route path="viewcamps" element={<ViewCamps/>}/>
-                    <Route path="viewcamp" element={<ViewSingleCamp/>}/>
+                    <Route path="viewcamps" element={<ViewCamps setCampus={(value)=>setCampName(value)}/>}/>
+                    <Route path="viewcamp" element={<ViewSingleCamp campName={campName}/>}/>
                 </Routes>
             </Flex>
         </Flex>

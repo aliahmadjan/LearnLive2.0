@@ -344,8 +344,7 @@ function TeacherUploadAssignment() {
             focusBorderColor='#F57C00' 
             variant={'flushed'} 
             borderBottomColor='#F57C00'
-            accept="application/pdf , image/png , .zip , application/msword
-            , application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            accept="application/pdf , image/png "
             onChange={onSelectFile}
             name="uplassign"
             isRequired

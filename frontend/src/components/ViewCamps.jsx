@@ -21,7 +21,7 @@ import {
 
 
 
-  const ViewCamps = ()=>
+  const ViewCamps = (props)=>
   {
     const [campname , setCampName] = useState('')
     const [camps , setCamps] = useState([]);
@@ -34,10 +34,13 @@ import {
     const cancelRef = React.useRef()
     const navigate = useNavigate();
 
-    const handleSubmitView = (camp_viewid) =>
+    const handleSubmitView = (camp_viewid , campName1,) =>
     {
         localStorage.removeItem('camp_viewid')
          localStorage.setItem('camp_viewid',camp_viewid)
+         localStorage.removeItem('campName1')
+         localStorage.setItem('campName1' , campName1)
+         props.setCampus(campName1)
             navigate("/admin/viewcamp");
     }
 
@@ -50,7 +53,7 @@ import {
 
     const getAllCamps= () =>
     {
-
+      
         axios.get("http://localhost:5000/camp/getcamps") 
         .then(res=> {
            setCamps(res.data)
@@ -166,7 +169,7 @@ import {
                     <Flex flexDir={'column'} justifyContent='center'>
 
                       <Tooltip label="View Camp" hasArrow placement='right'>
-                        <Button  onClick={()=>handleSubmitView(camp._id)} colorScheme='orange' variant='ghost'>
+                        <Button  onClick={()=>handleSubmitView(camp._id , camp)} colorScheme='orange' variant='ghost'>
                           <i class="fa-sharp fa-solid fa-eye"></i>
                         </Button>
                       </Tooltip>

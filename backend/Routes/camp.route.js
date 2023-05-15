@@ -27,5 +27,7 @@ router.delete('/deletecamp/:id',CampController.DeleteCamp)
 
 router.get('/getcampsdataforcert/:studentID',CampController.GetCampDataForCertificate)
 
+router.delete('/deleteteachercamp/:id/:campName',CampController.RemoveTeacherFromCamp)
 
+router.delete('/deletestudentcamp/:id/:campName',CampController.RemoveStudentFromCamp)
 module.exports = router;

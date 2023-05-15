@@ -20,7 +20,7 @@ const ViewSingleTeacherLeaderboard = (props) =>
       axios.get(`http://localhost:5000/leaderboard/getdetails/${props.campName}`)
       .then((res)=>
       {
-        //console.log(res.data)
+        console.log(res.data)
           setDetails(res.data)
   
       }).catch((err)=>

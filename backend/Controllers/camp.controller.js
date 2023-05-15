@@ -218,6 +218,68 @@ const AddCampname = (req,res,next) => {
       res.send(arr);
     }
 
+    const RemoveTeacherFromCamp = async (req, res, next) => {
+      const { campname } = req.body;
+      const teacherID = req.params.id;
+      const campName = req.params.campName;
+      
+    
+      try {
+        // Remove the teacher from the camp.
+        await Camp.findOneAndUpdate(
+          { campname: campName },
+          { $pull: { teachers: teacherID } },
+          { new: true }
+        );
+    
+        // Remove the campname from the teacher's campnames array.
+        await Teacher.findByIdAndUpdate(
+          teacherID,
+          { $pull: { campname: campName } },
+          { new: true }
+        );
+    
+        res.status(200).json({ message: "Teacher removed from camp" });
+      } catch (err) {
+        console.log(err);
+        res.status(500).json("Error");
+      }
+    };
+
+    const RemoveStudentFromCamp = async (req, res, next) => {
+      const { campname } = req.body;
+      const studentID = req.params.id;
+      const campName = req.params.campName;
+      
+    
+      try {
+        // Remove the teacher from the camp.
+        await Camp.findOneAndUpdate(
+          { campname: campName },
+          { $pull: { students: studentID } },
+          { new: true }
+        );
+    
+        // Remove the campname from the teacher's campnames array.
+        await Student.findByIdAndUpdate(
+          studentID,
+          { $pull: { campname: campName } },
+          { new: true }
+        );
+    
+        res.status(200).json({ message: "Student removed from camp" });
+      } catch (err) {
+        console.log(err);
+        res.status(500).json("Error");
+      }
+    };
+    
+    
+    
+    
+    
+    
+
 exports.VerifyAndAddCampTeachers = VerifyAndAddCampTeachers;
 exports.VerifyAndAddCampStudents = VerifyAndAddCampStudents;
 exports.AddCamp = AddCamp;
@@ -229,3 +291,5 @@ exports.GetCampForStudent= GetCampForStudent
 exports.AddCampname = AddCampname
 exports.DeleteCamp = DeleteCamp
 exports.GetCampDataForCertificate = GetCampDataForCertificate
+exports.RemoveTeacherFromCamp = RemoveTeacherFromCamp
+exports.RemoveStudentFromCamp = RemoveStudentFromCamp
