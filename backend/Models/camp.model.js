@@ -10,6 +10,10 @@ const campSchema = new moongose.Schema({
         type: String
     },
 
+//     camp_level: {
+//         type: Number
+//    },
+
     startdate :{
         type: String
     },

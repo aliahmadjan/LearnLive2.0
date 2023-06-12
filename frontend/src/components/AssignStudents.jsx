@@ -13,7 +13,7 @@ import { useDisclosure } from '@chakra-ui/react'
 const AssignStudents =() =>
 {
 
-    const [campname , setCampName]= useState("");
+    const [campname , setCampName]= useState([]);
     const [students , setStudents]= useState([]);
     const [selectedCampus, setSelectedCampus] = useState([]);
     const [searches, setSearches] = useState([])
@@ -27,19 +27,16 @@ const AssignStudents =() =>
   } = useDisclosure({ defaultIsOpen: true })
     const navigate = useNavigate();
 
-    const GetCampNames = () =>
-    {
-      axios.get('http://localhost:5000/camp/getcampname')
-      .then(res =>
-        {
-          setCampName(res.data);
-          //setCamps(res.data);
-          //console.log(camps)
-          
-        }).catch(err =>
-          {
-            console.log(err)
-          })
+    const GetCampNames = () => {
+      axios
+        .get('http://localhost:5000/camp/getcampname')
+        .then((res) => {
+          const campNames = res.data.map((camp) => camp.campname);
+          setCampName(campNames);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
     const AssignStudentsToCamp=async(e)=>
@@ -65,6 +62,7 @@ const AssignStudents =() =>
 
      useEffect(() => {
       GetCampNames(); 
+      //console.log(campname)
       //console.log(students);
     }, [])
 
@@ -118,19 +116,27 @@ const AssignStudents =() =>
             <FormControl mb={2} display={'flex'} alignItems='center' >
                 <FormLabel fontWeight="bold" color="orange.500" mr={2}>Camp</FormLabel>
 
-                <Select textAlign={'center'}
-                        focusBorderColor='orange.700' 
-                        variant={'flushed'} 
-                        borderBottomColor='orange'
-                        width={'60%'} 
-                        mr={0} ml='auto'
-                        value={selectedCampus}
-                        onChange={e => setSelectedCampus(e.target.value)}
-                        isRequired>
-
-                        <option value="" disabled>Camp Names</option>
-                        {Array.isArray(campname) && campname.map((campname) => ( <option value={campname}>{campname}</option> ))} 
-                 </Select>
+                <Select
+  textAlign="center"
+  focusBorderColor="orange.700"
+  variant="flushed"
+  borderBottomColor="orange"
+  width="60%"
+  mr={0}
+  ml="auto"
+  value={selectedCampus}
+  onChange={(e) => setSelectedCampus(e.target.value)}
+  isRequired
+>
+  <option value="" disabled>
+    Camp Names
+  </option>
+  {campname.map((camp, index) => (
+    <option key={index} value={camp}>
+      {camp}
+    </option>
+  ))}
+</Select>
             </FormControl>
 
 

@@ -44,6 +44,16 @@ import {
             navigate("/admin/viewcamp");
     }
 
+    const handleSubmitEdit = (camp_editid , campName1,) =>
+    {
+        localStorage.removeItem('camp_editid')
+         localStorage.setItem('camp_editid',camp_editid)
+         localStorage.removeItem('campName1')
+         localStorage.setItem('campName1' , campName1)
+         props.setCampus(campName1)
+            navigate("/admin/editcamp");
+    }
+
     const handleSubmitDelete = (camp_delid)=>
     {
       localStorage.removeItem('camp_delid')
@@ -161,7 +171,7 @@ import {
                     <Flex justifyContent={'space-evenly'} alignItems='center' flexWrap='wrap'>
                       <Avatar name={camp.campname} mx={4} />
                       <Box>
-                        <Heading size='sm'>{camp.campname}</Heading>
+                        <Heading size='sm'>{camp.campname} </Heading>
                         {/* <Text>{camp.campname}</Text> */}
                       </Box>
                     </Flex>
@@ -174,6 +184,11 @@ import {
                         </Button>
                       </Tooltip>
                       
+                      <Tooltip label="Edit Camp" hasArrow placement='right'>
+                        <Button  onClick={()=>handleSubmitEdit(camp._id , camp)} colorScheme='orange' variant='ghost'>
+                          <i class="fa-solid fa-pen-to-square"></i>
+                        </Button>
+                      </Tooltip>
 
                       <Tooltip label="Delete" hasArrow placement='right'>
                         <Button  onClick={()=>onOpen(handleSubmitDelete(camp._id))} colorScheme='orange' variant='ghost'>

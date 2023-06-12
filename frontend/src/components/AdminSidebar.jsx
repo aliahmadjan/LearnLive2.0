@@ -101,6 +101,7 @@ export default function AdminSidebar({navSize, changeNavSize}) {
                 <NavItem navSize={navSize} icon ={"fa-sharp fa-solid fa-users-line"} title="View Students" active={route === "viewstudents"} route="viewstudents"/>
                 <NavItem navSize={navSize} icon ={"fa-solid fa-tent"} title="Add Camp" active={route === "addcamp"} route="addcamp"/>
                 <NavItem navSize={navSize} icon={"fa-solid fa-tents"} title="View Camps" active={route === "viewcamps"} route="viewcamps"/>
+                <NavItem navSize={navSize} icon={"fa-solid fa-tents"} title="Analytics" active={route === "analytics"} route="analytics"/>
                 <NavItem navSize={navSize} icon={"fa-solid fa-gear"} title="Settings" active={route === "settings"} route="settings"/>
             </Flex>
 

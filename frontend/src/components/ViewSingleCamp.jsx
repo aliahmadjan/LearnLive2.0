@@ -24,6 +24,7 @@ import {
   {
     const navigate = useNavigate();
     const [campname , setCampName] = useState("");
+    const [camp_level , setCampLevel] = useState()
     const [ teachers , setTeachers] =useState([]);
     const [students , setStudents] = useState([]);
     const [ camps , setCamps] = useState([])
@@ -40,6 +41,7 @@ import {
           //setCamps(res.data);
           //console.log(camps)
           setCampName(res.data.campname)
+          setCampLevel(res.data.camp_level)
           setTeachers(res.data.teachers);
           //console.log(teachers)
           setStudents(res.data.students);
@@ -78,9 +80,16 @@ import {
     //   //localStorage.setItem('campname2', campname2)
     // }
 
-    const DeleteTeacherCamp = (teacherc_delid) => {
-      //e.preventDefault();
-      localStorage.setItem('teacherc_delid' , teacherc_delid)
+    const handleSubmitTeacherDelete = (teacherc_delid)=>
+    {
+      localStorage.removeItem('teacherc_delid')
+      localStorage.setItem('teacherc_delid',teacherc_delid)
+
+    }
+
+    const DeleteTeacherCamp = (e) => {
+      e.preventDefault();
+      //localStorage.setItem('teacherc_delid' , teacherc_delid)
       const teacherID = localStorage.getItem('teacherc_delid');  
      
       axios.delete(`http://localhost:5000/camp/deleteteachercamp/${teacherID}/${props.campName.campname}`)
@@ -96,9 +105,16 @@ import {
         });
     };
 
-    const DeleteStudentCamp = (studentc_delid) => {
-      //e.preventDefault();
+    const handleSubmitStudentDelete = (studentc_delid)=>
+    {
+      localStorage.removeItem('studentc_delid')
       localStorage.setItem('studentc_delid',studentc_delid)
+
+    }
+
+    const DeleteStudentCamp = (e) => {
+      e.preventDefault();
+      //localStorage.setItem('studentc_delid',studentc_delid)
       const studentID = localStorage.getItem('studentc_delid');     
       axios.delete(`http://localhost:5000/camp/deletestudentcamp/${studentID}/${props.campName.campname}`)
         .then((res) => {
@@ -123,6 +139,7 @@ import {
         <Box pt={4} pb={2}  >
           <Heading mb={2} color={'orange.900'}>
             Camp Name: {campname}
+
           </Heading>
         </Box>
 
@@ -166,7 +183,7 @@ import {
                 <Heading size='sm'>{teacher.name}</Heading>
                 <Tooltip label="Remove" hasArrow placement='right'>
 
-                  <Button size='sm' onClick={() => DeleteTeacherCamp(teacher._id)}
+                  <Button size='sm' onClick={()=>onOpen(handleSubmitTeacherDelete(teacher._id))}
                     colorScheme='orange' variant='ghost'>
                     <i class="fa-solid fa-trash"></i>
                   </Button>
@@ -225,7 +242,7 @@ import {
                           <Box>
                             <Heading size='sm'>{students[index].name}</Heading>
                             <Tooltip label="Remove" hasArrow placement='right'>
-                              <Button size='sm' onClick={() => DeleteStudentCamp(student._id)} colorScheme='orange' variant='ghost'>
+                              <Button size='sm' onClick={()=>onOpen(handleSubmitStudentDelete(student._id))} colorScheme='orange' variant='ghost'>
                                 <i class="fa-solid fa-trash"></i>
                               </Button>
                             </Tooltip>
@@ -235,6 +252,44 @@ import {
                     </CardHeader>
                   </Card>
                      ))} 
+
+<AlertDialog
+              isOpen={isOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+             
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                    Delete
+                  </AlertDialogHeader>
+
+                  <AlertDialogBody>
+                    Are you sure? You can't undo this action afterwards.
+                  </AlertDialogBody>
+
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme='red'
+                      onClick={(e) => {
+                       
+                        DeleteStudentCamp(e)
+                        DeleteTeacherCamp(e)
+                       
+                        onClose();
+                      }}
+                      ml={3}
+                    >
+                      Delete
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>         
                 
              
 

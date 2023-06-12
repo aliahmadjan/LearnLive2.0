@@ -16,7 +16,9 @@ import AssignTeachers from '../components/AssignTeachers'
 import AddCamp from '../components/AddCamp'
 import ViewCamps from '../components/ViewCamps'
 import ViewSingleCamp from '../components/ViewSingleCamp'
+import EditCampDetails from '../components/EditCamp'
 import AssignStudents from '../components/AssignStudents'
+import Analytics from '../components/Analytics'
 const AdminDashboard = () => {
     
     const [navSize, setNavSize] = useState("large")
@@ -49,8 +51,10 @@ const AdminDashboard = () => {
                     <Route path="assignteacher" element={<AssignTeachers/>}/>
                     <Route path="assignstudent" element={<AssignStudents/>}/>
                     <Route path="addcamp" element={<AddCamp/>}/>
+                    <Route path= "editcamp" element={<EditCampDetails/>}/>
                     <Route path="viewcamps" element={<ViewCamps setCampus={(value)=>setCampName(value)}/>}/>
                     <Route path="viewcamp" element={<ViewSingleCamp campName={campName}/>}/>
+                    <Route path="analytics" element={<Analytics/>} />
                 </Routes>
             </Flex>
         </Flex>

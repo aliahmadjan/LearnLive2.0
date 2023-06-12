@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react'
-import { Box,Button, Heading, Text, Link ,FormControl,FormLabel, Input,RadioGroup,Radio,Stack, InputGroup, Image} from '@chakra-ui/react'
+import { Box,Button, Heading, Text, Link ,SimpleGrid,FormControl,FormLabel, Input,RadioGroup,Radio,Stack, InputGroup, Image} from '@chakra-ui/react'
 import axios from "axios"
 import {
   Alert,
@@ -14,8 +14,18 @@ const AddStudents = () => {
   const [ userID , setUserID] = useState("");
   const [name, setName] = useState("");
   const [email , setEmail] = useState("");
+  const [age , setAge] = useState("")
   const [gender, setGender]= useState(null);
   const [phoneno , setPhoneNo]=useState("");
+  const [country , setCountry] = useState("");
+  const [city , setCity] = useState("");
+  const [parents_profession , setParentsProfession] = useState("")
+  const [camp_level ,  setCampLevel] = useState([])
+  const [ frequency , setFrequency] = useState()
+  const  [differently_abled , setDifferentlyAbled] = useState("")
+  const [hours , setHours] = useState();
+  const [grouped_hours , setGroupedHours] = useState()
+  const [ one_to_one , setOnetoOne] = useState();
   const [password,setPassword]= useState("");
   const[cpassword, setConPassword]= useState("");
   const[profileimg, setProfileImg] = useState("");
@@ -48,8 +58,19 @@ const AddStudents = () => {
            const formData = new FormData()
            formData.append('name',name)
            formData.append('email',email)
+           formData.append('age',age)
            formData.append('gender',gender)
            formData.append('phoneno',phoneno)
+           formData.append('parents_profession', parents_profession)
+           formData.append('city' , city)
+           formData.append('country',country)
+           //camp_level = camp_level.split(',').map(level => parseInt(level.trim()));
+          
+          //  formData.append('frequency' , frequency)
+           formData.append('differently_abled' , differently_abled)
+           formData.append('hours', hours)
+           formData.append('grouped_hours' , grouped_hours)
+           formData.append('one_to_one', one_to_one)
            formData.append('password',password)
            formData.append('cpassword',cpassword)
            formData.append('profileimg',selectedFile)
@@ -121,11 +142,35 @@ const AddStudents = () => {
         </Heading>
       </Box>
 
+      
+
+
       <form onSubmit={PostStudents}>
+
+      <SimpleGrid 
+            width={'90%'} 
+            overflowY='scroll' 
+            maxHeight={'46vh'} 
+            mx='auto'
+            minChildWidth='260px' 
+            spacingX='10px' spacingY='10px'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '16px',
+                borderRadius: '8px',
+                backgroundColor: 'white',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: `orange.500`,
+                borderRadius: '8px',
+              },
+            }}>
       <Box p={5} width="60%" mx="auto" textAlign={'start'}>
         
         <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF">
-          
+       
+
+
             <FormControl mb={2} display={'flex'} alignItems='center'>
               <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Full Name</FormLabel>
                 <Input
@@ -152,6 +197,23 @@ const AddStudents = () => {
                 id='email' name='email' label='Email'
                 placeholder= "student@mail.com"
                 type='email'
+                isRequired
+                width={'60%'} 
+                mr={0} ml='auto'/> 
+            </FormControl>
+
+            <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Age</FormLabel>
+              <Input
+              type='number'
+                textAlign={'center'}
+                focusBorderColor='#F57C00' 
+                variant={'flushed'} 
+                borderBottomColor='orange' 
+                onChange={e=>setAge(e.target.value)}
+                id='age' name='age' label='age'
+                placeholder= "10"
+               
                 isRequired
                 width={'60%'} 
                 mr={0} ml='auto'/> 
@@ -186,6 +248,138 @@ const AddStudents = () => {
                 mr={0} ml='auto'/>  
             </FormControl>
 
+            <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Parent's Profession</FormLabel>
+              <Input
+                
+                textAlign={'center'}
+                focusBorderColor='#F57C00' 
+                variant={'flushed'} 
+                borderBottomColor='orange' 
+                onChange={e=>setParentsProfession(e.target.value)}
+                id='parentsprof' name='parentsprof' label='parentsprof'
+                placeholder= "Engineer"
+                
+                width={'60%'} 
+                mr={0} ml='auto'/>  
+            </FormControl>
+
+            <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>City</FormLabel>
+              <Input
+                textAlign={'center'}
+                focusBorderColor='#F57C00' 
+                variant={'flushed'} 
+                borderBottomColor='orange' 
+                onChange={e=>setCity(e.target.value)}
+                id='city' name='city' label='City'
+                placeholder= "Islamabad"
+               
+                
+                width={'60%'} 
+                mr={0} ml='auto'/> 
+            </FormControl>
+
+            <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Country</FormLabel>
+              <Input
+                textAlign={'center'}
+                focusBorderColor='#F57C00' 
+                variant={'flushed'} 
+                borderBottomColor='orange' 
+                onChange={e=>setCountry(e.target.value)}
+                id='country' name='country' label='Country'
+                placeholder= "Pakistan"
+                
+                isRequired
+                width={'60%'} 
+                mr={0} ml='auto'/> 
+            </FormControl>
+
+           
+
+            {/* <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Frequency</FormLabel>
+              <Input
+                textAlign={'center'}
+                focusBorderColor='#F57C00' 
+                variant={'flushed'} 
+                borderBottomColor='orange' 
+                onChange={e=>setFrequency(e.target.value)}
+                id='frequency' name='frequency' label='Frequency'
+                placeholder= "2"
+                
+                isRequired
+                width={'60%'} 
+                mr={0} ml='auto'/> 
+            </FormControl> */}
+
+            <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Differently Abled</FormLabel>
+              <Input
+                textAlign={'center'}
+                focusBorderColor='#F57C00' 
+                variant={'flushed'} 
+                borderBottomColor='orange' 
+                onChange={e=>setDifferentlyAbled(e.target.value)}
+                id='differentlyabled' name='differentlyabled' label='DifferentlyAbled'
+                placeholder= "No"
+                
+                isRequired
+                width={'60%'} 
+                mr={0} ml='auto'/> 
+            </FormControl>
+
+            <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Hours</FormLabel>
+              <Input
+              type='number'
+                textAlign={'center'}
+                focusBorderColor='#F57C00' 
+                variant={'flushed'} 
+                borderBottomColor='orange' 
+                onChange={e=>setHours(e.target.value)}
+                id='hours' name='hours' label='Hours'
+                placeholder= "40"
+                
+                isRequired
+                width={'60%'} 
+                mr={0} ml='auto'/> 
+            </FormControl>
+
+            <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Grouped Hours</FormLabel>
+              <Input
+              type='number'
+                textAlign={'center'}
+                focusBorderColor='#F57C00' 
+                variant={'flushed'} 
+                borderBottomColor='orange' 
+                onChange={e=>setGroupedHours(e.target.value)}
+                id='groupedhours' name='groupedhours' label='GroupedHours'
+                placeholder= "48"
+                
+                
+                width={'60%'} 
+                mr={0} ml='auto'/> 
+            </FormControl>
+
+            <FormControl mb={2} display={'flex'} alignItems='center'>
+              <FormLabel fontWeight="bold" color="#F57C00" mr={2}>1-1</FormLabel>
+              <Input
+              type='number'
+                textAlign={'center'}
+                focusBorderColor='#F57C00' 
+                variant={'flushed'} 
+                borderBottomColor='orange' 
+                onChange={e=>setOnetoOne(e.target.value)}
+                id='onetoone' name='onetoone' label='OnetoOne'
+                placeholder= "1"
+                
+                isRequired
+                width={'60%'} 
+                mr={0} ml='auto'/> 
+            </FormControl>
             <FormControl mb={2} display={'flex'} alignItems='center'>
               <FormLabel fontWeight="bold" color="#F57C00" mr={2}>Password</FormLabel>
               <Input
@@ -250,19 +444,24 @@ const AddStudents = () => {
                       />
                   )} 
             </FormControl>
-                
+            
           </Box>
         </Box>
               
+        </SimpleGrid>
         <Button mt={4} type='submit' colorScheme='orange' variant='solid'>
               Add Student
         </Button>
 
         </form>
-    
-        <StatusAlert />
+        
+        
+        
 
+        <StatusAlert />
+        
   </Box>
+  
   )
 }
 

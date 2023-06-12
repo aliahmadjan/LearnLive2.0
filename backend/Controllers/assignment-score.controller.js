@@ -1,6 +1,7 @@
 const express = require('express');
 const https = require('https');
 const AssingmentScore = require('../Models/assignment-score.model')
+const Leaderboard = require('../Models/leaderboard.model')
 
 const jwt = require('jsonwebtoken');
 
@@ -103,19 +104,33 @@ const GetQuizResults = async (req, res, next) => {
 {
   const { assignment_score, stdassignment_id, student_id } = req.body;
 
+    // Convert assignment_score to a number
+    const numericScore = Number(assignment_score);
+
+    if (isNaN(numericScore)) {
+      return res.status(400).send('Invalid assignment score.');
+    }
+
   try {
     const updatedScore = await AssingmentScore.updateOne(
     //await db.collection('assignmentscore').updateOne(
       { stdassignment_id: stdassignment_id, student_id: student_id },
-      { $set: { assignment_score: assignment_score } }
+      { $set: { assignment_score: numericScore  } }
     );
-    res.send(updatedScore);
+
+
+     // Update the Leaderboard table
+     const updatedLeaderboard = await Leaderboard.updateOne(
+      {  student_id: student_id },
+      { $set: { assignment_score: numericScore  } }
+    );
+    res.status(200).send({ assignmentScore: updatedScore,  updatedLeaderboard ,message: "Updated"});
+    //res.send({ assignmentScore: updatedScore,  updatedLeaderboard });
+    //res.send(updatedScore);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error updating assignment score.');
+    res.status(500).send({message: "Error"});
   }
-
-
     }
 
 

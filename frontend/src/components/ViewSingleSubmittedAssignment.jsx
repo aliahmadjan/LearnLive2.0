@@ -90,8 +90,9 @@ const TeacherSingleViewSubmitAssignment=()=>
     //   })
     // }
 
-    const GradeAssignment = () =>
+    const GradeAssignment = (event) =>
     {
+      event.preventDefault(); // Prevent the default form submission behavior
       if (assignment_score <= tmarks) {
         axios.post("http://localhost:5000/assignmentscore/addassignmentscore",{
           tchassignment_id: `${localStorage.getItem('assignment_viewid')}`,
@@ -374,8 +375,8 @@ const TeacherSingleViewSubmitAssignment=()=>
         
 
       
-
-      <StatusAlert/>
+     
+      <StatusAlert />
 
       <Button 
         onClick={Back}

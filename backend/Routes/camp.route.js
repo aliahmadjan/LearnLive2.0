@@ -17,6 +17,8 @@ router.get('/getcamps',CampController.GetCamps);
 
 router.get('/getcamp/:id',CampController.GetSingleCamp);
 
+router.put('/updatecamp/:id', CampController.UpdateCamp)
+
 router.get('/getcampname',CampController.GetCampName)
 
 router.get('/getcampteacher/:id',CampController.GetCampForTeacher);

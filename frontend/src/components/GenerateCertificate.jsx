@@ -154,7 +154,7 @@ const GenerateCertificate = () =>
                 </Heading>
             </Box>
        
-            <form action={GenerateCert}>
+            <form onSubmit={GenerateCert}>
             <Box p={4} width="80%" mx="auto" textAlign={'start'}>
                 <Box boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)" borderRadius='15px' p={4} backgroundColor="#FFFFFF" >
                 

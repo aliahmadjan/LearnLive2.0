@@ -29,6 +29,8 @@ import {
     const [assignmentMarks , setAssignmentMarks] = useState([])
     const [results , setResults] = useState([])
     const [query, setQuery] = useState("")
+
+    const [tmarks , setTMarks] = useState("")
     
     const [submitStatus , setSubmitStatus] = useState()
     
@@ -85,10 +87,14 @@ function handleScoreChange(index, newScore) {
      axios.get(`http://localhost:5000/assignmentscore/getassignmentresults/${localStorage.getItem("assignment_viewid")}`)      
     .then((res)=>
     {
-      
+      res.data.forEach(element => {
+        setTMarks(element.tmarks)
+        console.log(element.tmarks); // Access each element in the array
+      });
+     // console.log(res.data[0].tmarks)
       setAssignmentMarks(res.data)
       setAssignmentScore(res.data.tmarks)
-
+      
      
     }).catch((err)=>
     {
@@ -119,11 +125,10 @@ function handleScoreChange(index, newScore) {
 
     const EditGrade = (newScore, assignmentID , studentID) =>
     { 
-      //console.log("H")
-      //console.log(e ,x ,s)
-      // if (newScore <= assignmentMarks.tmarks)
-      // {
-        console.log(assignment_score)
+     
+        if (newScore <= tmarks)
+        {
+        //console.log(assignment_score)
     axios.post('http://localhost:5000/assignmentscore/updateassignscore',
 
     {
@@ -132,23 +137,43 @@ function handleScoreChange(index, newScore) {
       student_id : studentID
 
     }).then((res)=>
-    {
-     
-       //window.alert("EditSuccesFUll")
-      //setSubmitStatus(1)
+    {if (res.status === 200) {
+      setSubmitStatus(res.data.message);
+    } else {
+      setSubmitStatus("Error");
+    }
+    
     }).catch((err)=>
       {
-         //window.alert("EditNOTSuccesFUll")
-        //setSubmitStatus(-1)
+        if (err.res && err.res.status === 500) {
+          setSubmitStatus("Error");
+        }
       })
-      // }
-      // else
-      // {
-      //   console.log('hello')
-      // }
+       }
+       else
+       {
+        setSubmitStatus("Error");
+       }
 
     }
 
+    const StatusAlert = () => {
+      if (submitStatus === "Updated")
+        return (
+          <Alert status='success'>
+          <AlertIcon />
+         Score was updated!
+        </Alert>
+        );
+
+        if (submitStatus === "Error")
+        return (
+          <Alert status="error">
+            <AlertIcon />
+           Score Couldn't be updated!
+          </Alert>
+        );
+    };
 
 
     
@@ -304,7 +329,7 @@ function handleScoreChange(index, newScore) {
       <Button colorScheme='orange' onClick={handleBack}>
         Back
       </Button>
-
+ <StatusAlert/>
 
     </Box>
 

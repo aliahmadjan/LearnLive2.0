@@ -7,41 +7,61 @@ const jwt = require('jsonwebtoken');
 //const requireLogin = require('../Middleware/UserToken.js')
 const router = express.Router()
 
-const AddStudent = (req,res,next) =>  
-{
-     const { name ,email,gender,phoneno,password,cpassword} = req.body;
-     if(!name || !email || !gender || !phoneno || !password || !cpassword )
-     {
-        return res.status(422).send("Please Fill ALl the fields");
-     }
+const AddStudent = async (req, res, next) => {
+  try {
+    const {
+      name,
+      email,
+      age,
+      gender,
+      phoneno,
+      parents_profession,
+      city,
+      country,
+      frequency,
+      differently_abled,
+      hours,
+      grouped_hours,
+      one_to_one,
+      password,
+      cpassword,
+    } = req.body;
 
-     Student.findOne({email:email})
-     .then(
-      async(savedUser) => {
-        if(savedUser)
-        {
-          return res.status(422).send({error: "Invalid Credentials"});
-        }
-        const student = new Student({
-          name,
-          email,
-          gender,
-          phoneno,
-          password,
-          cpassword,
-        })
-        try{
-          await student.save();
-          
-        }
-        catch (err)
-        {
-          return res.status(422).send({error: "Cannot login"});
-        }
-    
-      }   
-     )
+    // Check if the student with the same email already exists
+    const existingStudent = await Student.findOne({ email: email });
+    if (existingStudent) {
+      return res.status(422).send({ error: "Invalid Credentials" });
     }
+
+    // Create a new student instance
+    const student = new Student({
+      name,
+      email,
+      age,
+      gender,
+      phoneno,
+      parents_profession,
+      city,
+      country,
+     
+      frequency,
+      differently_abled,
+      hours,
+      grouped_hours,
+      one_to_one,
+      password,
+      cpassword,
+    });
+
+    // Save the student to the database
+    await student.save();
+
+    return res.status(200).send({ message: "Student Added Successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(422).send({ error: "Cannot login" });
+  }
+};
     
 
 

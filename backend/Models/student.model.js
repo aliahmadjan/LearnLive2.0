@@ -14,12 +14,50 @@ const studentSchema = new moongose.Schema({
         type: String
     },
 
+    age: {
+        type: Number
+    },
+
     gender: {
         type: String
     },
 
     phoneno: {
         type: String
+    },
+
+    parents_profession : {
+        type: String
+    },
+
+    city: {
+        type: String
+    },
+
+    country : {
+        type: String
+    },
+
+   
+
+    frequency: {
+        type: Number
+    },
+
+    differently_abled :{
+        type: String
+    },
+
+    hours: {
+        type: Number
+    },
+
+    grouped_hours : {
+        type: Number
+    },
+
+    one_to_one : {
+        type: Number
     },
     password:{
         type: String
@@ -29,13 +67,13 @@ const studentSchema = new moongose.Schema({
         type: String
     },
 
+    campname: {
+        type: Array
+    },
     profileimg: {
         type: String
     },
-    campname: 
-{
-    type: Array
-        },
+
        tokens : [
 {
     token: {

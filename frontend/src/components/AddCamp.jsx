@@ -11,6 +11,8 @@ import {
 function AddCamp() {
   const [ submitStatus , setSubmitStatus] = useState(0);
   const [campname , setCampName] = useState("");
+  const [camp_level ,  setCampLevel] = useState();
+  const options = ["Select" ,1, 2, 3];
   const [startdate , setStartDate] = useState("");
   const [enddate , setEndDate] = useState("");
   
@@ -25,6 +27,7 @@ function AddCamp() {
     axios.post("http://localhost:5000/camp/addcamp" ,
     {
         campname: campname,
+        // camp_level : camp_level,
         startdate: startdate,
         enddate: enddate,
 
@@ -118,6 +121,35 @@ function AddCamp() {
                 mr={0} ml='auto'/>
             </FormControl>
 
+            {/* <FormControl mb={2} display={'flex'} alignItems='center'>
+            <FormLabel htmlFor="camp" fontWeight="bold" color="#F57C00" mr={2}>Camp Level</FormLabel> */}
+
+            {/* <Select
+            
+              textAlign={'center'}
+              focusBorderColor='#F57C00' 
+              variant={'flushed'} 
+              borderBottomColor='#F57C00'
+              isRequired
+              width={'60%'} 
+              mr={0} ml='auto'
+              id='camp' name='camp'
+               
+              onChange={e => setCampLevel(e.target.value)}> */}
+                 
+            {/* <option value="" disabled>
+            Select
+            </option> */}
+            {/* {options.map((option) => (
+    <option key={option}
+    
+    value={option}>
+      {option}
+    </option>
+  ))}
+           </Select>
+          </FormControl> */}
+
             <FormControl mb={2} display={'flex'} alignItems='center'>
                 <FormLabel htmlFor="startdate" fontWeight="bold" color="orange.500" mr={2}>Start Date</FormLabel>
                 <Input
@@ -129,10 +161,12 @@ function AddCamp() {
                 label="startdate"
                 type="date"
                 onChange = {e=>setStartDate(e.target.value)}
+                
                 isRequired
                 width={'60%'} 
                 mr={0} ml='auto'/>
             </FormControl>
+            
 
             <FormControl mb={2} display={'flex'} alignItems='center'>
                 <FormLabel htmlFor="enddate" fontWeight="bold" color="orange.500" mr={2}>End Date</FormLabel>

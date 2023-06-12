@@ -37,59 +37,59 @@ const VerifyAndAddCampTeachers =  async(req,res,next) =>
   }
     
 }
-const VerifyAndAddCampStudents = async (req, res, next) => {
-  const { campname, teachers, students } = req.body;
-  const studentID = req.params.id;
-  try {
-    const student = await Student.findOne({ _id: studentID, campname: campname });
-    if (student) {
-      // The student is already added to the camp.
-      res.status(200).json({message: "Already Assigned"});
-    } else {
-      // The student is not added to the camp, so add them along with the teacher.
-      const result = await Camp.updateOne(
-        { campname: campname },
-        { $push: { teachers: teachers, students: students } }
-      );
-      // Add the campname to the student's campname array.
-      await Student.findByIdAndUpdate(
-        { _id: studentID },
-        { $push: { campname: campname } }
-      );
-      res.status(200).json({message: "Assigned"});
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json("Error");
-  }
-};
+
+ const VerifyAndAddCampStudents = async (req, res, next) => {
+   const { campname, teachers, students } = req.body;
+   const studentID = req.params.id;
+
+   // Check if the campname is valid and exists in the database
+   const camp = await Camp.findOne({ campname: campname });
+   if (!camp) {
+     return res.status(400).json({ error: 'Invalid campname' });
+   }
+
+   // The student is not added to the camp, so add them along with the teacher.
+   const result = await Camp.updateOne(
+     { campname: campname },
+     { $push: { teachers: teachers, students: students } }
+   );
+
+   // Add the campname to the student's campname array.
+   await Student.findByIdAndUpdate(
+             { _id: studentID },
+              { $push: { campname: campname } , $inc: {frequency: 1} }
+            );
+            res.status(200).json({message: "Assigned"});
+ };
+
 
 
 
 const AddCamp = async (req, res, next) => {
   const { campname, startdate, enddate } = req.body;
 
-  try {
-    const camp = await Camp.findOne({ campname});
-    if (camp) {
-      // Camp already exists
-      res.status(200).json({message: "Already Exists"});
-    } else {
+  //try {
+    //const camp = await Camp.findOne({ campname});
+    // if (camp) {
+    //   // Camp already exists
+    //   res.status(200).json({message: "Already Exists"});
+    // } else {
       // The camp does not exist, so add a new camp.
       const newCamp = new Camp({
         campname: req.body.campname,
+        camp_level : req.body.camp_level,
         startdate: req.body.startdate,
         enddate: req.body.enddate,
       });
 
       await newCamp.save();
       res.status(200).send({message: "Added"});
-    }
-  } catch (err) {
+    //}
+  //} catch (err) {
     //console.log(err);
-    return res.status(422).send({ message: "Error" });
+    //return res.status(422).send({ message: "Error" });
   }
-};
+
 
     
 
@@ -157,6 +157,20 @@ const GetSingleCamp = (req,res,next) =>
      })
 }
 
+const UpdateCamp = async(req,res,next) =>
+{
+  Camp.findByIdAndUpdate(req.params.id, {
+    $set: req.body
+      }, (error, data) => {
+        if (error) {
+          res.send("Error")
+          console.log(error)
+        } else {
+          res.json(data)
+        }
+      })
+}
+
 const GetCampName = async(req,res,next) =>
 {
   
@@ -164,7 +178,7 @@ const GetCampName = async(req,res,next) =>
  const campObj = await Camp.find() 
  for (var i=0;i< campObj.length ; i++)
  {
-  arr.push(campObj[i].campname);
+  arr.push({campname: campObj[i].campname , camp_level:campObj[i].camp_level});
   
  }
  //console.log(arr)
@@ -263,7 +277,7 @@ const AddCampname = (req,res,next) => {
         // Remove the campname from the teacher's campnames array.
         await Student.findByIdAndUpdate(
           studentID,
-          { $pull: { campname: campName } },
+          { $pull: { campname: campName } , $inc: {frequency: -1}},
           { new: true }
         );
     
@@ -285,6 +299,7 @@ exports.VerifyAndAddCampStudents = VerifyAndAddCampStudents;
 exports.AddCamp = AddCamp;
 exports.GetCamps = GetCamps;
 exports.GetSingleCamp = GetSingleCamp;
+exports.UpdateCamp = UpdateCamp;
 exports.GetCampName = GetCampName;
 exports.GetCampForTeacher = GetCampForTeacher;
 exports.GetCampForStudent= GetCampForStudent
@@ -293,3 +308,5 @@ exports.DeleteCamp = DeleteCamp
 exports.GetCampDataForCertificate = GetCampDataForCertificate
 exports.RemoveTeacherFromCamp = RemoveTeacherFromCamp
 exports.RemoveStudentFromCamp = RemoveStudentFromCamp
+
+

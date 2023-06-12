@@ -171,7 +171,7 @@ export default function StudentSidebar({navSize, changeNavSize}) {
             justifyContent="center"
             fontSize="sm"
           >
-            {unreadCount}
+            {/* {unreadCount} */}
           </Box>
          )} 
 
