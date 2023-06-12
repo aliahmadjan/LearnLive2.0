@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Box, Input, Button, Flex, Text, IconButton } from '@chakra-ui/react';
 
+
 const query = async (data) => {
   const response = await fetch(
     'https://api-inference.huggingface.co/models/deepset/roberta-base-squad2',
     {
-      headers: { Authorization: 'Bearer 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' },
+      // headers: { Authorization: `Bearer ${process.env.HUGGING_API_KEY}` },
+      headers : {Authorization : 'Bearer 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'} ,
       method: 'POST',
       body: JSON.stringify(data),
     }

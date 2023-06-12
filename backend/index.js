@@ -14,7 +14,9 @@ const ACTIONS = require('../backend/actions')
 const path = require('path');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
-
+const moment = require('moment');
+//const students = require('./students.json'); // Assuming student data is stored in a JSON file
+const Student =require('./Models/student.model')
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -55,6 +57,7 @@ const QuizzesScoreRouter = require('./Routes/quiz-score.route')
 const AssignmentScoreRouter = require('./Routes/assignment-score.route')
 const CertificateRouter= require('./Routes/certificate.route')
 const LeaderboardRouter = require('./Routes/leaderboard.route')
+const AnalyticsRouter = require('./Routes/analytics.route')
 
 
 const TokenTeacher = require('./Middleware/TeacherToken');
@@ -81,6 +84,7 @@ app.use('/quizscore',QuizzesScoreRouter);
 app.use('/assignmentscore',AssignmentScoreRouter);
 app.use('/certificate',CertificateRouter)
 app.use('/leaderboard',LeaderboardRouter)
+app.use('/analytics', AnalyticsRouter);
 
 app.get('/teacher/viewprofile',TokenTeacher,(req,res)=>
 {
@@ -159,6 +163,33 @@ io.on('connection', (socket) => {
 
 // Analytics 
 
+
+// const calculateRetentionRate = async () => {
+//     const totalStudents = await Student.countDocuments();
+//     let retainedStudents = 0;
+  
+//     const students = await Student.find();
+  
+//     students.forEach((student) => {
+//       const frequency = student.frequency; // Replace 'frequency' with the actual property name in your student data
+  
+//       if (frequency !== 1) {
+//         retainedStudents++;
+//       }
+//     });
+  
+//     const retentionRate = (retainedStudents / totalStudents) * 100;
+//     return retentionRate.toFixed(2); // Return retention rate with two decimal places
+//   };
+  
+//   // Call the function and log the retention rate
+//   calculateRetentionRate()
+//     .then((retentionRate) => {
+//       console.log(`Retention Rate: ${retentionRate}%`);
+//     })
+//     .catch((error) => {
+//       console.error('Error calculating retention rate:', error);
+//     });
 
 server.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
